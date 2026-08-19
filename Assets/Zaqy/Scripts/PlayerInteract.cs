@@ -4,10 +4,17 @@ using UnityEngine.InputSystem;
 public class PlayerInteract : MonoBehaviour
 {
     public static PlayerInteract Instance;
-    [SerializeField] Transform pickUpTransform;
+    [SerializeField] Transform holdTransform;
+    [SerializeField] Transform interactableParent;
+
     public bool IsCurrentlyHover => currentHoverObject != null;
-    public GameObject currentHoverObject; // target object yang dibawah mouse
-    public GameObject currentTargetObject; // target object yang dikejar player
+    public Transform currentHoverObject; // target object yang dibawah mouse
+    public Transform currentTargetObject; // target object yang dikejar player
+    public Transform currentHoldObject;
+
+    public bool isHoldingObject;
+
+    InteractableObject currentHoldInteractScript;
 
     private void Awake()
     {
@@ -39,6 +46,10 @@ public class PlayerInteract : MonoBehaviour
                 PlayerMovement.Instance.ChangeTargetPosition(newTargetPosition);
             }
         }
+        if (Mouse.current.rightButton.wasPressedThisFrame)
+        {
+            DropHoldObject();
+        }
     }
 
     public void SelectHoverObject()
@@ -56,7 +67,7 @@ public class PlayerInteract : MonoBehaviour
         {
             if (collider.CompareTag("interactable"))
             {
-                currentHoverObject = collider.gameObject;
+                currentHoverObject = collider.transform;
                 Debug.Log("Hover: " + currentHoverObject.name);
                 break;
             }
@@ -93,13 +104,36 @@ public class PlayerInteract : MonoBehaviour
             Debug.LogError("ada target tapi posisi salah");
             return;
         }
-        currentTargetObject.transform.SetParent(pickUpTransform);
-        currentTargetObject.transform.position = pickUpTransform.position;
+        currentTargetObject.SetParent(holdTransform);
+        currentTargetObject.position = holdTransform.position;
+        currentHoldObject = currentTargetObject;
+
+        currentHoldInteractScript = currentHoldObject.gameObject.GetComponent<InteractableObject>();
+        currentHoldInteractScript.PickupBehaviour();
+
+        isHoldingObject = false;
         DeselectTarget();
+    }
+    public void DropHoldObject()
+    {
+        if (currentHoldObject == null) return;
+
+        currentHoldObject.SetParent(interactableParent);
+
+        if (currentHoldInteractScript == null) return;
+        currentHoldInteractScript.DropBehaviour();
+
+        currentHoldInteractScript = null;
+        currentHoldObject = null;
     }
     bool IsPickUpValid()
     {
-        if (Vector3.Distance(transform.position, currentTargetObject.transform.position) <= 0.11f) return true;
+        if (Vector3.Distance(transform.position, currentTargetObject.position) <= 0.11f) return true;
         return false;
+    }
+    public void FlipHoldTransform(bool isXPositif)
+    {
+        if (isXPositif) holdTransform.localPosition = new Vector3(0.5f, 0.5f, 0);
+        else holdTransform.localPosition = new Vector3(-0.5f, 0.5f, 0);
     }
 }

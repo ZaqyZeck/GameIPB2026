@@ -350,6 +350,7 @@ GameObject:
   - component: {fileID: 603531022}
   - component: {fileID: 603531021}
   - component: {fileID: 603531023}
+  - component: {fileID: 603531024}
   m_Layer: 0
   m_Name: Object(Interactable)
   m_TagString: interactable
@@ -429,7 +430,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1535265028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &603531023
 CircleCollider2D:
@@ -467,6 +468,22 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &603531024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603531020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7bf10b1e28aef545bc3b625416fa866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
+  interactCollider: {fileID: 603531023}
+  dropDistance: 0.5
+  dropDuration: 0.3
+  easeDrop: 2
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,6 +616,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   barrierCollider: {fileID: 435032607}
+  spriteRenderer: {fileID: 1513617416}
   movementSpeed: 5
   haveTarget: 0
 --- !u!114 &1256394994
@@ -613,9 +631,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 811bbc62c5df02741a35e79795831276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
-  pickUpTransform: {fileID: 1964518007}
+  holdTransform: {fileID: 1964518007}
+  interactableParent: {fileID: 1535265028}
   currentHoverObject: {fileID: 0}
   currentTargetObject: {fileID: 0}
+  currentHoldObject: {fileID: 0}
+  isHoldingObject: 0
 --- !u!1 &1513617414
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,6 +728,38 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1535265027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535265028}
+  m_Layer: 0
+  m_Name: InteractableParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1535265028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535265027}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 603531022}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1964518006
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,4 +891,4 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 2004390484}
   - {fileID: 1256394992}
-  - {fileID: 603531022}
+  - {fileID: 1535265028}

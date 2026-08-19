@@ -1,16 +1,15 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance;
     [SerializeField] PolygonCollider2D barrierCollider;
+    [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private float movementSpeed = 3f;
     [SerializeField] private bool haveTarget;
 
     private Vector3 targetPosition;
-    private GameObject TargetObject => PlayerInteract.Instance.currentTargetObject;
+    private Transform TargetObject => PlayerInteract.Instance.currentTargetObject;
 
     private void Awake()
     {
@@ -24,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     public void ChangeTargetPosition(Vector3 target)
     {
         targetPosition = GetValidTargetPosition(target);
+        bool isXPositif = targetPosition.x - transform.position.x > 0f;
+        HandleFlip(isXPositif);
         haveTarget = true;
     }
     public void StopTargeting()
@@ -33,7 +34,6 @@ public class PlayerMovement : MonoBehaviour
     private void GoToTarget()
     {
         Vector3 nextPosition = Vector3.MoveTowards(transform.position, targetPosition, movementSpeed * Time.deltaTime);
-
         if(Vector3.Distance(transform.position, targetPosition) <= 0.1)
         {
             ReachedTarget();
@@ -66,5 +66,13 @@ public class PlayerMovement : MonoBehaviour
         Vector2 validPoint = closestPoint - direction * 0.01f;
 
         return new Vector3(validPoint.x, validPoint.y, transform.position.z);
+    }
+
+    private void HandleFlip(bool isXPositif)
+    {
+        if (spriteRenderer.flipX == isXPositif) return;
+
+        spriteRenderer.flipX = isXPositif;
+        PlayerInteract.Instance.FlipHoldTransform(isXPositif);
     }
 }
