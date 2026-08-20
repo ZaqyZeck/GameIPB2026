@@ -7,7 +7,7 @@ public class OwnerManager : MonoBehaviour
     [SerializeField] Owner[] owners = new Owner[3];
     [SerializeField] OwnerProfileSO ownerDatas;
 
-    float spawnTimer;
+    [SerializeField] float spawnTimer;
     [SerializeField] float minSpawnTime = 10f;
     [SerializeField] float maxSpawnTime = 15f;
 
@@ -26,7 +26,7 @@ public class OwnerManager : MonoBehaviour
             spawnTimer = Random.Range(minSpawnTime, maxSpawnTime);
             RandomSpawnOwner();
         }
-        else if(!isLineFull && PetManager.Instance.CheckPetAvailability())
+        else if(!isLineFull && PetManager.Instance.CheckPetWithoutOwner())
         {
             spawnTimer -= Time.deltaTime;
         }

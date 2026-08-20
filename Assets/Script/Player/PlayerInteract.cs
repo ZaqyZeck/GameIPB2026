@@ -14,7 +14,7 @@ public class PlayerInteract : MonoBehaviour
 
     public bool isHoldingObject;
 
-    InteractableObject currentHoldInteractScript;
+    Interactable currentHoldInteractScript;
 
     private void Awake()
     {
@@ -99,32 +99,51 @@ public class PlayerInteract : MonoBehaviour
             Debug.LogError("gak ada target yang bisa di pick up");
             return;
         }
+
         if(!IsPickUpValid())
         {
             Debug.LogError("ada target tapi posisi salah");
             return;
         }
+
+        if (isHoldingObject)
+        {
+            DropHoldObject();
+        }
+
         currentTargetObject.SetParent(holdTransform);
         currentTargetObject.position = holdTransform.position;
         currentHoldObject = currentTargetObject;
 
-        currentHoldInteractScript = currentHoldObject.gameObject.GetComponent<InteractableObject>();
-        currentHoldInteractScript.PickupBehaviour();
+        InteractableObject interactableObject = currentHoldObject.gameObject.GetComponent<InteractableObject>();
+        currentHoldInteractScript = interactableObject;
+        interactableObject.PickupBehaviour();
 
-        isHoldingObject = false;
+        isHoldingObject = true;
         DeselectTarget();
     }
     public void DropHoldObject()
     {
-        if (currentHoldObject == null) return;
+        if (currentHoldObject == null)
+            return;
+
+        InteractableObject interactableObject = currentHoldObject.gameObject.GetComponent<InteractableObject>();
 
         currentHoldObject.SetParent(interactableParent);
 
-        if (currentHoldInteractScript == null) return;
-        currentHoldInteractScript.DropBehaviour();
+        if (interactableObject != null)
+        {
+            interactableObject.DropBehaviour();
+        }
 
+        RemoveObjectyFromHold();
+    }
+
+    public void RemoveObjectyFromHold()
+    {
         currentHoldInteractScript = null;
         currentHoldObject = null;
+        isHoldingObject = false;
     }
     bool IsPickUpValid()
     {
@@ -135,5 +154,72 @@ public class PlayerInteract : MonoBehaviour
     {
         if (isXPositif) holdTransform.localPosition = new Vector3(0.5f, 0.5f, 0);
         else holdTransform.localPosition = new Vector3(-0.5f, 0.5f, 0);
+    }
+
+    public Interactable GetCurrentInteractScript()
+    {
+        return currentHoldInteractScript;
+    }
+
+    public void InteractTarget()
+    {
+        if (currentTargetObject == null)
+        {
+            Debug.Log("Tidak ada target.");
+            return;
+        }
+
+        Interactable interactable = currentTargetObject.gameObject.GetComponent<Interactable>();
+
+        if (interactable == null)
+        {
+            Debug.Log("Target bukan Interactable.");
+            return;
+        }
+
+        if (interactable is InteractableObject)
+        {
+            PickUpTargetObject();
+        }
+        else if (interactable is Owner)
+        {
+            GivePet();
+        }
+    }
+
+    public void GivePet()
+    {
+        if (currentTargetObject == null)
+        {
+            Debug.Log("Tidak ada Owner yang ditarget.");
+            return;
+        }
+
+        if (!isHoldingObject || currentHoldObject == null)
+        {
+            Debug.Log("Tidak sedang memegang pet.");
+            return;
+        }
+
+        Owner owner = currentTargetObject.gameObject.GetComponent<Owner>();
+
+        if (owner == null)
+        {
+            Debug.Log("Target bukan Owner.");
+            return;
+        }
+
+        GhostPet ghostPet = currentHoldObject.gameObject.GetComponent<GhostPet>();
+
+        if (ghostPet == null)
+        {
+            Debug.Log("Object yang dipegang bukan GhostPet.");
+            return;
+        }
+
+        owner.GetPet(ghostPet);
+
+        RemoveObjectyFromHold();
+        DeselectTarget();
     }
 }

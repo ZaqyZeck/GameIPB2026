@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(TargetObject != null)
         {
-            PlayerInteract.Instance.PickUpTargetObject();
+            PlayerInteract.Instance.InteractTarget();
         }
         StopTargeting();
     }
