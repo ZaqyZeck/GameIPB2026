@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a40cda1394094cb6a97cc87446d83e1, type: 3}
+  m_Name: OwnerDatas
+  m_EditorClassIdentifier: Assembly-CSharp::OwnerProfileSO
+  OwnerDatas:
+  - ownerName: Zaqy
+    ownerSprite: {fileID: 0}
+  - ownerName: Marvin
+    ownerSprite: {fileID: 0}
+  - ownerName: Naya
+    ownerSprite: {fileID: 0}
+  - ownerName: Inyo
+    ownerSprite: {fileID: 0}

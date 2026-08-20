@@ -203,9 +203,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Owner
   ownerName: 
-  patienceAmount: 60
+  patienceAmount: 10
   spriteRenderer: {fileID: 105957971}
   interactCollider: {fileID: 105957969}
+  currentPet: {fileID: 0}
   isInLine: 0
 --- !u!212 &105957971
 SpriteRenderer:
@@ -952,9 +953,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Owner
   ownerName: 
-  patienceAmount: 60
+  patienceAmount: 10
   spriteRenderer: {fileID: 1143222770}
   interactCollider: {fileID: 1143222768}
+  currentPet: {fileID: 0}
   isInLine: 0
 --- !u!212 &1143222770
 SpriteRenderer:
@@ -1474,9 +1476,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Owner
   ownerName: 
-  patienceAmount: 60
+  patienceAmount: 10
   spriteRenderer: {fileID: 1508637208}
   interactCollider: {fileID: 1508637206}
+  currentPet: {fileID: 0}
   isInLine: 0
 --- !u!212 &1508637208
 SpriteRenderer:
@@ -1745,8 +1748,8 @@ MonoBehaviour:
   - {fileID: 105957970}
   - {fileID: 1143222769}
   ownerDatas: {fileID: 11400000, guid: 538003c9d289f6c429af5e6036298e38, type: 2}
-  minSpawnTime: 10
-  maxSpawnTime: 15
+  minSpawnTime: 2
+  maxSpawnTime: 5
 --- !u!4 &1890949916
 Transform:
   m_ObjectHideFlags: 0
