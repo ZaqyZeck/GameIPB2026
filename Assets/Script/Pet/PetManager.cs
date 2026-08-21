@@ -50,9 +50,10 @@ public class PetManager : MonoBehaviour
         Debug.Log($"Customer dan mendapatkan OwnerData: {petData.petName}");
 
         GhostPet newPet = Instantiate(petPrefabs[0], GetSpawnPoint(), new Quaternion()).GetComponent<GhostPet>();
-       
+
         AddPetToList(newPet);
-        SetPetHabit(newPet);
+        newPet.Spawn(petData);
+        GameEventBus.OnPetSpawned?.Invoke(petData);
     }
 
     public void DespawnPet(GhostPet ghostPet)
@@ -105,11 +106,6 @@ public class PetManager : MonoBehaviour
     public void RemovePetFromList(GhostPet ghostPet)
     {
         ghostPets.Remove(ghostPet);
-    }
-
-    void SetPetHabit(GhostPet ghostPet)
-    {
-
     }
 
     public bool CheckPetWithoutOwner()
