@@ -206,6 +206,7 @@ MonoBehaviour:
   patienceAmount: 60
   spriteRenderer: {fileID: 105957971}
   interactCollider: {fileID: 105957969}
+  currentPet: {fileID: 0}
   isInLine: 0
 --- !u!212 &105957971
 SpriteRenderer:
@@ -727,6 +728,8 @@ GameObject:
   - component: {fileID: 1036498569}
   - component: {fileID: 1036498568}
   - component: {fileID: 1036498567}
+  - component: {fileID: 1036498570}
+  - component: {fileID: 1036498571}
   m_Layer: 0
   m_Name: Kucing2
   m_TagString: Untagged
@@ -809,6 +812,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GhostPet
   petId: 0
   isOwnerArrived: 0
+  petData:
+    petName: Unknown Soul
+    petSprite: {fileID: 0}
+    visualTrait: 0
+    specialColor: {r: 1, g: 1, b: 1, a: 1}
+    hiddenHabit: 0
+    timeToRevealHabit: 15
+    hiddenAction: 0
+  spriteRenderer: {fileID: 1036498569}
+  movement: {fileID: 1036498570}
+  behaviorController: {fileID: 1036498571}
 --- !u!212 &1036498569
 SpriteRenderer:
   serializedVersion: 2
@@ -868,6 +882,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1036498570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036498565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ae2cf73bbeb426e90a3c9b4d85c445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetMovement
+  moveSpeed: 1.5
+  stoppingDistance: 0.1
+--- !u!114 &1036498571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036498565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2f7ffad4ec74c1badc6f8d7e359977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetBehaviorController
+  ghostPet: {fileID: 1036498568}
 --- !u!1 &1143222766
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,6 +996,7 @@ MonoBehaviour:
   patienceAmount: 60
   spriteRenderer: {fileID: 1143222770}
   interactCollider: {fileID: 1143222768}
+  currentPet: {fileID: 0}
   isInLine: 0
 --- !u!212 &1143222770
 SpriteRenderer:
@@ -1096,6 +1138,8 @@ GameObject:
   - component: {fileID: 1353185334}
   - component: {fileID: 1353185333}
   - component: {fileID: 1353185332}
+  - component: {fileID: 1353185335}
+  - component: {fileID: 1353185336}
   m_Layer: 0
   m_Name: Kucing3
   m_TagString: Untagged
@@ -1178,6 +1222,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GhostPet
   petId: 0
   isOwnerArrived: 0
+  petData:
+    petName: Unknown Soul
+    petSprite: {fileID: 0}
+    visualTrait: 0
+    specialColor: {r: 1, g: 1, b: 1, a: 1}
+    hiddenHabit: 4
+    timeToRevealHabit: 15
+    hiddenAction: 0
+  spriteRenderer: {fileID: 1353185334}
+  movement: {fileID: 1353185335}
+  behaviorController: {fileID: 1353185336}
 --- !u!212 &1353185334
 SpriteRenderer:
   serializedVersion: 2
@@ -1237,6 +1292,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1353185335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353185330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ae2cf73bbeb426e90a3c9b4d85c445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetMovement
+  moveSpeed: 1.5
+  stoppingDistance: 0.1
+--- !u!114 &1353185336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353185330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2f7ffad4ec74c1badc6f8d7e359977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetBehaviorController
+  ghostPet: {fileID: 1353185333}
 --- !u!1 &1494228225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,6 +1331,8 @@ GameObject:
   - component: {fileID: 1494228229}
   - component: {fileID: 1494228228}
   - component: {fileID: 1494228227}
+  - component: {fileID: 1494228230}
+  - component: {fileID: 1494228231}
   m_Layer: 0
   m_Name: Kucing1
   m_TagString: Untagged
@@ -1331,6 +1415,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GhostPet
   petId: 0
   isOwnerArrived: 0
+  petData:
+    petName: Unknown Soul
+    petSprite: {fileID: 0}
+    visualTrait: 1
+    specialColor: {r: 0.21698111, g: 0.14226592, b: 0.14226592, a: 1}
+    hiddenHabit: 1
+    timeToRevealHabit: 15
+    hiddenAction: 0
+  spriteRenderer: {fileID: 1494228229}
+  movement: {fileID: 1494228230}
+  behaviorController: {fileID: 1494228231}
 --- !u!212 &1494228229
 SpriteRenderer:
   serializedVersion: 2
@@ -1390,6 +1485,33 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1494228230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494228225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ae2cf73bbeb426e90a3c9b4d85c445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetMovement
+  moveSpeed: 1.5
+  stoppingDistance: 0.1
+--- !u!114 &1494228231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494228225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2f7ffad4ec74c1badc6f8d7e359977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetBehaviorController
+  ghostPet: {fileID: 1494228228}
 --- !u!1 &1508637204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,6 +1599,7 @@ MonoBehaviour:
   patienceAmount: 60
   spriteRenderer: {fileID: 1508637208}
   interactCollider: {fileID: 1508637206}
+  currentPet: {fileID: 0}
   isInLine: 0
 --- !u!212 &1508637208
 SpriteRenderer:
@@ -1670,6 +1793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1820748887}
   - component: {fileID: 1820748886}
+  - component: {fileID: 1820748888}
   m_Layer: 0
   m_Name: GhostPets
   m_TagString: Untagged
@@ -1689,10 +1813,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6532b07812696164088e295ff85b0f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetManager
+  petDatas: {fileID: 0}
+  petPrefabs: []
   ghostPets:
   - {fileID: 1494228228}
   - {fileID: 1036498568}
   - {fileID: 1353185333}
+  barrierCollider: {fileID: 0}
+  maxPet: 0
+  minSpawnTime: 10
+  maxSpawnTime: 15
+  spawnTimer: 0
+  isPetAvailable: 0
 --- !u!4 &1820748887
 Transform:
   m_ObjectHideFlags: 0
@@ -1711,6 +1843,20 @@ Transform:
   - {fileID: 1353185331}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1820748888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820748885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2a0ff35bb5af46138bd269bc463f269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetSpotRegistry
+  doorSpot: {fileID: 0}
+  digSpots: []
 --- !u!1 &1890949914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,6 +1891,7 @@ MonoBehaviour:
   - {fileID: 105957970}
   - {fileID: 1143222769}
   ownerDatas: {fileID: 11400000, guid: 538003c9d289f6c429af5e6036298e38, type: 2}
+  spawnTimer: 0
   minSpawnTime: 10
   maxSpawnTime: 15
 --- !u!4 &1890949916

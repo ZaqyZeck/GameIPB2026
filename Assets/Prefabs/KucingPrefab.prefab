@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4939303307851474555}
   - component: {fileID: 2226010657864847411}
   - component: {fileID: 2027777344167743591}
+  - component: {fileID: 6903472403721547917}
+  - component: {fileID: 4065246658916650677}
   m_Layer: 0
   m_Name: KucingPrefab
   m_TagString: interactable
@@ -117,6 +119,8 @@ MonoBehaviour:
     timeToRevealHabit: 15
     hiddenAction: 0
   spriteRenderer: {fileID: 3931222213587269898}
+  movement: {fileID: 6903472403721547917}
+  behaviorController: {fileID: 4065246658916650677}
 --- !u!114 &2226010657864847411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,3 +183,30 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6903472403721547917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179462446187314528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38ae2cf73bbeb426e90a3c9b4d85c445, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetMovement
+  moveSpeed: 1.5
+  stoppingDistance: 0.1
+--- !u!114 &4065246658916650677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179462446187314528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e2f7ffad4ec74c1badc6f8d7e359977, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetBehaviorController
+  ghostPet: {fileID: 4939303307851474555}
