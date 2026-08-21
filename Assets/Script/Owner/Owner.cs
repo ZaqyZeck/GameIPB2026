@@ -80,7 +80,10 @@ public class Owner : Interactable
 
     public void GetPet(GhostPet ghostPet)
     {
-        if(currentPet != ghostPet) return;
+        if(currentPet != ghostPet)
+        {
+            return;
+        }
         Debug.Log("berhasil dapat pet");
         Despawn();
     }
