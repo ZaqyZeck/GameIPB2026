@@ -217,9 +217,12 @@ public class PlayerInteract : MonoBehaviour
             return;
         }
 
-        owner.GetPet(ghostPet);
+        bool isSucceed = owner.GetPet(ghostPet);
 
-        RemoveObjectyFromHold();
+        if (isSucceed)
+        {
+            RemoveObjectyFromHold();
+        }
         DeselectTarget();
     }
 }

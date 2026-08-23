@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class Owner : Interactable
@@ -8,6 +9,7 @@ public class Owner : Interactable
     [SerializeField] float patienceAmount = 60f;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Collider2D interactCollider;
+    [SerializeField] TextMeshPro textPetId;
 
     [SerializeField] GhostPet currentPet;
     OwnerData currentOwnerData;
@@ -30,7 +32,7 @@ public class Owner : Interactable
         else
         {
             patienceTimer = patienceAmount;
-            Despawn();
+            DespawnWithoutPet();
         }
     }
 
@@ -41,18 +43,23 @@ public class Owner : Interactable
         currentPet = wantedPet;
         currentOwnerData = newOwnerData;
         ownerName = currentOwnerData.ownerName;
+
+        textPetId.text = currentPet.petId.ToString();
+
         interactCollider.enabled = true;
         isInLine = true;
 
         //Debug.Log(ownerName + " spawn");
         SpawnAnimation();
     }
-    public void Despawn()
+    public void DespawnWithoutPet()
     {
         if (!isInLine) return;
 
         //Despawn pet
-        PetManager.Instance.DespawnPet(currentPet);
+        //PetManager.Instance.DespawnPet(currentPet);
+
+        textPetId.text = null;
 
         currentPet = null;
         currentOwnerData = null;
@@ -63,6 +70,27 @@ public class Owner : Interactable
         DespawnAnimation();
         OwnerManager.Instance.CheckLine();
     }
+
+    public void DespawnWithPet()
+    {
+        if (!isInLine) return;
+
+        //Despawn pet
+        PetManager.Instance.DespawnPet(currentPet);
+
+        textPetId.text = null;
+
+        currentPet.isOwnerArrived = false;
+        currentPet = null;
+        currentOwnerData = null;
+        ownerName = null;
+        interactCollider.enabled = false;
+        isInLine = false;
+
+        DespawnAnimation();
+        OwnerManager.Instance.CheckLine();
+    }
+
     void SpawnAnimation()
     {
         //if (isInLine) return;
@@ -78,14 +106,16 @@ public class Owner : Interactable
         return currentOwnerData;
     }
 
-    public void GetPet(GhostPet ghostPet)
+    public bool GetPet(GhostPet ghostPet)
     {
         if(currentPet != ghostPet)
         {
-            return;
+            DespawnWithoutPet();
+            return false;
         }
         Debug.Log("berhasil dapat pet");
-        Despawn();
+        DespawnWithPet();
+        return true;
     }
 
     //public override void Interact()

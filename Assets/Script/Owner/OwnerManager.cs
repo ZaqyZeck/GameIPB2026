@@ -31,47 +31,61 @@ public class OwnerManager : MonoBehaviour
             spawnTimer -= Time.deltaTime;
         }
     }
-    
+
     void RandomSpawnOwner()
     {
-        Owner[] availableCustomers = owners.Where(owner => !owner.isInLine).ToArray();
+        Owner[] availableOwners = owners.Where(owner => !owner.isInLine).ToArray();
 
-        if(availableCustomers.Length == 0)
+        if (availableOwners.Length == 0)
         {
             Debug.Log("LinePenuh1");
             return;
         }
-        Owner owner = availableCustomers[Random.Range(0, availableCustomers.Length)];
-        OwnerData ownerData = ownerData = ownerDatas.OwnerDatas[Random.Range(0, ownerDatas.OwnerDatas.Count)];
-        while (CheckDoubleOwnerData(ownerData)){
-            ownerData = ownerDatas.OwnerDatas[Random.Range(0, ownerDatas.OwnerDatas.Count)];
+
+        OwnerData ownerData = GetAvailableOwnerData();
+
+        if (ownerData == null)
+        {
+            Debug.Log("Semua OwnerData sedang digunakan.");
+            return;
         }
+
+        Owner owner = availableOwners[Random.Range(0, availableOwners.Length)];
 
         Debug.Log($"Customer dan mendapatkan OwnerData: {ownerData.ownerName}");
 
         GhostPet ghostPet = PetManager.Instance.GetAvailableGhostPet();
-        if(ghostPet == null)
+
+        if (ghostPet == null)
         {
             Debug.Log("no pet available");
             return;
         }
+
         ghostPet.OwnerArrived();
 
         owner.Spawn(ghostPet, ownerData);
         CheckLine();
     }
 
+    OwnerData GetAvailableOwnerData()
+    {
+        if (ownerDatas == null || ownerDatas.OwnerDatas == null || ownerDatas.OwnerDatas.Count == 0)
+            return null;
+
+        var availableOwnerDatas = ownerDatas.OwnerDatas
+            .Where(ownerData => !CheckDoubleOwnerData(ownerData))
+            .ToList();
+
+        if (availableOwnerDatas.Count == 0)
+            return null;
+
+        return availableOwnerDatas[Random.Range(0, availableOwnerDatas.Count)];
+    }
+
     bool CheckDoubleOwnerData(OwnerData newOwnerData)
     {
-        for (int i = 0; i < owners.Length; i++)
-        {
-            if (owners[i].GetOwnerData() == newOwnerData)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return owners.Any(owner => owner.isInLine && owner.GetOwnerData() == newOwnerData);
     }
 
     public void CheckLine()

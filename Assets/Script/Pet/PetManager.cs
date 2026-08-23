@@ -14,8 +14,11 @@ public class PetManager : MonoBehaviour
     [SerializeField] float minSpawnTime = 10f;
     [SerializeField] float maxSpawnTime = 15f;
 
-    [SerializeField]  float spawnTimer;
+    [SerializeField] float spawnTimer;
+    [SerializeField] Vector3 spawnPosition;
     public bool isPetAvailable;
+
+    private int petIdCounter = 0;
     private void Awake()
     {
         Instance = this;
@@ -41,15 +44,20 @@ public class PetManager : MonoBehaviour
 
     void SpawnPet()
     {
-        PetData petData = petData = petDatas.petDatas[Random.Range(0, petDatas.petDatas.Count)];
-        while (CheckDoublePetData(petData))
+        PetData petData = GetAvailablePetData();
+
+        if (petData == null)
         {
-            petData = petDatas.petDatas[Random.Range(0, petDatas.petDatas.Count)];
+            Debug.Log("Semua PetData sedang digunakan.");
+            return;
         }
 
-        Debug.Log($"Customer dan mendapatkan OwnerData: {petData.petName}");
+        Debug.Log($"Pet mendapatkan PetData: {petData.petName}");
 
-        GhostPet newPet = Instantiate(petPrefabs[0], GetSpawnPoint(), new Quaternion()).GetComponent<GhostPet>();
+        GhostPet newPet = Instantiate(petPrefabs[0], spawnPosition, Quaternion.identity).GetComponent<GhostPet>();
+
+        petIdCounter++;
+        newPet.petId = petIdCounter;
 
         AddPetToList(newPet);
         newPet.Spawn(petData);
@@ -62,7 +70,7 @@ public class PetManager : MonoBehaviour
         ghostPet.Despawn();
     }
 
-    private Vector3 GetSpawnPoint()
+    public Vector3 GetRandomPosition()
     {
         Bounds bounds = barrierCollider.bounds;
 
@@ -78,7 +86,18 @@ public class PetManager : MonoBehaviour
 
         return barrierCollider.bounds.center;
     }
+    private PetData GetAvailablePetData()
+    {
+        if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
+            return null;
 
+        List<PetData> availablePetDatas = petDatas.petDatas.Where(petData => !CheckDoublePetData(petData)).ToList();
+
+        if (availablePetDatas.Count == 0)
+            return null;
+
+        return availablePetDatas[Random.Range(0, availablePetDatas.Count)];
+    }
     public GhostPet GetAvailableGhostPet()
     {
         List<GhostPet> availablePets = new();
@@ -128,8 +147,18 @@ public class PetManager : MonoBehaviour
 
     public bool CanSpawnPet()
     {
-        if(ghostPets.Count() >= maxPet) return false;
-        // mungkin mau tambahin pengecekan jumlah pet melebihi petData
-        return true;
+        if (ghostPets.Count > maxPet)
+            return false;
+
+        if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
+            return false;
+
+        foreach (PetData petData in petDatas.petDatas)
+        {
+            if (!CheckDoublePetData(petData))
+                return true;
+        }
+
+        return false;
     }
 }

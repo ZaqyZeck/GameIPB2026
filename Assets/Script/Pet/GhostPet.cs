@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class GhostPet : MonoBehaviour
@@ -9,6 +10,8 @@ public class GhostPet : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] PetMovement movement;
     [SerializeField] PetBehaviorController behaviorController;
+    [SerializeField] Vector3 targetSpawn;
+    [SerializeField] TextMeshPro textPetId;
 
     public PetMovement Movement => movement;
     public PetBehaviorController BehaviorController => behaviorController;
@@ -23,6 +26,8 @@ public class GhostPet : MonoBehaviour
         petData = newPetData;
         behaviorController.Initialize(petData);
 
+        textPetId.text = petId.ToString();
+
         SpawnAnimation();
     }
 
@@ -32,7 +37,7 @@ public class GhostPet : MonoBehaviour
     }
     void SpawnAnimation()
     {
-        spriteRenderer.DOFade(1f, 1f);
+        spriteRenderer.DOFade(1f, 1f).OnComplete(()=> { movement.MoveTo(targetSpawn); });
     }
 
     void DespawnAnimation()

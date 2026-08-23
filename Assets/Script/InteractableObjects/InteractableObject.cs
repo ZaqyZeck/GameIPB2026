@@ -6,10 +6,12 @@ public class InteractableObject : Interactable
     [SerializeField] Collider2D interactCollider;
     [SerializeField] private float dropDistance = 0.5f;
     [SerializeField] private float dropDuration = 0.3f;
-    public Ease easeDrop = Ease.Linear;
+    [SerializeField] private Ease easeDrop = Ease.Linear;
+    public bool isPickuped;
 
     public void PickupBehaviour()
     {
+        isPickuped = true;
         DeactivateCollider();
     }
     public void DropBehaviour()
@@ -19,7 +21,7 @@ public class InteractableObject : Interactable
     }
     void DropAnimation()
     {
-        transform.DOMoveY(transform.position.y - dropDistance, dropDuration).SetEase(easeDrop).OnComplete(ActivateCollider);
+        transform.DOMoveY(transform.position.y - dropDistance, dropDuration).SetEase(easeDrop).OnComplete(() => { ActivateCollider(); isPickuped = false; });
     }
     void DeactivateCollider()
     {
