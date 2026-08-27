@@ -4,9 +4,9 @@ public class FollowerBehavior : IHabitBehavior
 {
     private const float FollowDistance = 1f;
  
-    public void OnEnter(GhostPet pet) { }
+    public void OnEnter(Pet pet) { }
  
-    public void Tick(GhostPet pet, float deltaTime)
+    public void Tick(Pet pet, float deltaTime)
     {
         if (PlayerMovement.Instance == null) return;
  
@@ -17,5 +17,5 @@ public class FollowerBehavior : IHabitBehavior
         }
     }
  
-    public void OnExit(GhostPet pet) => pet.Movement.Stop();
+    public void OnExit(Pet pet) => pet.Movement.Stop();
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PetBehaviorController : MonoBehaviour
 {
-    [SerializeField] private GhostPet ghostPet;
+    [SerializeField] private Pet ghostPet;
 
     private IHabitBehavior currentHabitBehavior;
     private float revealTimer;

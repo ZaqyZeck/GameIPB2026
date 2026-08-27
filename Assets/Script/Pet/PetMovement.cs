@@ -5,7 +5,8 @@ public class PetMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float stoppingDistance = 0.1f;
-    [SerializeField] private InteractableObject petInteractable;
+    [SerializeField] private InteractablePet petInteractable;
+    [SerializeField] private PetAnimation petAnimation;
     private Vector3? destination;
     private Coroutine wanderCoroutine;
     public bool IsMoving { get; private set; }
@@ -39,6 +40,7 @@ public class PetMovement : MonoBehaviour
             return;
         }
 
+        petAnimation.FlipSprite(transform.position.x - target.x < 0);
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         IsMoving = true;
     }

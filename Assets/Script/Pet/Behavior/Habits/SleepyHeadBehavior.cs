@@ -8,13 +8,13 @@ public class SleepyHeadBehavior : IHabitBehavior
     private float timer;
     private bool isSleeping;
  
-    public void OnEnter(GhostPet pet)
+    public void OnEnter(Pet pet)
     {
         timer = SleepInterval;
         isSleeping = false;
     }
  
-    public void Tick(GhostPet pet, float deltaTime)
+    public void Tick(Pet pet, float deltaTime)
     {
         timer -= deltaTime;
  
@@ -33,5 +33,5 @@ public class SleepyHeadBehavior : IHabitBehavior
         }
     }
  
-    public void OnExit(GhostPet pet) { isSleeping = false; }
+    public void OnExit(Pet pet) { isSleeping = false; }
 }

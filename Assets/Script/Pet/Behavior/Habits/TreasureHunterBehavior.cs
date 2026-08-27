@@ -5,9 +5,9 @@ public class TreasureHunterBehavior : IHabitBehavior
     private const float WanderInterval = 6f;
     private float timer;
  
-    public void OnEnter(GhostPet pet) => timer = 0f;
+    public void OnEnter(Pet pet) => timer = 0f;
  
-    public void Tick(GhostPet pet, float deltaTime)
+    public void Tick(Pet pet, float deltaTime)
     {
         timer -= deltaTime;
  
@@ -19,5 +19,5 @@ public class TreasureHunterBehavior : IHabitBehavior
         }
     }
  
-    public void OnExit(GhostPet pet) { }
+    public void OnExit(Pet pet) { }
 }

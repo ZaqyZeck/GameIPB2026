@@ -2,7 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class GhostPet : MonoBehaviour
+public class Pet : MonoBehaviour, IHoldable
 {
     public int petId;
     public bool isOwnerArrived;
@@ -10,12 +10,29 @@ public class GhostPet : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] PetMovement movement;
     [SerializeField] PetBehaviorController behaviorController;
+    [SerializeField] PetAnimation petAnimation;
+    [SerializeField] InteractablePet petInteractable;
+
     [SerializeField] Vector3 targetSpawn;
     [SerializeField] TextMeshPro textPetId;
 
     public PetMovement Movement => movement;
+    public Transform Transform => transform;
     public PetBehaviorController BehaviorController => behaviorController;
+    public void OnPickedUp(Transform holdPoint)
+    {
+        petInteractable.PickupBehaviour();
+    }
 
+    public void OnDropped(Transform dropParent)
+    {
+        petInteractable.DropBehaviour();
+    }
+
+    public void SetFacing(bool isFacingPositiveX)
+    {
+        petAnimation.FlipSprite(isFacingPositiveX);
+    }
     public void OwnerArrived()
     {
         isOwnerArrived = true;
@@ -48,5 +65,15 @@ public class GhostPet : MonoBehaviour
     void DestroySelf()
     {
         Destroy(gameObject);
+    }
+
+    public InteractablePet GetInteractable()
+    {
+        return petInteractable;
+    }
+
+    public PetAnimation GetPetAnimation()
+    {
+        return petAnimation;
     }
 }

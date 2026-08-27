@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IHabitBehavior
 {
-    void OnEnter(GhostPet pet);
-    void Tick(GhostPet pet, float deltaTime);
-    void OnExit(GhostPet pet);
+    void OnEnter(Pet pet);
+    void Tick(Pet pet, float deltaTime);
+    void OnExit(Pet pet);
 }

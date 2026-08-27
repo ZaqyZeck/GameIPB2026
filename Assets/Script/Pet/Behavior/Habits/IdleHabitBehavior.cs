@@ -1,6 +1,6 @@
 public class IdleHabitBehavior : IHabitBehavior
 {
-    public void OnEnter(GhostPet pet) { }
-    public void Tick(GhostPet pet, float deltaTime) { }
-    public void OnExit(GhostPet pet) { }
+    public void OnEnter(Pet pet) { }
+    public void Tick(Pet pet, float deltaTime) { }
+    public void OnExit(Pet pet) { }
 }

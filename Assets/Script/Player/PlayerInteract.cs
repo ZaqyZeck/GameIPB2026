@@ -11,10 +11,14 @@ public class PlayerInteract : MonoBehaviour
     public Transform currentHoverObject; // target object yang dibawah mouse
     public Transform currentTargetObject; // target object yang dikejar player
     public Transform currentHoldObject;
+    public IHoldable CurrentHeldHoldable { get; private set; }
 
     public bool isHoldingObject;
 
-    Interactable currentHoldInteractScript;
+    [SerializeField] private float pickUpRange = 2f;
+
+    //Interactable currentHoldInteractScript;
+    //Pet currentGhostPet;
 
     private void Awake()
     {
@@ -99,66 +103,49 @@ public class PlayerInteract : MonoBehaviour
             Debug.LogError("gak ada target yang bisa di pick up");
             return;
         }
-
-        if(!IsPickUpValid())
+        if (!IsPickUpValid())
         {
             Debug.LogError("ada target tapi posisi salah");
             return;
         }
+        if (isHoldingObject) DropHoldObject();
 
-        if (isHoldingObject)
-        {
-            DropHoldObject();
-        }
+        //InteractablePet interactableObj = currentTargetObject.GetComponent<InteractablePet>();
+        IHoldable holdable = currentTargetObject.GetComponent<IHoldable>();
 
         currentTargetObject.SetParent(holdTransform);
         currentTargetObject.position = holdTransform.position;
         currentHoldObject = currentTargetObject;
+        CurrentHeldHoldable = holdable;
 
-        InteractableObject interactableObject = currentHoldObject.gameObject.GetComponent<InteractableObject>();
-        currentHoldInteractScript = interactableObject;
-        interactableObject.PickupBehaviour();
-
+        holdable.OnPickedUp(holdTransform);
         isHoldingObject = true;
         DeselectTarget();
     }
     public void DropHoldObject()
     {
-        if (currentHoldObject == null)
-            return;
-
-        InteractableObject interactableObject = currentHoldObject.gameObject.GetComponent<InteractableObject>();
+        if (currentHoldObject == null) return;
 
         currentHoldObject.SetParent(interactableParent);
-
-        if (interactableObject != null)
-        {
-            interactableObject.DropBehaviour();
-        }
-
+        CurrentHeldHoldable?.OnDropped(interactableParent);
         RemoveObjectyFromHold();
     }
 
     public void RemoveObjectyFromHold()
     {
-        currentHoldInteractScript = null;
+        CurrentHeldHoldable = null;
         currentHoldObject = null;
         isHoldingObject = false;
     }
     bool IsPickUpValid()
     {
-        if (Vector3.Distance(transform.position, currentTargetObject.position) <= 0.11f) return true;
+        if (Vector3.Distance(transform.position, currentTargetObject.position) <= pickUpRange) return true;
         return false;
     }
     public void FlipHoldTransform(bool isXPositif)
     {
         if (isXPositif) holdTransform.localPosition = new Vector3(0.5f, 0.5f, 0);
         else holdTransform.localPosition = new Vector3(-0.5f, 0.5f, 0);
-    }
-
-    public Interactable GetCurrentInteractScript()
-    {
-        return currentHoldInteractScript;
     }
 
     public void InteractTarget()
@@ -168,61 +155,28 @@ public class PlayerInteract : MonoBehaviour
             Debug.Log("Tidak ada target.");
             return;
         }
-
-        Interactable interactable = currentTargetObject.gameObject.GetComponent<Interactable>();
-
+        Interactable interactable = currentTargetObject.GetComponent<Interactable>();
         if (interactable == null)
         {
             Debug.Log("Target bukan Interactable.");
             return;
         }
-
-        if (interactable is InteractableObject)
-        {
-            PickUpTargetObject();
-        }
-        else if (interactable is Owner)
-        {
-            GivePet();
-        }
+        interactable.OnInteract(this); // double dispatch — gak perlu tahu jenisnya apa
     }
 
     public void GivePet()
     {
-        if (currentTargetObject == null)
-        {
-            Debug.Log("Tidak ada Owner yang ditarget.");
-            return;
-        }
+        if (currentTargetObject == null || !isHoldingObject || CurrentHeldHoldable == null) return;
 
-        if (!isHoldingObject || currentHoldObject == null)
-        {
-            Debug.Log("Tidak sedang memegang pet.");
-            return;
-        }
+        Owner owner = currentTargetObject.GetComponent<Owner>();
+        if (owner == null) return;
 
-        Owner owner = currentTargetObject.gameObject.GetComponent<Owner>();
-
-        if (owner == null)
-        {
-            Debug.Log("Target bukan Owner.");
-            return;
-        }
-
-        GhostPet ghostPet = currentHoldObject.gameObject.GetComponent<GhostPet>();
-
-        if (ghostPet == null)
-        {
-            Debug.Log("Object yang dipegang bukan GhostPet.");
-            return;
-        }
-
-        bool isSucceed = owner.GetPet(ghostPet);
-
-        if (isSucceed)
+        if (owner.GetPet(CurrentHeldHoldable))
         {
             RemoveObjectyFromHold();
+            //ReputationManager.Instance.Reward(100);
         }
         DeselectTarget();
     }
+
 }

@@ -1,24 +1,21 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class InteractableObject : Interactable, IHoldable
+public class InteractablePet : Interactable
 {
-    //[SerializeField] private Pet ownerPet;
+    [SerializeField] private Pet ownerPet;
     [SerializeField] Collider2D interactCollider;
-    [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private float dropDistance = 0.5f;
     [SerializeField] private float dropDuration = 0.3f;
     [SerializeField] private Ease easeDrop = Ease.Linear;
     public bool isPickuped;
-
-    public Transform Transform => throw new System.NotImplementedException();
 
     public override void OnInteract(PlayerInteract player)
     {
         player.PickUpTargetObject();
     }
 
-    //public IHoldable GetHoldable() => ownerPet;
+    public IHoldable GetHoldable() => ownerPet;
     public void PickupBehaviour()
     {
         isPickuped = true;
@@ -41,19 +38,15 @@ public class InteractableObject : Interactable, IHoldable
     {
         interactCollider.enabled = true;
     }
+    //private void OnDestroy()
+    //{
+    //    InteractableObject playerHolding = (InteractableObject) PlayerInteract.Instance.currentHoldObject.
+    //    if (playerHolding == null) return;
+    //    if (playerHolding == this) PlayerInteract.Instance.RemoveObjectyFromHold();
+    //}
 
-    public void OnPickedUp(Transform holdPoint)
-    {
-        PickupBehaviour();
-    }
-
-    public void OnDropped(Transform dropParent)
-    {
-        DropBehaviour();
-    }
-
-    public void SetFacing(bool isFacingPositiveX)
-    {
-        spriteRenderer.flipX = isFacingPositiveX;
-    }
+    //public override void Interact()
+    //{
+    //    //PickupBehaviour();
+    //}
 }

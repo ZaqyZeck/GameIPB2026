@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ReputationManager : MonoBehaviour
 {
+    public static ReputationManager Instance;
+
     [System.Serializable]
     public class ReputationEntry
     {
@@ -12,6 +15,7 @@ public class ReputationManager : MonoBehaviour
         public string timestamp;
         public int resultingScore;
     }
+    
 
     [Header("Score Settings")]
     [SerializeField] private int startingScore = 0;
@@ -21,9 +25,13 @@ public class ReputationManager : MonoBehaviour
     [SerializeField] private int score;
     private List<ReputationEntry> history = new List<ReputationEntry>();
     public event Action<int, int> OnReputationChanged; 
+    
+    [Header("UI")]
+    [SerializeField] TextMeshProUGUI reputationText;
 
     private void Awake()
     {
+        Instance = this;
         score = startingScore;
     }
 
@@ -40,6 +48,7 @@ public class ReputationManager : MonoBehaviour
             resultingScore = score
         });
 
+        if(reputationText != null) reputationText.text = "Reputation: " + score;
         OnReputationChanged?.Invoke(before, score);
 
         return score;

@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IActionBehavior
 {
-    void Execute(GhostPet pet);
+    void Execute(Pet pet);
 }

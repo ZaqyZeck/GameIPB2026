@@ -8,7 +8,7 @@ public class PetManager : MonoBehaviour
 
     [SerializeField] private PetProfileSO petDatas;
     [SerializeField] private GameObject[] petPrefabs;
-    [SerializeField] private List<GhostPet> ghostPets = new();
+    [SerializeField] private List<Pet> ghostPets = new();
     [SerializeField] private Collider2D barrierCollider;
     [SerializeField] private int maxPet;
     [SerializeField] float minSpawnTime = 10f;
@@ -54,7 +54,7 @@ public class PetManager : MonoBehaviour
 
         Debug.Log($"Pet mendapatkan PetData: {petData.petName}");
 
-        GhostPet newPet = Instantiate(petPrefabs[0], spawnPosition, Quaternion.identity).GetComponent<GhostPet>();
+        Pet newPet = Instantiate(petPrefabs[0], spawnPosition, Quaternion.identity).GetComponent<Pet>();
 
         petIdCounter++;
         newPet.petId = petIdCounter;
@@ -64,7 +64,7 @@ public class PetManager : MonoBehaviour
         GameEventBus.OnPetSpawned?.Invoke(petData);
     }
 
-    public void DespawnPet(GhostPet ghostPet)
+    public void DespawnPet(Pet ghostPet)
     {
         RemovePetFromList(ghostPet);
         ghostPet.Despawn();
@@ -98,11 +98,11 @@ public class PetManager : MonoBehaviour
 
         return availablePetDatas[Random.Range(0, availablePetDatas.Count)];
     }
-    public GhostPet GetAvailableGhostPet()
+    public Pet GetAvailableGhostPet()
     {
-        List<GhostPet> availablePets = new();
+        List<Pet> availablePets = new();
 
-        foreach (GhostPet ghostPet in ghostPets)
+        foreach (Pet ghostPet in ghostPets)
         {
             if (!ghostPet.isOwnerArrived)
             {
@@ -118,18 +118,18 @@ public class PetManager : MonoBehaviour
         return availablePets[Random.Range(0, availablePets.Count)];
     }
 
-    public void AddPetToList(GhostPet ghostPet)
+    public void AddPetToList(Pet ghostPet)
     {
         ghostPets.Add(ghostPet);
     }
-    public void RemovePetFromList(GhostPet ghostPet)
+    public void RemovePetFromList(Pet ghostPet)
     {
         ghostPets.Remove(ghostPet);
     }
 
     public bool CheckPetWithoutOwner()
     {
-        foreach (GhostPet pet in ghostPets)
+        foreach (Pet pet in ghostPets)
         {
             if (!pet.isOwnerArrived) return true;
         }
@@ -138,7 +138,7 @@ public class PetManager : MonoBehaviour
 
     public bool CheckDoublePetData(PetData newPetData)
     {
-        foreach (GhostPet ghostPet in ghostPets)
+        foreach (Pet ghostPet in ghostPets)
         {
             if (ghostPet.petData == newPetData) return true;
         }

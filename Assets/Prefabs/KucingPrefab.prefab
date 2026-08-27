@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -0.01}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &6817137725346119479
@@ -191,11 +191,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5560707476691373949}
   - component: {fileID: 3931222213587269898}
-  - component: {fileID: 4939303307851474555}
-  - component: {fileID: 2226010657864847411}
   - component: {fileID: 2027777344167743591}
+  - component: {fileID: 5936869539581823035}
   - component: {fileID: 6903472403721547917}
   - component: {fileID: 4065246658916650677}
+  - component: {fileID: 3624374341971409518}
+  - component: {fileID: 8936162723813097491}
   m_Layer: 0
   m_Name: KucingPrefab
   m_TagString: interactable
@@ -278,50 +279,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &4939303307851474555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5179462446187314528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5484330045f063b47a8f55b765dec05f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GhostPet
-  petId: 0
-  isOwnerArrived: 0
-  petData:
-    petName: Unknown Soul
-    petSprite: {fileID: 0}
-    visualTrait: 0
-    specialColor: {r: 1, g: 1, b: 1, a: 1}
-    hiddenHabit: 0
-    timeToRevealHabit: 15
-    hiddenAction: 0
-  spriteRenderer: {fileID: 3931222213587269898}
-  movement: {fileID: 6903472403721547917}
-  behaviorController: {fileID: 4065246658916650677}
-  targetSpawn: {x: 4, y: -1.75, z: 0}
-  textPetId: {fileID: 479771380384152824}
---- !u!114 &2226010657864847411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5179462446187314528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf59b649e8ee85741921b42ae515caa9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InteractableObject
-  interactCollider: {fileID: 2027777344167743591}
-  dropDistance: 0.5
-  dropDuration: 0.3
-  easeDrop: 1
-  isPickuped: 0
 --- !u!61 &2027777344167743591
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -360,7 +317,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 50, y: 50}
+    oldSize: {x: 2, y: 2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -368,6 +325,35 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5936869539581823035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179462446187314528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be7db6bd4dbd0614cb9d0888be477b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pet
+  petId: 0
+  isOwnerArrived: 0
+  petData:
+    petName: Unknown Soul
+    petSprite: {fileID: 0}
+    visualTrait: 0
+    specialColor: {r: 1, g: 1, b: 1, a: 1}
+    hiddenHabit: 0
+    timeToRevealHabit: 15
+    hiddenAction: 0
+  spriteRenderer: {fileID: 3931222213587269898}
+  movement: {fileID: 6903472403721547917}
+  behaviorController: {fileID: 4065246658916650677}
+  petAnimation: {fileID: 3624374341971409518}
+  petInteractable: {fileID: 8936162723813097491}
+  targetSpawn: {x: 5.75, y: -3.75, z: 0}
+  textPetId: {fileID: 479771380384152824}
 --- !u!114 &6903472403721547917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,7 +368,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PetMovement
   moveSpeed: 1.5
   stoppingDistance: 0.1
-  petInteractable: {fileID: 2226010657864847411}
+  petInteractable: {fileID: 8936162723813097491}
+  petAnimation: {fileID: 3624374341971409518}
 --- !u!114 &4065246658916650677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,4 +382,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2f7ffad4ec74c1badc6f8d7e359977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetBehaviorController
-  ghostPet: {fileID: 4939303307851474555}
+  ghostPet: {fileID: 5936869539581823035}
+--- !u!114 &3624374341971409518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179462446187314528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e5dfd0b3c9a354c8f4469f80251325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetAnimation
+  petAnimator: {fileID: 0}
+  petRenderer: {fileID: 3931222213587269898}
+--- !u!114 &8936162723813097491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179462446187314528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8914531f114ef4e478ac2c1699144fe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractablePet
+  ownerPet: {fileID: 5936869539581823035}
+  interactCollider: {fileID: 2027777344167743591}
+  dropDistance: 0.5
+  dropDuration: 0.3
+  easeDrop: 1
+  isPickuped: 0

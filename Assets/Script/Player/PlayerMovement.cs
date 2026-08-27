@@ -3,7 +3,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement Instance;
-    [SerializeField] PolygonCollider2D barrierCollider;
+    [SerializeField] PlayerInteract playerInteract;
+    [SerializeField] PolygonCollider2D playerArea;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private float movementSpeed = 3f;
     [SerializeField] private bool haveTarget;
@@ -52,14 +53,14 @@ public class PlayerMovement : MonoBehaviour
     }
     private bool CanMoveTo(Vector3 target)
     {
-        return barrierCollider.OverlapPoint(target);
+        return playerArea.OverlapPoint(target);
     }
 
     private Vector3 GetValidTargetPosition(Vector3 target)
     {
         if (CanMoveTo(target)) return target;
 
-        Vector2 closestPoint = barrierCollider.ClosestPoint(target);
+        Vector2 closestPoint = playerArea.ClosestPoint(target);
 
         Vector2 direction = ((Vector2)target - closestPoint).normalized;
 
@@ -71,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandleFlip(bool isXPositif)
     {
         if (spriteRenderer.flipX == isXPositif) return;
-
+        playerInteract.CurrentHeldHoldable?.SetFacing(isXPositif);
         spriteRenderer.flipX = isXPositif;
         PlayerInteract.Instance.FlipHoldTransform(isXPositif);
     }

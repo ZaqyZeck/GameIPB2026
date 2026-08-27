@@ -54,7 +54,7 @@ public class OwnerManager : MonoBehaviour
 
         Debug.Log($"Customer dan mendapatkan OwnerData: {ownerData.ownerName}");
 
-        GhostPet ghostPet = PetManager.Instance.GetAvailableGhostPet();
+        Pet ghostPet = PetManager.Instance.GetAvailableGhostPet();
 
         if (ghostPet == null)
         {
