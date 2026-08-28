@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 public static class PetBehaviorFactory
 {
-    // Habit behaviors hold per-pet state (timers), so we store FACTORY FUNCS
-    // and create a fresh instance per pet, never a shared singleton.
+
     private static readonly Dictionary<HabitTrait, Func<IHabitBehavior>> habitFactories = new()
     {
         { HabitTrait.None,           () => new IdleHabitBehavior() },
@@ -13,8 +12,6 @@ public static class PetBehaviorFactory
         { HabitTrait.TreasureHunter, () => new TreasureHunterBehavior() },
         { HabitTrait.Follower,       () => new FollowerBehavior() },
     };
-
-    // Action behaviors are stateless (Execute only), so singletons are fine.
     private static readonly Dictionary<ActionTrait, IActionBehavior> actionBehaviors = new()
     {
         { ActionTrait.Football, new FootballActionBehavior() },

@@ -198,6 +198,9 @@ GameObject:
   - component: {fileID: 3624374341971409518}
   - component: {fileID: 8936162723813097491}
   - component: {fileID: 1463753482885765304}
+  - component: {fileID: 6120435355111725230}
+  - component: {fileID: 3728483775909779085}
+  - component: {fileID: 6503803699437720789}
   m_Layer: 0
   m_Name: KucingPrefab
   m_TagString: interactable
@@ -270,12 +273,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: b13baa2afca5cae47afab93bc701b142, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 84115c8845430424a82cae177ffc9800, type: 3}
   m_Color: {r: 1, g: 0.5222672, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.4414062, y: 2.4414062}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -318,8 +321,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 2.4414062, y: 2.4414062}
+    newSize: {x: 2.4414062, y: 2.4414062}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -398,8 +401,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7e5dfd0b3c9a354c8f4469f80251325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetAnimation
-  petAnimator: {fileID: 0}
+  petAnimator: {fileID: 6503803699437720789}
   petRenderer: {fileID: 3931222213587269898}
+  petResolver: {fileID: 3728483775909779085}
 --- !u!114 &8936162723813097491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,3 +450,55 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
+--- !u!114 &6120435355111725230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179462446187314528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteLibrary
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: d6ad53bbfd4084c1fa34b19371995dcb, type: 3}
+--- !u!114 &3728483775909779085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179462446187314528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
+  m_CategoryHash: 0.36610043
+  m_labelHash: 0.00000040954276
+  m_SpriteKey: 0
+  m_SpriteHash: 714332764
+--- !u!95 &6503803699437720789
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179462446187314528}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6797e2259077e455cad5d2cd6c529558, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

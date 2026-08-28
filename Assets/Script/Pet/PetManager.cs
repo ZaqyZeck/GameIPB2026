@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PetManager : MonoBehaviour
 {
@@ -44,11 +46,25 @@ public class PetManager : MonoBehaviour
 
     void SpawnPet()
     {
-        PetData petData = GetAvailablePetData();
+        if (!CanSpawnPet())
+        {
+            return;
+        }
 
-        if (petData == null)
+        PetData template = GetAvailablePetData();
+
+        if (template == null)
         {
             Debug.Log("Semua PetData sedang digunakan.");
+            return;
+        }
+
+        // Clone so we never mutate the shared PetProfileSO asset data.
+        PetData petData = template.Clone();
+
+        if (!TryRollUniqueTraits(petData))
+        {
+            Debug.Log("Gagal mendapatkan kombinasi trait (warna/habit/action) yang unik.");
             return;
         }
 
@@ -140,14 +156,83 @@ public class PetManager : MonoBehaviour
     {
         foreach (Pet ghostPet in ghostPets)
         {
-            if (ghostPet.petData == newPetData) return true;
+            // Compare by name rather than reference: spawned pets hold a
+            // Clone() of the template, not the original PetProfileSO entry.
+            if (ghostPet.petData != null && ghostPet.petData.petName == newPetData.petName)
+                return true;
         }
         return false;
     }
 
+    private const int MaxTraitRollAttempts = 30;
+
+    // Rolls a random color (from petDatas.colorPool), HabitTrait and ActionTrait
+    // onto petData, retrying until the resulting combo doesn't match any
+    // currently-spawned pet. Returns false if it couldn't find a free combo
+    // within MaxTraitRollAttempts (e.g. pool exhausted).
+    private bool TryRollUniqueTraits(PetData petData)
+    {
+        Color[] colorPool = (petDatas != null && petDatas.colorPool != null && petDatas.colorPool.Length > 0)
+            ? petDatas.colorPool
+            : null;
+
+        for (int attempt = 0; attempt < MaxTraitRollAttempts; attempt++)
+        {
+            Color rolledColor = colorPool != null
+                ? colorPool[Random.Range(0, colorPool.Length)]
+                : petData.specialColor;
+
+            HabitTrait rolledHabit = RandomEnumValue<HabitTrait>();
+            ActionTrait rolledAction = RandomEnumValue<ActionTrait>();
+
+            if (!IsTraitComboInUse(rolledColor, rolledHabit, rolledAction))
+            {
+                petData.specialColor = rolledColor;
+                petData.hiddenHabit = rolledHabit;
+                petData.hiddenAction = rolledAction;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static T RandomEnumValue<T>() where T : Enum
+    {
+        T[] values = (T[])Enum.GetValues(typeof(T));
+        return values[Random.Range(0, values.Length)];
+    }
+
+    private bool IsTraitComboInUse(Color color, HabitTrait habit, ActionTrait action)
+    {
+        foreach (Pet ghostPet in ghostPets)
+        {
+            PetData other = ghostPet.petData;
+            if (other == null) continue;
+
+            if (other.hiddenHabit == habit &&
+                other.hiddenAction == action &&
+                ColorsApproximatelyEqual(other.specialColor, color))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static bool ColorsApproximatelyEqual(Color a, Color b)
+    {
+        const float eps = 0.001f;
+        return Mathf.Abs(a.r - b.r) < eps &&
+               Mathf.Abs(a.g - b.g) < eps &&
+               Mathf.Abs(a.b - b.b) < eps &&
+               Mathf.Abs(a.a - b.a) < eps;
+    }
+
     public bool CanSpawnPet()
     {
-        if (ghostPets.Count > maxPet)
+        if (ghostPets.Count >= maxPet)
             return false;
 
         if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)

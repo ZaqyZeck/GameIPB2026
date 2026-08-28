@@ -23,15 +23,23 @@ public class SleepyHeadBehavior : IHabitBehavior
             isSleeping = true;
             timer = SleepDuration;
             pet.Movement.Stop();
-            //animation animation animationnnnn
+            pet.GetPetAnimation().SetSitting(true);
         }
         else if (isSleeping && timer <= 0f)
         {
             isSleeping = false;
             timer = SleepInterval;
-            //animation animation animationnn
+            pet.GetPetAnimation().SetSitting(false);
+            Vector3 wakeTarget = PetManager.Instance != null
+                ? PetManager.Instance.GetRandomPosition()
+                : pet.transform.position;
+            pet.Movement.MoveTo(wakeTarget);
         }
     }
  
-    public void OnExit(Pet pet) { isSleeping = false; }
+    public void OnExit(Pet pet)
+    {
+        isSleeping = false;
+        pet.GetPetAnimation().SetSitting(false);
+    }
 }

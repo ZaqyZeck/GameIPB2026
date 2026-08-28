@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 211726bc1b2d04e77b711aed5626b220
+guid: a2bbad22903604117afdce07261ad663
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6773652245902134482
-    second: catwalk_0002_0
+      213: 823886104734750126
+    second: calico main_0002_0
   - first:
-      213: -4807031565283458722
-    second: catwalk_0002_1
+      213: -654331938717762958
+    second: calico main_0002_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1024
+  spritePixelsToUnits: 2048
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: catwalk_0002_0
+      name: calico main_0002_0
       rect:
         serializedVersion: 2
-        x: 257
-        y: 854
-        width: 291
-        height: 78
+        x: 1676
+        y: 4044
+        width: 1147
+        height: 294
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e23f9f2bb272ff1a0800000000000000
-      internalID: -6773652245902134482
+      spriteID: ea558101c080f6b00800000000000000
+      internalID: 823886104734750126
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catwalk_0002_1
+      name: calico main_0002_1
       rect:
         serializedVersion: 2
-        x: 143
-        y: 146
-        width: 732
-        height: 704
+        x: 553
+        y: 782
+        width: 3754
+        height: 3232
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e518037924ef94db0800000000000000
-      internalID: -4807031565283458722
+      spriteID: 27af88b81985be6f0800000000000000
+      internalID: -654331938717762958
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      catwalk_0002_0: -6773652245902134482
-      catwalk_0002_1: -4807031565283458722
+      calico main_0002_0: 823886104734750126
+      calico main_0002_1: -654331938717762958
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

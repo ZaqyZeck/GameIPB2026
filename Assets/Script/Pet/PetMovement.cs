@@ -23,6 +23,8 @@ public class PetMovement : MonoBehaviour
 
     public void MoveTo(Vector3 target)
     {
+        CancelWander();
+
         destination = target;
 
         if (usePathfinding)
@@ -38,10 +40,13 @@ public class PetMovement : MonoBehaviour
 
     public void Stop()
     {
+        CancelWander();
+
         destination = null;
         path = null;
         currentWaypoint = 0;
         IsMoving = false;
+        petAnimation.SetWalking(false);
     }
 
     private void Update()
@@ -49,6 +54,7 @@ public class PetMovement : MonoBehaviour
         if (!destination.HasValue || petInteractable.isPickuped)
         {
             IsMoving = false;
+            petAnimation.SetWalking(false);
             return;
         }
 
@@ -75,6 +81,7 @@ public class PetMovement : MonoBehaviour
         petAnimation.FlipSprite(transform.position.x - target.x < 0);
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         IsMoving = true;
+        petAnimation.SetWalking(true);
     }
 
     private void MoveWithPathfinding()
@@ -112,6 +119,7 @@ public class PetMovement : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, waypoint, moveSpeed * Time.deltaTime);
         IsMoving = true;
+        petAnimation.SetWalking(true);
     }
 
     private void OnPathComplete(Path newPath)
@@ -134,6 +142,7 @@ public class PetMovement : MonoBehaviour
         path = null;
         currentWaypoint = 0;
         IsMoving = false;
+        petAnimation.SetWalking(false);
 
         WanderAround();
     }
@@ -143,6 +152,15 @@ public class PetMovement : MonoBehaviour
         if (wanderCoroutine != null) return;
 
         wanderCoroutine = StartCoroutine(WanderDelay());
+    }
+
+    private void CancelWander()
+    {
+        if (wanderCoroutine != null)
+        {
+            StopCoroutine(wanderCoroutine);
+            wanderCoroutine = null;
+        }
     }
 
     private IEnumerator WanderDelay()

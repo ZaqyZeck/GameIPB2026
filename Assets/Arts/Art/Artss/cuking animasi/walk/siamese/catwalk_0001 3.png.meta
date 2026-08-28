@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 39f1be06584b84f5d9c952bd00e0c95f
+guid: 4741598436c0842f5b9e4a350680a678
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1333588776140036392
-    second: catwalk_0000_0
+      213: -4688632816426786144
+    second: catwalk_0001 3_0
   - first:
-      213: -4063888554316105367
-    second: catwalk_0000_1
+      213: 2094321844160294970
+    second: catwalk_0001 3_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1024
+  spritePixelsToUnits: 2048
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: catwalk_0000_0
+      name: catwalk_0001 3_0
       rect:
         serializedVersion: 2
-        x: 257
-        y: 854
-        width: 291
-        height: 78
+        x: 1191
+        y: 3959
+        width: 1345
+        height: 355
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 829564e1debd18210800000000000000
-      internalID: 1333588776140036392
+      spriteID: 0a264ae7b41aeeeb0800000000000000
+      internalID: -4688632816426786144
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catwalk_0000_1
+      name: catwalk_0001 3_1
       rect:
         serializedVersion: 2
-        x: 143
-        y: 138
-        width: 732
-        height: 712
+        x: 660
+        y: 649
+        width: 3390
+        height: 3288
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 969763924ea2a97c0800000000000000
-      internalID: -4063888554316105367
+      spriteID: a30f38efe96801d10800000000000000
+      internalID: 2094321844160294970
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      catwalk_0000_0: 1333588776140036392
-      catwalk_0000_1: -4063888554316105367
+      catwalk_0001 3_0: -4688632816426786144
+      catwalk_0001 3_1: 2094321844160294970
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

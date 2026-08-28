@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 7d032e3c863e04cb9b1aa7a9caa165ff
+guid: f594a9f5f23884942b4332b48a25af40
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2879054188690422036
-    second: catwalk_0003_0
+      213: -5835773947444185907
+    second: cuking main siamese_0001_0
   - first:
-      213: -4885808887792325381
-    second: catwalk_0003_1
+      213: 7246804316066966259
+    second: cuking main siamese_0001_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +54,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1024
+  spritePixelsToUnits: 2048
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: catwalk_0003_0
+      name: cuking main siamese_0001_0
       rect:
         serializedVersion: 2
-        x: 257
-        y: 854
-        width: 291
-        height: 78
+        x: 1672
+        y: 4044
+        width: 1147
+        height: 294
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,20 +118,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce6c102287b8b08d0800000000000000
-      internalID: -2879054188690422036
+      spriteID: dc43c19938a230fa0800000000000000
+      internalID: -5835773947444185907
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catwalk_0003_1
+      name: cuking main siamese_0001_1
       rect:
         serializedVersion: 2
-        x: 143
-        y: 138
-        width: 732
-        height: 712
+        x: 365
+        y: 782
+        width: 3942
+        height: 3232
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bfc21b2e3be123cb0800000000000000
-      internalID: -4885808887792325381
+      spriteID: 3fa60f75122d19460800000000000000
+      internalID: 7246804316066966259
       vertices: []
       indices: 
       edges: []
@@ -160,8 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      catwalk_0003_0: -2879054188690422036
-      catwalk_0003_1: -4885808887792325381
+      cuking main siamese_0001_0: -5835773947444185907
+      cuking main siamese_0001_1: 7246804316066966259
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -4,7 +4,8 @@ public class FootballActionBehavior : IActionBehavior
 {
     public void Execute(Pet pet)
     {
-        //masi blom tau ini bakal dilakuinnya tu gmn
+        pet.Movement.Stop();
+        pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play);
         Debug.Log($"{pet.name} plays football!");
     }
 }

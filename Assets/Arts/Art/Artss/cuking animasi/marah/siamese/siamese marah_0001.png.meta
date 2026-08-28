@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 608e6fdef8dcb4f26aa623416d69d7e9
+guid: 5ded50ef88da6440ba0a57d012b0d975
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6307647476089403952
-    second: catwalk_0001_0
-  - first:
-      213: -7630997925048297630
-    second: catwalk_0001_1
+      213: -8665512213002097523
+    second: siamese marah_0001_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1024
+  spritePixelsToUnits: 2048
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -75,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: catwalk_0001_0
+      name: siamese marah_0001_0
       rect:
         serializedVersion: 2
-        x: 257
-        y: 854
-        width: 291
-        height: 78
+        x: 601
+        y: 500
+        width: 3292
+        height: 4312
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -118,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 03ab2bcc5f3498750800000000000000
-      internalID: 6307647476089403952
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: catwalk_0001_1
-      rect:
-        serializedVersion: 2
-        x: 143
-        y: 140
-        width: 732
-        height: 710
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 267d0c361df391690800000000000000
-      internalID: -7630997925048297630
+      spriteID: d8c633bdd8aedb780800000000000000
+      internalID: -8665512213002097523
       vertices: []
       indices: 
       edges: []
@@ -160,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      catwalk_0001_0: 6307647476089403952
-      catwalk_0001_1: -7630997925048297630
+      siamese marah_0001_0: -8665512213002097523
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

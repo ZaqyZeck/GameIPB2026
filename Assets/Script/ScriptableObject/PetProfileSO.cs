@@ -7,6 +7,10 @@ using UnityEngine;
 public class PetProfileSO : ScriptableObject
 {
     public List<PetData> petDatas = new();
+
+    [Header("Trait Roll Pools")]
+    [Tooltip("Pool of colors that can be randomly assigned to a spawned pet. If empty, the pet's authored specialColor is used instead.")]
+    public Color[] colorPool;
 }
 
 [Serializable]
@@ -26,4 +30,18 @@ public class PetData
 
     [Header("Ciri-Ciri Action (Interactive)")]
     public ActionTrait hiddenAction;
+
+    public PetData Clone()
+    {
+        return new PetData
+        {
+            petName = petName,
+            petSprite = petSprite,
+            visualTrait = visualTrait,
+            specialColor = specialColor,
+            hiddenHabit = hiddenHabit,
+            timeToRevealHabit = timeToRevealHabit,
+            hiddenAction = hiddenAction
+        };
+    }
 }
