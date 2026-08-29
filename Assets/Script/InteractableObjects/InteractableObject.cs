@@ -24,7 +24,7 @@ public class InteractableObject : Interactables, IHoldable
     {
         isPickuped = true;
         DeactivateCollider();
-        objectBehaviour.OnPickupBehaviour();
+        if (objectBehaviour != null) objectBehaviour.OnPickupBehaviour();
     }
     public void DropBehaviour()
     {

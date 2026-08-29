@@ -135,7 +135,7 @@ public class PetMovement : MonoBehaviour
         PlayArriveCallBack();
     }
 
-    private void WanderAround()
+    public void WanderAround()
     {
         if (wanderCoroutine != null) return;
 
@@ -178,5 +178,17 @@ public class PetMovement : MonoBehaviour
     public bool IsNear(Vector3 position,  float distance)
     {
         return Vector3.Distance(position, transform.position) < distance;
+    }
+
+    public Vector3 GetPositionNear(Vector3 position, Vector3 targetPosition)
+    {
+        Vector3 direction = (position - targetPosition).normalized;
+        float distance = UnityEngine.Random.Range(0.3f, .7f);
+        float yOffset = UnityEngine.Random.Range(0f, 0.5f);
+
+        Vector3 result = targetPosition + direction * distance;
+        result.y += yOffset;
+
+        return result;
     }
 }

@@ -2,5 +2,6 @@ using UnityEngine;
 
 public interface IActionBehavior
 {
-    void Execute(Pet pet);
+    void StopAction(Pet pet);
+    void ExecuteAction(Pet pet);
 }

@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Pet : MonoBehaviour, IHoldable
 {
@@ -17,11 +18,13 @@ public class Pet : MonoBehaviour, IHoldable
     [SerializeField] TextMeshPro textPetId;
 
     public PetMovement Movement => movement;
+    public PetAnimation Animation => petAnimation;
     public Transform Transform => transform;
     public PetBehaviorController BehaviorController => behaviorController;
     public void OnPickedUp(Transform holdPoint)
     {
         petInteractable.PickupBehaviour();
+        BehaviorController.TryStopAction(petData.hiddenAction);
     }
 
     public void OnDropped(Transform dropParent)

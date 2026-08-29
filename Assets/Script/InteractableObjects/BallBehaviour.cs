@@ -15,9 +15,11 @@ public class BallBehaviour : ObjectBehaviour
         petsCalled = PetManager.Instance.GetPetsWithAction(trait);
         foreach (Pet pet in petsCalled)
         {
+            if (pet == null) continue;
             if (pet.Movement.IsNear(transform.position, callArea))
-                pet.Movement.MoveTo(transform.position, () =>
+                pet.Movement.MoveTo(pet.Movement.GetPositionNear(pet.transform.position, transform.position), () =>
                 {
+
                     pet.BehaviorController.TryExecuteAction(trait);
                 });
         }
@@ -25,9 +27,11 @@ public class BallBehaviour : ObjectBehaviour
 
     public override void OnPickupBehaviour()
     {
+        if (petsCalled == null) return;
         foreach (Pet pet in petsCalled)
         {
-            pet.Movement.Stop();
+            if (pet.Movement.IsNear(transform.position, callArea))
+                pet.BehaviorController.TryStopAction(trait);
         }
     }
 }
