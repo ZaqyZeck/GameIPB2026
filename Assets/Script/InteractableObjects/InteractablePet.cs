@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class InteractablePet : Interactable
+public class InteractablePet : Interactables
 {
     [SerializeField] private Pet ownerPet;
     [SerializeField] Collider2D interactCollider;
