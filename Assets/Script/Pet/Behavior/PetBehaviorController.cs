@@ -46,9 +46,14 @@ public class PetBehaviorController : MonoBehaviour
     // Call this from a toy Interactable when the player uses it near this pet.
     public void TryExecuteAction(ActionTrait trait)
     {
-        if (ghostPet.petData == null || ghostPet.petData.hiddenAction != trait) return;
+        if (!HasHiddenAction(trait)) return;
 
         PetBehaviorFactory.GetActionBehavior(trait)?.Execute(ghostPet);
         GameEventBus.OnActionExecuted?.Invoke(trait);
+    }
+
+    public bool HasHiddenAction(ActionTrait trait)
+    {
+        return habitRevealed && ghostPet.petData != null && ghostPet.petData.hiddenAction == trait;
     }
 }

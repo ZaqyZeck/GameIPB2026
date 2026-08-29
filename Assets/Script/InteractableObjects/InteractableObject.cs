@@ -1,9 +1,10 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class InteractableObject : Interactable, IHoldable
+public class InteractableObject : Interactables, IHoldable
 {
     //[SerializeField] private Pet ownerPet;
+    [SerializeField] ObjectBehaviour objectBehaviour;
     [SerializeField] Collider2D interactCollider;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] private float dropDistance = 0.5f;
@@ -23,15 +24,22 @@ public class InteractableObject : Interactable, IHoldable
     {
         isPickuped = true;
         DeactivateCollider();
+        objectBehaviour.OnPickupBehaviour();
     }
     public void DropBehaviour()
     {
         DropAnimation();
+        objectBehaviour.OnDropBehaviour();
         //ActivateCollider(); // nanti buat setelah animasi atau bagaimana ntah lah
     }
     void DropAnimation()
     {
-        transform.DOMoveY(transform.position.y - dropDistance, dropDuration).SetEase(easeDrop).OnComplete(() => { ActivateCollider(); isPickuped = false; });
+        transform.DOMoveY(transform.position.y - dropDistance, dropDuration).SetEase(easeDrop).OnComplete(() => 
+            { 
+                ActivateCollider(); 
+                isPickuped = false; 
+                objectBehaviour.OnFloorBehaviour(); 
+            });
     }
     void DeactivateCollider()
     {

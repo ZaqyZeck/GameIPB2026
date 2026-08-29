@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Pathfinding;
@@ -10,10 +11,12 @@ public class PetMovement : MonoBehaviour
     [SerializeField] private InteractablePet petInteractable;
     [SerializeField] private PetAnimation petAnimation;
 
-    [SerializeField] private bool usePathfinding;
+    //[SerializeField] private bool usePathfinding;
     [SerializeField] private Seeker seeker;
 
     private Vector3? destination;
+    private Action onArrived;
+    private bool wanderAfterArrival;
     private Coroutine wanderCoroutine;
 
     private List<Vector3> path;
@@ -25,17 +28,23 @@ public class PetMovement : MonoBehaviour
     {
         CancelWander();
 
-        destination = target;
+        SetDestination(target, onArrived: null, wanderAfterArrival: true);
+        seeker.StartPath(transform.position, target, OnPathComplete);
+    }
 
-        if (usePathfinding)
-        {
-            seeker.StartPath(transform.position, target, OnPathComplete);
-        }
-        else
-        {
-            path = null;
-            currentWaypoint = 0;
-        }
+    public void MoveTo(Vector3 target, Action onArrivedCallback)
+    {
+        CancelWander();
+
+        SetDestination(target, onArrived: onArrivedCallback, wanderAfterArrival: false);
+        seeker.StartPath(transform.position, target, OnPathComplete);
+    }
+
+    private void SetDestination(Vector3 target, Action onArrived, bool wanderAfterArrival)
+    {
+        destination = target;
+        this.onArrived = onArrived;
+        this.wanderAfterArrival = wanderAfterArrival;
     }
 
     public void Stop()
@@ -46,6 +55,8 @@ public class PetMovement : MonoBehaviour
         path = null;
         currentWaypoint = 0;
         IsMoving = false;
+        onArrived = null;
+        wanderAfterArrival = true;
         petAnimation.SetWalking(false);
     }
 
@@ -58,33 +69,11 @@ public class PetMovement : MonoBehaviour
             return;
         }
 
-        if (usePathfinding)
-        {
-            MoveWithPathfinding();
-        }
-        else
-        {
-            MoveDirectly();
-        }
+        Move();
+
     }
 
-    private void MoveDirectly()
-    {
-        Vector3 target = destination.Value;
-
-        if (Vector3.Distance(transform.position, target) <= stoppingDistance)
-        {
-            ReachedDestination();
-            return;
-        }
-
-        petAnimation.FlipSprite(transform.position.x - target.x < 0);
-        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        IsMoving = true;
-        petAnimation.SetWalking(true);
-    }
-
-    private void MoveWithPathfinding()
+    private void Move()
     {
         if (path == null || path.Count == 0)
         {
@@ -143,8 +132,7 @@ public class PetMovement : MonoBehaviour
         currentWaypoint = 0;
         IsMoving = false;
         petAnimation.SetWalking(false);
-
-        WanderAround();
+        PlayArriveCallBack();
     }
 
     private void WanderAround()
@@ -152,6 +140,22 @@ public class PetMovement : MonoBehaviour
         if (wanderCoroutine != null) return;
 
         wanderCoroutine = StartCoroutine(WanderDelay());
+    }
+    private void PlayArriveCallBack()
+    {
+        IsMoving = false;
+
+        Action callback = onArrived;
+        onArrived = null;
+
+        if (callback != null)
+        {
+            callback.Invoke();
+        }
+        else if (wanderAfterArrival)
+        {
+            WanderAround();
+        }
     }
 
     private void CancelWander()
@@ -169,5 +173,10 @@ public class PetMovement : MonoBehaviour
 
         wanderCoroutine = null;
         MoveTo(PetManager.Instance.GetRandomPosition());
+    }
+
+    public bool IsNear(Vector3 position,  float distance)
+    {
+        return Vector3.Distance(position, transform.position) < distance;
     }
 }

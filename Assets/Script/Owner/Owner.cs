@@ -2,7 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class Owner : Interactable
+public class Owner : Interactables
 {
     [SerializeField] string ownerName;
     //[SerializeField] int petId;
