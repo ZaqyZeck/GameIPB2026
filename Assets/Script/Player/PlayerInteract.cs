@@ -155,13 +155,13 @@ public class PlayerInteract : MonoBehaviour
             Debug.Log("Tidak ada target.");
             return;
         }
-        Interactables interactable = currentTargetObject.GetComponent<Interactables>();
+        Interactable interactable = currentTargetObject.GetComponent<Interactable>();
         if (interactable == null)
         {
             Debug.Log("Target bukan Interactable.");
             return;
         }
-        interactable.OnInteract(this); // double dispatch ï¿½ gak perlu tahu jenisnya apa
+        interactable.OnInteract(this); // double dispatch — gak perlu tahu jenisnya apa
     }
 
     public void GivePet()
