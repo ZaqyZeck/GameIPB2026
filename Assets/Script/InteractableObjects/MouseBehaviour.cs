@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallBehaviour : ObjectBehaviour
+public class MouseBehaviour : ObjectBehaviour
 {
     [SerializeField] float callArea;
     List<Pet> petsCalled;

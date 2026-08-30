@@ -374,7 +374,6 @@ MonoBehaviour:
   stoppingDistance: 0.1
   petInteractable: {fileID: 8936162723813097491}
   petAnimation: {fileID: 3624374341971409518}
-  usePathfinding: 1
   seeker: {fileID: 1463753482885765304}
 --- !u!114 &4065246658916650677
 MonoBehaviour:

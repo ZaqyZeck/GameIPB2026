@@ -4,8 +4,9 @@ public class SunbatheActionBehavior : IActionBehavior
 {
     public void ExecuteAction(Pet pet)
     {
-        pet.Movement.Stop();
-        //gatau juga ini jemur diri tu begimana
+        pet.Animation.SetSitting(true);
+        pet.Movement.Stop(5f);
+
         Debug.Log($"{pet.name} sunbathes!");
     }
 

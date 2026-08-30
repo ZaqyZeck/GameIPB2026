@@ -60,6 +60,13 @@ public class PetMovement : MonoBehaviour
         petAnimation.SetWalking(false);
     }
 
+    public void Stop(float stopTime)
+    {
+        CancelWander();
+        petAnimation.SetWalking(false);
+        StartCoroutine(StopTimer(stopTime));
+    }
+
     private void Update()
     {
         if (!destination.HasValue || petInteractable.isPickuped)
@@ -175,20 +182,31 @@ public class PetMovement : MonoBehaviour
         MoveTo(PetManager.Instance.GetRandomPosition());
     }
 
+    private IEnumerator StopTimer(float stopAmount)
+    {
+        yield return new WaitForSeconds(stopAmount);
+        destination = null;
+        path = null;
+        currentWaypoint = 0;
+        IsMoving = false;
+        onArrived = null;
+        wanderAfterArrival = true;
+    }
+
     public bool IsNear(Vector3 position,  float distance)
     {
         return Vector3.Distance(position, transform.position) < distance;
     }
 
-    public Vector3 GetPositionNear(Vector3 position, Vector3 targetPosition)
-    {
-        Vector3 direction = (position - targetPosition).normalized;
-        float distance = UnityEngine.Random.Range(0.3f, .7f);
-        float yOffset = UnityEngine.Random.Range(0f, 0.5f);
+    //public Vector3 GetPositionNear(Vector3 position, Vector3 targetPosition)
+    //{
+    //    Vector3 direction = (position - targetPosition).normalized;
+    //    float distance = UnityEngine.Random.Range(0.3f, .7f);
+    //    float yOffset = UnityEngine.Random.Range(0f, 0.5f);
 
-        Vector3 result = targetPosition + direction * distance;
-        result.y += yOffset;
+    //    Vector3 result = targetPosition + direction * distance;
+    //    result.y += yOffset;
 
-        return result;
-    }
+    //    return result;
+    //}
 }

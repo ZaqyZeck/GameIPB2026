@@ -72,7 +72,7 @@ public class PlayerInteract : MonoBehaviour
             if (collider.CompareTag("interactable"))
             {
                 currentHoverObject = collider.transform;
-                Debug.Log("Hover: " + currentHoverObject.name);
+                //Debug.Log("Hover: " + currentHoverObject.name);
                 break;
             }
         }

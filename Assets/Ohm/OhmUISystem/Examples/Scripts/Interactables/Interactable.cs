@@ -5,7 +5,7 @@ using Ohm.UISystem;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Renderer))]
-public class Interactable : MonoBehaviour, 
+public abstract class Interactable : MonoBehaviour, 
     IPointerEnterHandler, 
     IPointerExitHandler, 
     IPointerDownHandler, 
@@ -85,7 +85,6 @@ public class Interactable : MonoBehaviour,
         _isClicking = false;
         UpdateVisuals();
     }
-
 
     public void OnPointerClick(PointerEventData eventData)
     {

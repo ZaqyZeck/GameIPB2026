@@ -3,43 +3,91 @@ using UnityEngine;
 public class SleepyHeadBehavior : IHabitBehavior
 {
     private const float SleepInterval = 8f;
-    private const float SleepDuration = 3f;
- 
+    private const float SleepDuration = 5f;
+
     private float timer;
+    private bool isGoingToSleep;
     private bool isSleeping;
- 
+
     public void OnEnter(Pet pet)
     {
         timer = SleepInterval;
+        isGoingToSleep = false;
         isSleeping = false;
     }
- 
+
     public void Tick(Pet pet, float deltaTime)
     {
-        timer -= deltaTime;
- 
-        if (!isSleeping && timer <= 0f)
+        if (isGoingToSleep) return;
+
+        if (isSleeping)
         {
-            isSleeping = true;
-            timer = SleepDuration;
-            pet.Movement.Stop();
-            pet.GetPetAnimation().SetSitting(true);
+            timer -= deltaTime;
+
+            if (timer <= 0f)
+            {
+                WakeUp(pet);
+            }
+
+            return;
         }
-        else if (isSleeping && timer <= 0f)
+
+        timer -= deltaTime;
+
+        if (timer <= 0f)
         {
-            isSleeping = false;
-            timer = SleepInterval;
-            pet.GetPetAnimation().SetSitting(false);
-            Vector3 wakeTarget = PetManager.Instance != null
-                ? PetManager.Instance.GetRandomPosition()
-                : pet.transform.position;
-            pet.Movement.MoveTo(wakeTarget);
+            GoToSleep(pet);
         }
     }
- 
+
     public void OnExit(Pet pet)
     {
+        isGoingToSleep = false;
         isSleeping = false;
+
+        pet.Movement.Stop();
         pet.GetPetAnimation().SetSitting(false);
+    }
+
+    private void GoToSleep(Pet pet)
+    {
+        if (MapManager.Instance == null || MapManager.Instance.bedCollders == null || MapManager.Instance.bedCollders.Length == 0)
+        {
+            Sleep(pet);
+            return;
+        }
+
+        isGoingToSleep = true;
+
+        Collider2D bedCollider = MapManager.Instance.bedCollders[Random.Range(0, MapManager.Instance.bedCollders.Length)];
+        Vector3 sleepPosition = MapManager.Instance.GetRandomPositionIn(bedCollider);
+
+        pet.Movement.MoveTo(sleepPosition, () => Sleep(pet));
+    }
+
+    private void Sleep(Pet pet)
+    {
+        isGoingToSleep = false;
+        isSleeping = true;
+        timer = SleepDuration;
+
+        pet.Movement.Stop();
+        pet.GetPetAnimation().SetSitting(true);
+
+        Debug.LogWarning(pet.petData.petName + " is sleeping");
+    }
+
+    private void WakeUp(Pet pet)
+    {
+        isSleeping = false;
+        timer = SleepInterval;
+
+        pet.GetPetAnimation().SetSitting(false);
+
+        Vector3 wakeTarget = PetManager.Instance != null
+            ? PetManager.Instance.GetRandomPosition()
+            : pet.transform.position;
+
+        pet.Movement.MoveTo(wakeTarget);
     }
 }
