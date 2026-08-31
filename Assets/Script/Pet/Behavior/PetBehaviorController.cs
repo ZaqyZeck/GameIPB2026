@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PetBehaviorController : MonoBehaviour
 {
-    [SerializeField] private Pet ghostPet;
+    [SerializeField] private Pet pet;
     private IHabitBehavior currentHabitBehavior;
     private float revealTimer;
     private bool habitRevealed;
@@ -18,7 +18,7 @@ public class PetBehaviorController : MonoBehaviour
 
     private void Update()
     {
-        if (ghostPet.petData == null) return;
+        if (pet.petData == null) return;
 
         if (!habitRevealed)
         {
@@ -26,7 +26,7 @@ public class PetBehaviorController : MonoBehaviour
             if (revealTimer <= 0f) RevealHabit();
         }
 
-        currentHabitBehavior?.Tick(ghostPet, Time.deltaTime);
+        currentHabitBehavior?.Tick(pet, Time.deltaTime);
 
         UpdateIdleWander();
     }
@@ -37,41 +37,41 @@ public class PetBehaviorController : MonoBehaviour
         if (isPerformingAction) return;
         if (currentHabitBehavior is IdleHabitBehavior)
         {
-            ghostPet.Movement.WanderAround();
+            pet.Movement.WanderAround();
         }
     }
 
     private void RevealHabit()
     {
         habitRevealed = true;
-        SetHabitBehavior(PetBehaviorFactory.GetHabitBehavior(ghostPet.petData.hiddenHabit));
-        GameEventBus.OnMemoryUnlocked?.Invoke(ghostPet.petData.hiddenHabit);
+        SetHabitBehavior(PetBehaviorFactory.GetHabitBehavior(pet.petData.hiddenHabit));
+        GameEventBus.OnMemoryUnlocked?.Invoke(pet.petData.hiddenHabit);
     }
 
     private void SetHabitBehavior(IHabitBehavior newBehavior)
     {
-        currentHabitBehavior?.OnExit(ghostPet);
+        currentHabitBehavior?.OnExit(pet);
         currentHabitBehavior = newBehavior;
-        currentHabitBehavior?.OnEnter(ghostPet);
+        currentHabitBehavior?.OnEnter(pet);
     }
 
     public void TryStopAction(ActionTrait trait)
     {
         if (!HasHiddenAction(trait)) return;
-        PetBehaviorFactory.GetActionBehavior(trait)?.StopAction(ghostPet);
+        PetBehaviorFactory.GetActionBehavior(trait)?.StopAction(pet);
         isPerformingAction = false; // action selesai, buka jalan buat wander/habit lagi
     }
 
     public void TryExecuteAction(ActionTrait trait)
     {
         if (!HasHiddenAction(trait)) return;
-        PetBehaviorFactory.GetActionBehavior(trait)?.ExecuteAction(ghostPet);
+        PetBehaviorFactory.GetActionBehavior(trait)?.ExecuteAction(pet);
         GameEventBus.OnActionExecuted?.Invoke(trait);
         isPerformingAction = true; // action sedang jalan, jangan diganggu wander/habit
     }
 
     public bool HasHiddenAction(ActionTrait trait)
     {
-        return habitRevealed && ghostPet.petData != null && ghostPet.petData.hiddenAction == trait;
+        return habitRevealed && pet.petData != null && pet.petData.hiddenAction == trait;
     }
 }

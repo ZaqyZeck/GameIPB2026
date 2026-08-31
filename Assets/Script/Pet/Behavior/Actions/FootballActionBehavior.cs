@@ -4,6 +4,7 @@ public class FootballActionBehavior : IActionBehavior
 {
     public void ExecuteAction(Pet pet)
     {
+        pet.ChangeTextAction("play ball");
         pet.Movement.Stop();
         pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play);
         Debug.Log($"{pet.name} plays football!");
@@ -12,6 +13,7 @@ public class FootballActionBehavior : IActionBehavior
     public void StopAction(Pet pet)
     {
         //pet.Movement.MoveTo(PetManager.Instance.GetRandomPosition());
+        pet.ChangeTextAction("xplay ball");
         pet.Animation.SetSitting(true);
     }
 }

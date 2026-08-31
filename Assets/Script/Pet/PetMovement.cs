@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PetMovement : MonoBehaviour
 {
+    [SerializeField] private Pet pet;
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float stoppingDistance = 0.1f;
     [SerializeField] private InteractablePet petInteractable;
@@ -179,6 +180,7 @@ public class PetMovement : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         wanderCoroutine = null;
+        pet.ChangeTextAction("Wander1");
         MoveTo(PetManager.Instance.GetRandomPosition());
     }
 

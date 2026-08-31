@@ -3,31 +3,40 @@ using UnityEngine;
 public class DoorWaiterBehavior : IHabitBehavior
 {
     private const float WaitDuration = 5f;
+    private const float HabitInterval = 10f;
 
     private float timer;
     private bool isWaiting;
     private bool isGoingToDoor;
+    private bool isDoingHabit;
 
     public void OnEnter(Pet pet)
     {
-        timer = 0f;
+        timer = HabitInterval;
         isWaiting = false;
         isGoingToDoor = false;
-
-        GoToDoor(pet);
+        isDoingHabit = false;
     }
 
     public void Tick(Pet pet, float deltaTime)
     {
         if (isGoingToDoor) return;
 
-        if (!isWaiting) return;
-
         timer -= deltaTime;
 
-        if (timer <= 0f)
+        if (timer > 0f) return;
+
+        if (isWaiting)
         {
             FinishWaiting(pet);
+            EnterWandering(pet);
+            return;
+        }
+
+        if (!isDoingHabit)
+        {
+            isDoingHabit = true;
+            GoToDoor(pet);
         }
     }
 
@@ -35,6 +44,7 @@ public class DoorWaiterBehavior : IHabitBehavior
     {
         isWaiting = false;
         isGoingToDoor = false;
+        isDoingHabit = false;
 
         pet.Movement.Stop();
         pet.GetPetAnimation().SetSitting(false);
@@ -44,7 +54,7 @@ public class DoorWaiterBehavior : IHabitBehavior
     {
         if (MapManager.Instance == null || MapManager.Instance.doorArea == null)
         {
-            FinishWaiting(pet);
+            EnterWandering(pet);
             return;
         }
 
@@ -52,6 +62,7 @@ public class DoorWaiterBehavior : IHabitBehavior
 
         Vector3 targetPosition = MapManager.Instance.GetRandomPositionIn(MapManager.Instance.doorArea);
 
+        pet.ChangeTextAction("go door");
         pet.Movement.MoveTo(targetPosition, () => StartWaiting(pet));
     }
 
@@ -61,6 +72,7 @@ public class DoorWaiterBehavior : IHabitBehavior
         isWaiting = true;
         timer = WaitDuration;
 
+        pet.ChangeTextAction("wait door");
         pet.Movement.Stop();
         pet.GetPetAnimation().SetSitting(true);
     }
@@ -70,5 +82,18 @@ public class DoorWaiterBehavior : IHabitBehavior
         isWaiting = false;
 
         pet.GetPetAnimation().SetSitting(false);
+    }
+
+    private void EnterWandering(Pet pet)
+    {
+        timer = HabitInterval;
+        isDoingHabit = false;
+
+        Vector3 wanderTarget = PetManager.Instance != null
+            ? PetManager.Instance.GetRandomPosition()
+            : pet.transform.position;
+
+        pet.ChangeTextAction("wander");
+        pet.Movement.MoveTo(wanderTarget);
     }
 }

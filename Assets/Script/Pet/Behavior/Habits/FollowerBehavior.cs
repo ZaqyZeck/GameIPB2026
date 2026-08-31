@@ -31,6 +31,7 @@ public class FollowerBehavior : IHabitBehavior
                 if (stateTimer <= 0f)
                 {
                     EnterWandering(pet);
+                    pet.ChangeTextAction("Wander");
                 }
                 break;
 
@@ -40,6 +41,7 @@ public class FollowerBehavior : IHabitBehavior
                 if (stateTimer <= 0f || !pet.Movement.IsMoving)
                 {
                     EnterFollowing();
+                    pet.ChangeTextAction("Follow player");
                 }
                 break;
         }

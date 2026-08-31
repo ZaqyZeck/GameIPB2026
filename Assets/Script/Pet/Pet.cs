@@ -16,6 +16,7 @@ public class Pet : MonoBehaviour, IHoldable
 
     [SerializeField] Vector3 targetSpawn;
     [SerializeField] TextMeshPro textPetId;
+    [SerializeField] TextMeshPro textPetAction;
 
     public PetMovement Movement => movement;
     public PetAnimation Animation => petAnimation;
@@ -78,5 +79,10 @@ public class Pet : MonoBehaviour, IHoldable
     public PetAnimation GetPetAnimation()
     {
         return petAnimation;
+    }
+
+    public void ChangeTextAction(string text)
+    {
+        textPetAction.text = text;
     }
 }

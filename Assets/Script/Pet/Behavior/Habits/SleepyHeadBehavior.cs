@@ -60,8 +60,9 @@ public class SleepyHeadBehavior : IHabitBehavior
         isGoingToSleep = true;
 
         Collider2D bedCollider = MapManager.Instance.bedCollders[Random.Range(0, MapManager.Instance.bedCollders.Length)];
-        Vector3 sleepPosition = MapManager.Instance.GetRandomPositionIn(bedCollider);
+        Vector3 sleepPosition = bedCollider.transform.position;
 
+        pet.ChangeTextAction("goto sleep");
         pet.Movement.MoveTo(sleepPosition, () => Sleep(pet));
     }
 
@@ -71,6 +72,7 @@ public class SleepyHeadBehavior : IHabitBehavior
         isSleeping = true;
         timer = SleepDuration;
 
+        pet.ChangeTextAction("sleep");
         pet.Movement.Stop();
         pet.GetPetAnimation().SetSitting(true);
 
@@ -88,6 +90,7 @@ public class SleepyHeadBehavior : IHabitBehavior
             ? PetManager.Instance.GetRandomPosition()
             : pet.transform.position;
 
+        pet.ChangeTextAction("wander");
         pet.Movement.MoveTo(wakeTarget);
     }
 }

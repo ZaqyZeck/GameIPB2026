@@ -11,6 +11,7 @@ public class InteractableObject : Interactables, IHoldable
     [SerializeField] private float dropDuration = 0.3f;
     [SerializeField] private Ease easeDrop = Ease.Linear;
     public bool isPickuped;
+    public ActionTrait actionTrait;
 
     public Transform Transform => throw new System.NotImplementedException();
 

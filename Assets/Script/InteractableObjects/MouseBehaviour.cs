@@ -17,6 +17,7 @@ public class MouseBehaviour : ObjectBehaviour
         {
             if (pet == null) continue;
             if (pet.Movement.IsNear(transform.position, callArea))
+                pet.ChangeTextAction("goto mouse");
                 pet.Movement.MoveTo(MapManager.Instance.GetPositionNear(pet.transform.position, transform.position), () =>
                 {
 

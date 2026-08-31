@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -128,15 +129,10 @@ public class PlayerInteract : MonoBehaviour
 
         currentHoldObject.SetParent(interactableParent);
         CurrentHeldHoldable?.OnDropped(interactableParent);
-        RemoveObjectyFromHold();
+        RemoveObjectFromHold();
     }
 
-    public void RemoveObjectyFromHold()
-    {
-        CurrentHeldHoldable = null;
-        currentHoldObject = null;
-        isHoldingObject = false;
-    }
+    
     bool IsPickUpValid()
     {
         if (Vector3.Distance(transform.position, currentTargetObject.position) <= pickUpRange) return true;
@@ -173,10 +169,30 @@ public class PlayerInteract : MonoBehaviour
 
         if (owner.GetPet(CurrentHeldHoldable))
         {
-            RemoveObjectyFromHold();
+            RemoveObjectFromHold();
             //ReputationManager.Instance.Reward(100);
         }
         DeselectTarget();
     }
 
+    public InteractableObject GiveToy(InteractablePet pet)
+    {
+        if (!isHoldingObject || CurrentHeldHoldable == null || currentHoldObject == null) return null;
+        if (pet == null) return null;
+
+        InteractableObject toy = CurrentHeldHoldable as InteractableObject;
+        if (toy == null) return null;
+        if (toy.actionTrait != pet.GetPet().petData.hiddenAction) return null;
+
+        currentHoldObject.SetParent(pet.transform);
+        RemoveObjectFromHold();
+
+        return toy;
+    }
+    public void RemoveObjectFromHold()
+    {
+        CurrentHeldHoldable = null;
+        currentHoldObject = null;
+        isHoldingObject = false;
+    }
 }

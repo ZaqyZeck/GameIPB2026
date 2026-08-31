@@ -194,13 +194,14 @@ public class PetManager : MonoBehaviour
             }
         }
 
+        Debug.LogError("gak ketemu trait yang cocok");
         return false;
     }
 
     private static T RandomEnumValue<T>() where T : Enum
     {
         T[] values = (T[])Enum.GetValues(typeof(T));
-        return values[Random.Range(0, values.Length)];
+        return values[Random.Range(1, values.Length)];
     }
 
     private bool IsTraitComboInUse(Color color, HabitTrait habit, ActionTrait action)
