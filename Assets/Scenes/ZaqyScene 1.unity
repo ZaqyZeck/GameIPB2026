@@ -1019,6 +1019,7 @@ MonoBehaviour:
   dropDuration: 0.3
   easeDrop: 2
   isPickuped: 0
+  actionTrait: 1
 --- !u!114 &603531025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1803,6 +1804,7 @@ MonoBehaviour:
   dropDuration: 0.3
   easeDrop: 2
   isPickuped: 0
+  actionTrait: 4
 --- !u!58 &822139331
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2880,6 +2882,7 @@ MonoBehaviour:
   - {fileID: 721606906}
   - {fileID: 1717685685}
   callArea: 10
+  openDuration: 10
 --- !u!212 &1325744820
 SpriteRenderer:
   serializedVersion: 2
@@ -4163,6 +4166,7 @@ MonoBehaviour:
   bedCollders:
   - {fileID: 1647838401}
   - {fileID: 1647838401}
+  interactableParent: {fileID: 0}
 --- !u!1 &2024669571
 GameObject:
   m_ObjectHideFlags: 0
