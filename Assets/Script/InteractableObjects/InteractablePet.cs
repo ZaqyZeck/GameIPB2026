@@ -11,12 +11,18 @@ public class InteractablePet : Interactables
     [SerializeField] private Ease easeDrop = Ease.Linear;
     //[SerializeField] private Transform interactableParent;
     public bool isPickuped;
+    bool isPlaying;
     InteractableObject currentToy;
+
     public override void OnInteract(PlayerInteract player)
     {
+        if (isPlaying)
+        {
+            return;
+        }
         if (ownerPet.petData.hiddenAction != ActionTrait.Football && ownerPet.petData.hiddenAction != ActionTrait.CatToy)
         {
-            player.PickUpTargetObject();
+            //player.PickUpTargetObject();
             return;
         }
 
@@ -24,7 +30,8 @@ public class InteractablePet : Interactables
 
         if (currentToy == null)
         {
-            player.PickUpTargetObject();
+            //player.PickUpTargetObject();
+            DropToy();
             return;
         }
 
@@ -34,7 +41,8 @@ public class InteractablePet : Interactables
             return;
         }
 
-        player.PickUpTargetObject();
+        //player.PickUpTargetObject();
+        DropToy();
     }
 
     public IHoldable GetHoldable() => ownerPet;
@@ -63,27 +71,25 @@ public class InteractablePet : Interactables
 
     void StartPlayToy()
     {
-
+        isPlaying = true;
+        ownerPet.BehaviorController.TryExecuteAction(ownerPet.petData.hiddenAction);
     }
 
-    void StopPlayToy()
+    public void StopPlayToy()
     {
-        currentToy.transform.SetParent(MapManager.Instance.interactableParent);
-        currentToy = null;
+        DropToy();
+        isPlaying = false;
     }
     public Pet GetPet()
     {
         return ownerPet;
     }
-    //private void OnDestroy()
-    //{
-    //    InteractableObject playerHolding = (InteractableObject) PlayerInteract.Instance.currentHoldObject.
-    //    if (playerHolding == null) return;
-    //    if (playerHolding == this) PlayerInteract.Instance.RemoveObjectyFromHold();
-    //}
-
-    //public override void Interact()
-    //{
-    //    //PickupBehaviour();
-    //}
+    
+    void DropToy()
+    {
+        if (currentToy == null) return;
+        currentToy.Transform.SetParent(PlayerInteract.Instance.GetInteractableParent());
+        currentToy.DropBehaviour();
+        currentToy = null;
+    }
 }

@@ -185,6 +185,7 @@ public class PlayerInteract : MonoBehaviour
         if (toy.actionTrait != pet.GetPet().petData.hiddenAction) return null;
 
         currentHoldObject.SetParent(pet.transform);
+        currentHoldObject.localPosition = Vector3.zero;
         RemoveObjectFromHold();
 
         return toy;
@@ -194,5 +195,10 @@ public class PlayerInteract : MonoBehaviour
         CurrentHeldHoldable = null;
         currentHoldObject = null;
         isHoldingObject = false;
+    }
+
+    public Transform GetInteractableParent()
+    {
+        return interactableParent;
     }
 }

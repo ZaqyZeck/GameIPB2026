@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FootballActionBehavior : IActionBehavior
 {
+    public float actionDurtion = 10f;
     public void ExecuteAction(Pet pet)
     {
         pet.ChangeTextAction("play ball");
@@ -15,5 +16,9 @@ public class FootballActionBehavior : IActionBehavior
         //pet.Movement.MoveTo(PetManager.Instance.GetRandomPosition());
         pet.ChangeTextAction("xplay ball");
         pet.Animation.SetSitting(true);
+    }
+    public float GetActionDuration()
+    {
+        return actionDurtion;
     }
 }

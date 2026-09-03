@@ -25,12 +25,14 @@ public class Pet : MonoBehaviour, IHoldable
     public void OnPickedUp(Transform holdPoint)
     {
         petInteractable.PickupBehaviour();
-        BehaviorController.TryStopAction(petData.hiddenAction);
+        //BehaviorController.TryStopAction(petData.hiddenAction);
+        BehaviorController.PickUpBehaviour(petData.hiddenAction);
     }
 
     public void OnDropped(Transform dropParent)
     {
         petInteractable.DropBehaviour();
+        BehaviorController.DropBehaviour();
     }
 
     public void SetFacing(bool isFacingPositiveX)

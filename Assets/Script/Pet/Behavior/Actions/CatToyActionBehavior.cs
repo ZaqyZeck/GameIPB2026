@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class CatToyActionBehavior : IActionBehavior
 {
+    public float actionDurtion = 10f;
+
     public void ExecuteAction(Pet pet)
     {
         pet.ChangeTextAction("play mouse");
@@ -14,5 +16,10 @@ public class CatToyActionBehavior : IActionBehavior
     {
         pet.ChangeTextAction("xplay mouse");
         pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play);
+    }
+
+    public float GetActionDuration()
+    {
+        return actionDurtion;
     }
 }

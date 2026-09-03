@@ -3,19 +3,16 @@ using UnityEngine;
 public class DoorWaiterBehavior : IHabitBehavior
 {
     private const float WaitDuration = 5f;
-    //private const float HabitInterval = 10f;
 
     private float timer;
     private bool isWaiting;
     private bool isGoingToDoor;
-    //private bool isDoingHabit;
 
     public void OnEnter(Pet pet)
     {
-        //timer = HabitInterval;
+        timer = 0f;
         isWaiting = false;
         isGoingToDoor = false;
-        //isDoingHabit = false;
     }
 
     public void Tick(Pet pet, float deltaTime)
@@ -29,7 +26,6 @@ public class DoorWaiterBehavior : IHabitBehavior
         if (isWaiting)
         {
             FinishWaiting(pet);
-            //EnterWandering(pet);
             StopHabit(pet);
             return;
         }
@@ -41,20 +37,21 @@ public class DoorWaiterBehavior : IHabitBehavior
     {
         isWaiting = false;
         isGoingToDoor = false;
-        //isDoingHabit = false;
 
         pet.Movement.Stop();
         pet.GetPetAnimation().SetSitting(false);
     }
+
     private void StopHabit(Pet pet)
     {
         pet.BehaviorController.ResetHabitTimer();
     }
+
     private void GoToDoor(Pet pet)
     {
         if (MapManager.Instance == null || MapManager.Instance.doorArea == null)
         {
-            //EnterWandering(pet);
+            StopHabit(pet);
             return;
         }
 
@@ -83,6 +80,4 @@ public class DoorWaiterBehavior : IHabitBehavior
 
         pet.GetPetAnimation().SetSitting(false);
     }
-
-    
 }

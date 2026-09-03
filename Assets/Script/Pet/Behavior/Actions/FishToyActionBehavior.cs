@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class FishToyActionBehavior : IActionBehavior
 {
+    public float actionDurtion = 10f;
+
     public void ExecuteAction(Pet pet)
     {
         pet.ChangeTextAction("play fish");
@@ -13,5 +15,10 @@ public class FishToyActionBehavior : IActionBehavior
     {
         pet.ChangeTextAction("xplay fish");
         throw new System.NotImplementedException();
+    }
+
+    public float GetActionDuration()
+    {
+        return actionDurtion;
     }
 }

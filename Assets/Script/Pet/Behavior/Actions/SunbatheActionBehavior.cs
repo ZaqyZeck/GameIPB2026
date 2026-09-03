@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SunbatheActionBehavior : IActionBehavior
 {
+    public float actionDurtion = 10f;
+
     public void ExecuteAction(Pet pet)
     {
         pet.ChangeTextAction("sunbath");
@@ -15,5 +17,9 @@ public class SunbatheActionBehavior : IActionBehavior
     {
         pet.ChangeTextAction("xsunbath");
         throw new System.NotImplementedException();
+    }
+    public float GetActionDuration()
+    {
+        return actionDurtion;
     }
 }
