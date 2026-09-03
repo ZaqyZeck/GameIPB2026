@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TreasureHunterBehavior : IHabitBehavior
 {
-    private const float WanderInterval = 10f;
+    //private const float WanderInterval = 10f;
     private const float MinDigDuration = 5f;
     private const float MaxDigDuration = 8f;
 
@@ -13,7 +13,7 @@ public class TreasureHunterBehavior : IHabitBehavior
 
     public void OnEnter(Pet pet)
     {
-        timer = WanderInterval;
+        //timer = WanderInterval;
         isGoingToDig = false;
         isDigging = false;
     }
@@ -21,22 +21,20 @@ public class TreasureHunterBehavior : IHabitBehavior
     public void Tick(Pet pet, float deltaTime)
     {
         if (isGoingToDig) return;
-
+        timer -= deltaTime;
+    
         if (isDigging)
         {
-            timer -= deltaTime;
-
             if (timer <= 0f)
             {
                 FinishDigging(pet);
+                StopHabit(pet);
             }
-
             return;
         }
 
-        timer -= deltaTime;
-
-        if (timer <= 0f && !pet.Movement.IsMoving)
+        // pet.Movement.IsMoving
+        if (timer <= 0f)
         {
             GoToDigSpot(pet);
         }
@@ -48,6 +46,10 @@ public class TreasureHunterBehavior : IHabitBehavior
         isDigging = false;
 
         pet.Movement.Stop();
+    }
+    private void StopHabit(Pet pet)
+    {
+        pet.BehaviorController.ResetHabitTimer();
     }
 
     private void GoToDigSpot(Pet pet)
@@ -80,18 +82,18 @@ public class TreasureHunterBehavior : IHabitBehavior
     private void FinishDigging(Pet pet)
     {
         isDigging = false;
-        timer = WanderInterval;
+        //timer = WanderInterval;
 
         // Hentikan animasi digging
         // pet.GetPetAnimation().SetDigging(false);
 
         Debug.Log($"{pet.petData.petName} finished digging");
 
-        Vector3 wanderTarget = PetManager.Instance != null
-            ? PetManager.Instance.GetRandomPosition()
-            : pet.transform.position;
+        //Vector3 wanderTarget = PetManager.Instance != null
+        //    ? PetManager.Instance.GetRandomPosition()
+        //    : pet.transform.position;
 
-        pet.ChangeTextAction("WANDER");
-        pet.Movement.MoveTo(wanderTarget);
+        //pet.ChangeTextAction("WANDER");
+        //pet.Movement.MoveTo(wanderTarget);
     }
 }

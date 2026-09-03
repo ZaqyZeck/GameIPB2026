@@ -143,11 +143,11 @@ public class PetMovement : MonoBehaviour
         PlayArriveCallBack();
     }
 
-    public void WanderAround()
+    public void WanderAround(float delay)
     {
         if (wanderCoroutine != null) return;
 
-        wanderCoroutine = StartCoroutine(WanderDelay());
+        wanderCoroutine = StartCoroutine(WanderDelay(delay));
     }
     private void PlayArriveCallBack()
     {
@@ -160,10 +160,6 @@ public class PetMovement : MonoBehaviour
         {
             callback.Invoke();
         }
-        else if (wanderAfterArrival)
-        {
-            WanderAround();
-        }
     }
 
     private void CancelWander()
@@ -175,7 +171,7 @@ public class PetMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator WanderDelay()
+    private IEnumerator WanderDelay(float delay)
     {
         yield return new WaitForSeconds(3f);
 

@@ -3,19 +3,19 @@ using UnityEngine;
 public class DoorWaiterBehavior : IHabitBehavior
 {
     private const float WaitDuration = 5f;
-    private const float HabitInterval = 10f;
+    //private const float HabitInterval = 10f;
 
     private float timer;
     private bool isWaiting;
     private bool isGoingToDoor;
-    private bool isDoingHabit;
+    //private bool isDoingHabit;
 
     public void OnEnter(Pet pet)
     {
-        timer = HabitInterval;
+        //timer = HabitInterval;
         isWaiting = false;
         isGoingToDoor = false;
-        isDoingHabit = false;
+        //isDoingHabit = false;
     }
 
     public void Tick(Pet pet, float deltaTime)
@@ -29,32 +29,32 @@ public class DoorWaiterBehavior : IHabitBehavior
         if (isWaiting)
         {
             FinishWaiting(pet);
-            EnterWandering(pet);
+            //EnterWandering(pet);
+            StopHabit(pet);
             return;
         }
 
-        if (!isDoingHabit)
-        {
-            isDoingHabit = true;
-            GoToDoor(pet);
-        }
+        GoToDoor(pet);
     }
 
     public void OnExit(Pet pet)
     {
         isWaiting = false;
         isGoingToDoor = false;
-        isDoingHabit = false;
+        //isDoingHabit = false;
 
         pet.Movement.Stop();
         pet.GetPetAnimation().SetSitting(false);
     }
-
+    private void StopHabit(Pet pet)
+    {
+        pet.BehaviorController.ResetHabitTimer();
+    }
     private void GoToDoor(Pet pet)
     {
         if (MapManager.Instance == null || MapManager.Instance.doorArea == null)
         {
-            EnterWandering(pet);
+            //EnterWandering(pet);
             return;
         }
 
@@ -84,16 +84,5 @@ public class DoorWaiterBehavior : IHabitBehavior
         pet.GetPetAnimation().SetSitting(false);
     }
 
-    private void EnterWandering(Pet pet)
-    {
-        timer = HabitInterval;
-        isDoingHabit = false;
-
-        Vector3 wanderTarget = PetManager.Instance != null
-            ? PetManager.Instance.GetRandomPosition()
-            : pet.transform.position;
-
-        pet.ChangeTextAction("wander");
-        pet.Movement.MoveTo(wanderTarget);
-    }
+    
 }

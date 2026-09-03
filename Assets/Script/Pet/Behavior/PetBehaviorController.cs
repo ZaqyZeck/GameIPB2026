@@ -5,13 +5,18 @@ public class PetBehaviorController : MonoBehaviour
     [SerializeField] private Pet pet;
     private IHabitBehavior currentHabitBehavior;
     private float revealTimer;
+    private float habitTimer;
     private bool habitRevealed;
-    private bool isPerformingAction;
+    private bool isDoingAction;
+    private bool isDoingHabit;
 
+    [SerializeField] private float habitInterval = 10f;
     public void Initialize(PetData petData)
     {
         habitRevealed = false;
-        isPerformingAction = false;
+        isDoingAction = false;
+        isDoingHabit = false;
+        //habitTimer = habitInterval;
         revealTimer = petData.timeToRevealHabit;
         SetHabitBehavior(new IdleHabitBehavior());
     }
@@ -25,20 +30,25 @@ public class PetBehaviorController : MonoBehaviour
             revealTimer -= Time.deltaTime;
             if (revealTimer <= 0f) RevealHabit();
         }
+        else if (!isDoingAction)
+        {
+            habitTimer -= Time.deltaTime;
+            if (habitTimer <= 0f)
+            {
+                currentHabitBehavior?.Tick(pet, Time.deltaTime);
+                isDoingHabit = true;
+            }
+        }
 
-        currentHabitBehavior?.Tick(pet, Time.deltaTime);
-
-        UpdateIdleWander();
+        EnterWandering();
     }
 
     // Kalau lagi gak Action dan lagi gak Habit aktif (masih Idle), suruh wander.
-    private void UpdateIdleWander()
+    private void EnterWandering()
     {
-        if (isPerformingAction) return;
-        if (currentHabitBehavior is IdleHabitBehavior)
-        {
-            pet.Movement.WanderAround();
-        }
+        if (isDoingAction) return;
+        
+        pet.Movement.WanderAround(3f);
     }
 
     private void RevealHabit()
@@ -59,7 +69,7 @@ public class PetBehaviorController : MonoBehaviour
     {
         if (!HasHiddenAction(trait)) return;
         PetBehaviorFactory.GetActionBehavior(trait)?.StopAction(pet);
-        isPerformingAction = false; // action selesai, buka jalan buat wander/habit lagi
+        isDoingAction = false; // action selesai, buka jalan buat wander/habit lagi
     }
 
     public void TryExecuteAction(ActionTrait trait)
@@ -67,11 +77,16 @@ public class PetBehaviorController : MonoBehaviour
         if (!HasHiddenAction(trait)) return;
         PetBehaviorFactory.GetActionBehavior(trait)?.ExecuteAction(pet);
         GameEventBus.OnActionExecuted?.Invoke(trait);
-        isPerformingAction = true; // action sedang jalan, jangan diganggu wander/habit
+        isDoingAction = true; // action sedang jalan, jangan diganggu wander/habit
     }
 
     public bool HasHiddenAction(ActionTrait trait)
     {
         return habitRevealed && pet.petData != null && pet.petData.hiddenAction == trait;
+    }
+    public void ResetHabitTimer()
+    {
+        habitTimer = habitInterval;
+        isDoingHabit = false;
     }
 }

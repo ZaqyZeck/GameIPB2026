@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SleepyHeadBehavior : IHabitBehavior
 {
-    private const float SleepInterval = 8f;
+    //private const float SleepInterval = 8f;
     private const float SleepDuration = 5f;
 
     private float timer;
@@ -11,7 +11,7 @@ public class SleepyHeadBehavior : IHabitBehavior
 
     public void OnEnter(Pet pet)
     {
-        timer = SleepInterval;
+        //timer = SleepInterval;
         isGoingToSleep = false;
         isSleeping = false;
     }
@@ -27,6 +27,7 @@ public class SleepyHeadBehavior : IHabitBehavior
             if (timer <= 0f)
             {
                 WakeUp(pet);
+                StopHabit(pet);
             }
 
             return;
@@ -47,6 +48,10 @@ public class SleepyHeadBehavior : IHabitBehavior
 
         pet.Movement.Stop();
         pet.GetPetAnimation().SetSitting(false);
+    }
+    private void StopHabit(Pet pet)
+    {
+        pet.BehaviorController.ResetHabitTimer();
     }
 
     private void GoToSleep(Pet pet)
@@ -82,15 +87,15 @@ public class SleepyHeadBehavior : IHabitBehavior
     private void WakeUp(Pet pet)
     {
         isSleeping = false;
-        timer = SleepInterval;
+        //timer = SleepInterval;
 
         pet.GetPetAnimation().SetSitting(false);
 
-        Vector3 wakeTarget = PetManager.Instance != null
-            ? PetManager.Instance.GetRandomPosition()
-            : pet.transform.position;
+        //Vector3 wakeTarget = PetManager.Instance != null
+        //    ? PetManager.Instance.GetRandomPosition()
+        //    : pet.transform.position;
 
-        pet.ChangeTextAction("wander");
-        pet.Movement.MoveTo(wakeTarget);
+        //pet.ChangeTextAction("wander");
+        //pet.Movement.MoveTo(wakeTarget);
     }
 }
