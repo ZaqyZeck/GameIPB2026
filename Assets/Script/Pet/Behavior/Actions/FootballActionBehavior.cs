@@ -15,7 +15,8 @@ public class FootballActionBehavior : IActionBehavior
     {
         //pet.Movement.MoveTo(PetManager.Instance.GetRandomPosition());
         pet.ChangeTextAction("xplay ball");
-        pet.Animation.SetSitting(true);
+        pet.Animation.SetSitting(false);
+        pet.GetInteractable().StopPlayToy();
     }
     public float GetActionDuration()
     {

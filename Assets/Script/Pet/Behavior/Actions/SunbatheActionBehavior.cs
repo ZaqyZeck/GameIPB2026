@@ -8,7 +8,7 @@ public class SunbatheActionBehavior : IActionBehavior
     {
         pet.ChangeTextAction("sunbath");
         pet.Animation.SetSitting(true);
-        pet.Movement.Stop(5f);
+        //pet.Movement.Stop(5f);
 
         Debug.Log($"{pet.name} sunbathes!");
     }
@@ -16,7 +16,7 @@ public class SunbatheActionBehavior : IActionBehavior
     public void StopAction(Pet pet)
     {
         pet.ChangeTextAction("xsunbath");
-        throw new System.NotImplementedException();
+        pet.Animation.SetSitting(false);
     }
     public float GetActionDuration()
     {

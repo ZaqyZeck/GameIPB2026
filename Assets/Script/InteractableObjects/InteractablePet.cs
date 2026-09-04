@@ -16,22 +16,28 @@ public class InteractablePet : Interactables
 
     public override void OnInteract(PlayerInteract player)
     {
-        if (isPlaying)
-        {
-            return;
-        }
+        
         if (ownerPet.petData.hiddenAction != ActionTrait.Football && ownerPet.petData.hiddenAction != ActionTrait.CatToy)
         {
-            //player.PickUpTargetObject();
+            player.PickUpTargetObject();
             return;
         }
+        if (!player.isHoldingObject)
+        {
+            player.PickUpTargetObject();
+            return;
+        }
+        //if (isPlaying)
+        //{
+        //    return;
+        //}
 
         currentToy = player.GiveToy(this);
 
-        if (currentToy == null)
+        if (currentToy == null || isPlaying)
         {
             //player.PickUpTargetObject();
-            DropToy();
+            StopPlayToy();
             return;
         }
 
@@ -42,7 +48,7 @@ public class InteractablePet : Interactables
         }
 
         //player.PickUpTargetObject();
-        DropToy();
+        StopPlayToy();
     }
 
     public IHoldable GetHoldable() => ownerPet;
@@ -77,8 +83,10 @@ public class InteractablePet : Interactables
 
     public void StopPlayToy()
     {
+        if (!isPlaying) return;
         DropToy();
         isPlaying = false;
+        //ownerPet.BehaviorController.TryStopAction(ownerPet.petData.hiddenAction);
     }
     public Pet GetPet()
     {
@@ -88,7 +96,15 @@ public class InteractablePet : Interactables
     void DropToy()
     {
         if (currentToy == null) return;
-        currentToy.Transform.SetParent(PlayerInteract.Instance.GetInteractableParent());
+        Transform interactableParent = PlayerInteract.Instance.GetInteractableParent();
+        //if (interactableParent == null)
+        //{
+        //    Debug.LogError(0);
+        //    return;
+        //}
+
+        //Debug.LogError(1);
+        currentToy.gameObject.transform.SetParent(interactableParent);
         currentToy.DropBehaviour();
         currentToy = null;
     }

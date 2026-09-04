@@ -11,10 +11,11 @@ public class PetBehaviorController : MonoBehaviour
     private float habitTimer;
     private float actionTimer;
 
-    private bool habitRevealed;
-    private bool isDoingAction;
-    private bool isDoingHabit;
-    private bool isStopBehaviour;
+    [SerializeField] private bool habitRevealed;
+    [SerializeField] private bool isDoingAction;
+    [SerializeField] private bool isDoingHabit;
+    [SerializeField] private bool isStopBehaviour;
+    [SerializeField] private bool isWandering;
 
     public void Initialize(PetData petData)
     {
@@ -69,6 +70,12 @@ public class PetBehaviorController : MonoBehaviour
         if (actionTimer <= 0f)
         {
             TryStopAction(pet.petData.hiddenAction);
+            if (pet.petData.hiddenAction == ActionTrait.Football || pet.petData.hiddenAction == ActionTrait.CatToy)
+            {
+                //.PickUpTargetObject();
+                pet.GetInteractable().StopPlayToy();
+                return;
+            }
         }
     }
 
@@ -88,13 +95,14 @@ public class PetBehaviorController : MonoBehaviour
     private void StartHabit()
     {
         isDoingHabit = true;
+        isWandering = false;
         currentHabitBehavior?.Tick(pet, Time.deltaTime);
     }
 
     private void EnterWandering()
     {
         if (isDoingAction || isDoingHabit || isStopBehaviour) return;
-
+        isWandering = true;
         pet.Movement.WanderAround(3f);
     }
 
@@ -131,11 +139,13 @@ public class PetBehaviorController : MonoBehaviour
             isDoingHabit = false;
         }
 
+        isWandering = false;
         pet.Movement.Stop();
 
+        actionTimer = actionBehaviour.GetActionDuration();
         actionBehaviour.ExecuteAction(pet);
 
-        actionTimer = actionBehaviour.GetActionDuration();
+        
         isDoingAction = true;
 
         GameEventBus.OnActionExecuted?.Invoke(trait);
@@ -202,6 +212,7 @@ public class PetBehaviorController : MonoBehaviour
             isDoingHabit = false;
         }
 
+        isWandering = false;
         pet.Movement.Stop();
     }
 }
