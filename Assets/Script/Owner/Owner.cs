@@ -1,28 +1,41 @@
 using DG.Tweening;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class Owner : Interactables
 {
-    [SerializeField] string ownerName;
-    //[SerializeField] int petId;
-    [SerializeField] float patienceAmount = 60f;
-    [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Collider2D interactCollider;
-    [SerializeField] TextMeshPro textPetId;
+    [SerializeField] private string ownerName;
+    [SerializeField] private float patienceAmount = 60f;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Collider2D interactCollider;
+    [SerializeField] private TextMeshPro textPetId;
 
     [Header("Dialogue")]
-    [SerializeField] DialogueBox dialogueBox; // the DialogueCanvas child under this Owner
-    [SerializeField] Sprite catIcon;          // icon shown on the "Do you see my cat?" page
+    [SerializeField] private DialogueBox dialogueBox; // this owner's own textbox above them
+    [SerializeField] private Sprite catIcon;
 
-    Pet currentPet;
-    //IHoldable currentPet;
+    [Header("Player Reaction Lines")]
+    [SerializeField]
+    private string[] advanceLines =
+    {
+        "Could you tell me more?",
+        "Go on...",
+        "Hmm, tell me more."
+    };
+    [SerializeField]
+    private string[] farewellLines =
+    {
+        "Okay, I'll be right back.",
+        "Got it, thank you!",
+        "Alright, I'll go look."
+    };
 
-    OwnerData currentOwnerData;
-    
+    private Pet currentPet;
+    private OwnerData currentOwnerData;
+
     public bool isInLine;
-
-    float patienceTimer;
+    private float patienceTimer;
 
     private void Awake()
     {
@@ -31,7 +44,7 @@ public class Owner : Interactables
 
     private void Update()
     {
-        if(patienceTimer >= 0 && isInLine)
+        if (patienceTimer >= 0 && isInLine)
         {
             patienceTimer -= Time.deltaTime;
         }
@@ -54,23 +67,27 @@ public class Owner : Interactables
         }
     }
 
-    void OpenDialogue()
+    private void OpenDialogue()
     {
-        if (currentPet == null || dialogueBox == null) return;
+        if (currentPet == null || currentPet.petData == null) return;
+        if (dialogueBox == null || PlayerDialogueController.Instance == null) return;
 
-        string habitText = (currentPet.CurrentHabit as IDialogueDescribable)?.GetDialogueText()
+        IHabitBehavior habit = PetBehaviorFactory.GetHabitBehavior(currentPet.petData.hiddenHabit);
+        IActionBehavior action = PetBehaviorFactory.GetActionBehavior(currentPet.petData.hiddenAction);
+
+        string habitText = (habit as IDialogueDescribable)?.GetDialogueText()
                             ?? "Hmm, not sure what it likes to do.";
-        string actionText = (currentPet.CurrentAction as IDialogueDescribable)?.GetDialogueText()
+        string actionText = (action as IDialogueDescribable)?.GetDialogueText()
                             ?? "Hmm, not sure what it does.";
 
-        System.Collections.Generic.List<DialoguePage> pages = new System.Collections.Generic.List<DialoguePage>
+        List<DialoguePage> pages = new List<DialoguePage>
         {
             new DialoguePage { text = "Do you see my cat?", icon = catIcon },
             new DialoguePage { text = habitText, icon = null },
             new DialoguePage { text = actionText, icon = null },
         };
 
-        dialogueBox.Show(pages);
+        PlayerDialogueController.Instance.StartConversation(dialogueBox, pages, advanceLines, farewellLines);
     }
 
     public bool GetPet(IHoldable heldPet)
@@ -78,7 +95,7 @@ public class Owner : Interactables
         if (currentPet == null || !ReferenceEquals(heldPet, currentPet))
         {
             Debug.Log("Pet salah, ini bukan pet yang diminta " + ownerName);
-            DespawnWithoutPet() ;
+            DespawnWithoutPet();
             return false;
         }
 
@@ -86,6 +103,7 @@ public class Owner : Interactables
         DespawnWithPet();
         return true;
     }
+
     public void Spawn(Pet wantedPet, OwnerData newOwnerData)
     {
         if (isInLine) return;
@@ -93,24 +111,18 @@ public class Owner : Interactables
         currentPet = wantedPet;
         currentOwnerData = newOwnerData;
         ownerName = currentOwnerData.ownerName;
-
         textPetId.text = currentPet.petId.ToString();
-
         interactCollider.enabled = true;
         isInLine = true;
 
-        //Debug.Log(ownerName + " spawn");
         SpawnAnimation();
     }
+
     public void DespawnWithoutPet()
     {
         if (!isInLine) return;
 
-        //Despawn pet
-        //PetManager.Instance.DespawnPet(currentPet);
-
-        dialogueBox?.Hide();
-
+        PlayerDialogueController.Instance?.CancelConversationFor(dialogueBox);
         textPetId.text = null;
         currentPet = null;
         currentOwnerData = null;
@@ -119,7 +131,6 @@ public class Owner : Interactables
         isInLine = false;
 
         ReputationManager.Instance.Penalize(100);
-
         DespawnAnimation();
         OwnerManager.Instance.CheckLine();
     }
@@ -128,11 +139,8 @@ public class Owner : Interactables
     {
         if (!isInLine) return;
 
-        //Despawn pet
         PetManager.Instance.DespawnPet(currentPet);
-
-        dialogueBox?.Hide();
-
+        PlayerDialogueController.Instance?.CancelConversationFor(dialogueBox);
         textPetId.text = null;
         currentPet.isOwnerArrived = false;
         currentPet = null;
@@ -142,22 +150,22 @@ public class Owner : Interactables
         isInLine = false;
 
         ReputationManager.Instance.Reward(100);
-
         DespawnAnimation();
         OwnerManager.Instance.CheckLine();
     }
 
-    void SpawnAnimation()
+    private void SpawnAnimation()
     {
         spriteRenderer.DOFade(1f, 1f);
     }
-    void DespawnAnimation()
+
+    private void DespawnAnimation()
     {
         spriteRenderer.DOFade(0f, 1f);
     }
+
     public OwnerData GetOwnerData()
     {
         return currentOwnerData;
     }
-
 }

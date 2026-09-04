@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class TreasureHunterBehavior : IHabitBehavior
+public class TreasureHunterBehavior : IHabitBehavior, IDialogueDescribable
 {
-    //private const float WanderInterval = 10f;
     private const float MinDigDuration = 5f;
     private const float MaxDigDuration = 8f;
 
@@ -13,7 +12,6 @@ public class TreasureHunterBehavior : IHabitBehavior
 
     public void OnEnter(Pet pet)
     {
-        //timer = WanderInterval;
         isGoingToDig = false;
         isDigging = false;
     }
@@ -22,7 +20,7 @@ public class TreasureHunterBehavior : IHabitBehavior
     {
         if (isGoingToDig) return;
         timer -= deltaTime;
-    
+
         if (isDigging)
         {
             if (timer <= 0f)
@@ -33,7 +31,6 @@ public class TreasureHunterBehavior : IHabitBehavior
             return;
         }
 
-        // pet.Movement.IsMoving
         if (timer <= 0f)
         {
             GoToDigSpot(pet);
@@ -47,6 +44,7 @@ public class TreasureHunterBehavior : IHabitBehavior
 
         pet.Movement.Stop();
     }
+
     private void StopHabit(Pet pet)
     {
         pet.BehaviorController.ResetHabitTimer();
@@ -73,27 +71,14 @@ public class TreasureHunterBehavior : IHabitBehavior
         pet.ChangeTextAction("DIGGING");
         pet.Movement.Stop();
 
-        // Jalankan animasi digging di sini
-        // pet.GetPetAnimation().SetDigging(true);
-
         Debug.Log($"{pet.petData.petName} started digging");
     }
 
     private void FinishDigging(Pet pet)
     {
         isDigging = false;
-        //timer = WanderInterval;
-
-        // Hentikan animasi digging
-        // pet.GetPetAnimation().SetDigging(false);
-
         Debug.Log($"{pet.petData.petName} finished digging");
-
-        //Vector3 wanderTarget = PetManager.Instance != null
-        //    ? PetManager.Instance.GetRandomPosition()
-        //    : pet.transform.position;
-
-        //pet.ChangeTextAction("WANDER");
-        //pet.Movement.MoveTo(wanderTarget);
     }
+
+    public string GetDialogueText() => "It's always digging around, looking for buried treasure.";
 }

@@ -18,9 +18,6 @@ public class PlayerInteract : MonoBehaviour
 
     [SerializeField] private float pickUpRange = 2f;
 
-    //Interactable currentHoldInteractScript;
-    //Pet currentGhostPet;
-
     private void Awake()
     {
         Instance = this;
@@ -28,6 +25,9 @@ public class PlayerInteract : MonoBehaviour
     private void Update()
     {
         SelectHoverObject();
+
+        bool inputLocked = PlayerMovement.Instance != null && PlayerMovement.Instance.IsMovementLocked;
+        if (inputLocked) return;
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
@@ -73,7 +73,6 @@ public class PlayerInteract : MonoBehaviour
             if (collider.CompareTag("interactable"))
             {
                 currentHoverObject = collider.transform;
-                //Debug.Log("Hover: " + currentHoverObject.name);
                 break;
             }
         }
@@ -111,7 +110,6 @@ public class PlayerInteract : MonoBehaviour
         }
         if (isHoldingObject) DropHoldObject();
 
-        //InteractablePet interactableObj = currentTargetObject.GetComponent<InteractablePet>();
         IHoldable holdable = currentTargetObject.GetComponent<IHoldable>();
 
         currentTargetObject.SetParent(holdTransform);
@@ -157,7 +155,7 @@ public class PlayerInteract : MonoBehaviour
             Debug.Log("Target bukan Interactable.");
             return;
         }
-        interactable.OnInteract(this); // double dispatch � gak perlu tahu jenisnya apa
+        interactable.OnInteract(this);
     }
 
     public void GivePet()
@@ -170,7 +168,6 @@ public class PlayerInteract : MonoBehaviour
         if (owner.GetPet(CurrentHeldHoldable))
         {
             RemoveObjectFromHold();
-            //ReputationManager.Instance.Reward(100);
         }
         DeselectTarget();
     }

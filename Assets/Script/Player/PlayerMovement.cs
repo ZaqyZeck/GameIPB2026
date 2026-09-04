@@ -14,12 +14,15 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float movementSpeed = 3f;
     [SerializeField] private float reachDistance = 0.1f;
     [SerializeField] private bool haveTarget;
+    [SerializeField] private bool isMovementLocked;
 
     private Vector3 targetPosition;
     private List<Vector3> path;
     private int currentWaypoint;
 
     private Transform TargetObject => PlayerInteract.Instance.currentTargetObject;
+
+    public bool IsMovementLocked => isMovementLocked;
 
     private void Awake()
     {
@@ -28,11 +31,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (haveTarget) GoToTarget();
+        if (haveTarget && !isMovementLocked) GoToTarget();
     }
 
     public void ChangeTargetPosition(Vector3 target)
     {
+        if (isMovementLocked) return;
+
         targetPosition = GetValidTargetPosition(target);
 
         seeker.StartPath(transform.position, targetPosition, OnPathComplete);
@@ -48,6 +53,19 @@ public class PlayerMovement : MonoBehaviour
         haveTarget = false;
         path = null;
         currentWaypoint = 0;
+    }
+
+    /// <summary>
+    /// Locks or unlocks player movement (e.g. while a dialogue is open).
+    /// Locking immediately cancels any in-progress path.
+    /// </summary>
+    public void SetMovementLocked(bool locked)
+    {
+        isMovementLocked = locked;
+        if (locked)
+        {
+            StopTargeting();
+        }
     }
 
     private void OnPathComplete(Path newPath)

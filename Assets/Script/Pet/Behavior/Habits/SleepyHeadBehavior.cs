@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class SleepyHeadBehavior : IHabitBehavior
+public class SleepyHeadBehavior : IHabitBehavior, IDialogueDescribable
 {
-    //private const float SleepInterval = 8f;
     private const float SleepDuration = 5f;
 
     private float timer;
@@ -11,7 +10,6 @@ public class SleepyHeadBehavior : IHabitBehavior
 
     public void OnEnter(Pet pet)
     {
-        //timer = SleepInterval;
         isGoingToSleep = false;
         isSleeping = false;
     }
@@ -49,6 +47,7 @@ public class SleepyHeadBehavior : IHabitBehavior
         pet.Movement.Stop();
         pet.GetPetAnimation().SetSitting(false);
     }
+
     private void StopHabit(Pet pet)
     {
         pet.BehaviorController.ResetHabitTimer();
@@ -87,15 +86,8 @@ public class SleepyHeadBehavior : IHabitBehavior
     private void WakeUp(Pet pet)
     {
         isSleeping = false;
-        //timer = SleepInterval;
-
         pet.GetPetAnimation().SetSitting(false);
-
-        //Vector3 wakeTarget = PetManager.Instance != null
-        //    ? PetManager.Instance.GetRandomPosition()
-        //    : pet.transform.position;
-
-        //pet.ChangeTextAction("wander");
-        //pet.Movement.MoveTo(wakeTarget);
     }
+
+    public string GetDialogueText() => "My cat loves to nap anywhere it can find a cozy spot.";
 }

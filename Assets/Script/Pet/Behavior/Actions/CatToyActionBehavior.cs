@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CatToyActionBehavior : IActionBehavior
+public class CatToyActionBehavior : IActionBehavior, IDialogueDescribable
 {
     public float actionDurtion = 10f;
 
@@ -17,12 +17,12 @@ public class CatToyActionBehavior : IActionBehavior
         pet.ChangeTextAction("xplay mouse");
         pet.Animation.SetSitting(false);
         pet.GetInteractable().StopPlayToy();
-        //pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play);
-        //pet.GetPetAnimation().Se
     }
 
     public float GetActionDuration()
     {
         return actionDurtion;
     }
+
+    public string GetDialogueText() => "It can't resist swatting at a little toy mouse.";
 }

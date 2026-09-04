@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FishToyActionBehavior : IActionBehavior
+public class FishToyActionBehavior : IActionBehavior, IDialogueDescribable
 {
     public float actionDurtion = 10f;
 
@@ -21,4 +21,6 @@ public class FishToyActionBehavior : IActionBehavior
     {
         return actionDurtion;
     }
+
+    public string GetDialogueText() => "A fish toy will get it chasing around instantly.";
 }

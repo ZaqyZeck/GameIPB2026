@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FollowerBehavior : IHabitBehavior
+public class FollowerBehavior : IHabitBehavior, IDialogueDescribable
 {
     private const float FollowDistance = 1f;
 
@@ -30,6 +30,7 @@ public class FollowerBehavior : IHabitBehavior
     }
 
     public void OnExit(Pet pet) => pet.Movement.Stop();
+
     private void StopHabit(Pet pet)
     {
         ResetTimer();
@@ -52,4 +53,5 @@ public class FollowerBehavior : IHabitBehavior
         followTimer = Random.Range(MinFollowDuration, MaxFollowDuration);
     }
 
+    public string GetDialogueText() => "It tends to follow people around wherever they go.";
 }

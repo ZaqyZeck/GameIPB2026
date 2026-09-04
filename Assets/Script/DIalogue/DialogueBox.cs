@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,65 +7,49 @@ using UnityEngine.UI;
 public class DialogueBox : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] GameObject boxRoot;
-    [SerializeField] TextMeshProUGUI dialogueText;
-    [SerializeField] Image iconImage;
-    [SerializeField] Button nextButton;
-    [SerializeField] Button skipClickArea; 
+    [SerializeField] private GameObject boxRoot;
+    [SerializeField] private TextMeshProUGUI dialogueText;
+    [SerializeField] private Image iconImage;
 
     [Header("Settings")]
-    [SerializeField] float charsPerSecond = 30f;
+    [SerializeField] private float charsPerSecond = 30f;
 
-    List<DialoguePage> pages = new List<DialoguePage>();
-    int currentPageIndex;
-    Coroutine typingCoroutine;
-    bool isTyping;
-    Action onDialogueComplete;
+    private Coroutine typingCoroutine;
+    private Action pendingCallback;
 
-    void Awake()
+    public bool IsTyping { get; private set; }
+
+    private void Awake()
     {
-        nextButton.onClick.AddListener(OnNextClicked);
-        skipClickArea.onClick.AddListener(OnBoxClicked);
         Hide();
     }
 
-    public void Show(List<DialoguePage> newPages, Action onComplete = null)
+    /// <summary>
+    /// Shows this owner's line for the given page. onTypingComplete fires once
+    /// the full line has finished typing out.
+    /// </summary>
+    public void ShowPage(DialoguePage page, Action onTypingComplete = null)
     {
-        pages = newPages;
-        currentPageIndex = 0;
-        onDialogueComplete = onComplete;
         boxRoot.SetActive(true);
-        ShowPage(currentPageIndex);
-    }
 
-    public void Hide()
-    {
-        boxRoot.SetActive(false);
-        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
-        isTyping = false;
-    }
-
-    void ShowPage(int index)
-    {
-        if (index < 0 || index >= pages.Count)
-        {
-            Hide();
-            onDialogueComplete?.Invoke();
-            return;
-        }
-
-        DialoguePage page = pages[index];
         iconImage.gameObject.SetActive(page.icon != null);
         iconImage.sprite = page.icon;
-        nextButton.gameObject.SetActive(false);
 
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        pendingCallback = onTypingComplete;
         typingCoroutine = StartCoroutine(TypeText(page.text));
     }
 
-    IEnumerator TypeText(string fullText)
+    public void CompleteTyping()
     {
-        isTyping = true;
+        if (!IsTyping) return;
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        FinishTyping();
+    }
+
+    private IEnumerator TypeText(string fullText)
+    {
+        IsTyping = true;
         dialogueText.text = fullText;
         dialogueText.maxVisibleCharacters = 0;
         dialogueText.ForceMeshUpdate();
@@ -85,22 +68,21 @@ public class DialogueBox : MonoBehaviour
         FinishTyping();
     }
 
-    void FinishTyping()
+    private void FinishTyping()
     {
-        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
-        isTyping = false;
+        IsTyping = false;
         dialogueText.maxVisibleCharacters = dialogueText.textInfo.characterCount;
-        nextButton.gameObject.SetActive(true);
+
+        Action callback = pendingCallback;
+        pendingCallback = null;
+        callback?.Invoke();
     }
 
-    void OnBoxClicked()
+    public void Hide()
     {
-        if (isTyping) FinishTyping();
-    }
-
-    void OnNextClicked()
-    {
-        currentPageIndex++;
-        ShowPage(currentPageIndex);
+        boxRoot.SetActive(false);
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        IsTyping = false;
+        pendingCallback = null;
     }
 }
