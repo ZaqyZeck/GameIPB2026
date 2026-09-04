@@ -11,6 +11,10 @@ public class Owner : Interactables
     [SerializeField] Collider2D interactCollider;
     [SerializeField] TextMeshPro textPetId;
 
+    [Header("Dialogue")]
+    [SerializeField] DialogueBox dialogueBox; // the DialogueCanvas child under this Owner
+    [SerializeField] Sprite catIcon;          // icon shown on the "Do you see my cat?" page
+
     Pet currentPet;
     //IHoldable currentPet;
 
@@ -40,7 +44,33 @@ public class Owner : Interactables
 
     public override void OnInteract(PlayerInteract player)
     {
-        player.GivePet();
+        if (player.isHoldingObject)
+        {
+            player.GivePet(); // already holding a pet -> treat click as "hand it over"
+        }
+        else
+        {
+            OpenDialogue();
+        }
+    }
+
+    void OpenDialogue()
+    {
+        if (currentPet == null || dialogueBox == null) return;
+
+        string habitText = (currentPet.CurrentHabit as IDialogueDescribable)?.GetDialogueText()
+                            ?? "Hmm, not sure what it likes to do.";
+        string actionText = (currentPet.CurrentAction as IDialogueDescribable)?.GetDialogueText()
+                            ?? "Hmm, not sure what it does.";
+
+        System.Collections.Generic.List<DialoguePage> pages = new System.Collections.Generic.List<DialoguePage>
+        {
+            new DialoguePage { text = "Do you see my cat?", icon = catIcon },
+            new DialoguePage { text = habitText, icon = null },
+            new DialoguePage { text = actionText, icon = null },
+        };
+
+        dialogueBox.Show(pages);
     }
 
     public bool GetPet(IHoldable heldPet)
@@ -79,6 +109,8 @@ public class Owner : Interactables
         //Despawn pet
         //PetManager.Instance.DespawnPet(currentPet);
 
+        dialogueBox?.Hide();
+
         textPetId.text = null;
         currentPet = null;
         currentOwnerData = null;
@@ -98,6 +130,8 @@ public class Owner : Interactables
 
         //Despawn pet
         PetManager.Instance.DespawnPet(currentPet);
+
+        dialogueBox?.Hide();
 
         textPetId.text = null;
         currentPet.isOwnerArrived = false;
