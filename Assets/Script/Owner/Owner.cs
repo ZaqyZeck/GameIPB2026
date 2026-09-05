@@ -57,6 +57,8 @@ public class Owner : Interactables
 
     public override void OnInteract(PlayerInteract player)
     {
+        Debug.Log($"[Owner] OnInteract called on {name}. isHoldingObject={player.isHoldingObject}");
+
         if (player.isHoldingObject)
         {
             player.GivePet(); // already holding a pet -> treat click as "hand it over"
@@ -69,8 +71,18 @@ public class Owner : Interactables
 
     private void OpenDialogue()
     {
-        if (currentPet == null || currentPet.petData == null) return;
-        if (dialogueBox == null || PlayerDialogueController.Instance == null) return;
+        Debug.Log($"[Owner] OpenDialogue called on {name}. currentPet={currentPet}, petData={currentPet?.petData}, dialogueBox={dialogueBox}, controllerInstance={PlayerDialogueController.Instance}");
+
+        if (currentPet == null || currentPet.petData == null)
+        {
+            Debug.LogWarning($"[Owner] Aborted on {name}: currentPet or petData is null");
+            return;
+        }
+        if (dialogueBox == null || PlayerDialogueController.Instance == null)
+        {
+            Debug.LogWarning($"[Owner] Aborted on {name}: dialogueBox or PlayerDialogueController.Instance is null");
+            return;
+        }
 
         IHabitBehavior habit = PetBehaviorFactory.GetHabitBehavior(currentPet.petData.hiddenHabit);
         IActionBehavior action = PetBehaviorFactory.GetActionBehavior(currentPet.petData.hiddenAction);
@@ -87,6 +99,7 @@ public class Owner : Interactables
             new DialoguePage { text = actionText, icon = null },
         };
 
+        Debug.Log($"[Owner] Starting conversation on {name} with {pages.Count} pages");
         PlayerDialogueController.Instance.StartConversation(dialogueBox, pages, advanceLines, farewellLines);
     }
 
@@ -111,7 +124,10 @@ public class Owner : Interactables
         currentPet = wantedPet;
         currentOwnerData = newOwnerData;
         ownerName = currentOwnerData.ownerName;
-        if(textPetId != null ) textPetId.text = currentPet.petId.ToString();
+
+        if (textPetId != null) textPetId.text = currentPet.petId.ToString();
+        else Debug.LogWarning($"[Owner] textPetId is not assigned on {name}");
+
         interactCollider.enabled = true;
         isInLine = true;
 
@@ -123,7 +139,9 @@ public class Owner : Interactables
         if (!isInLine) return;
 
         PlayerDialogueController.Instance?.CancelConversationFor(dialogueBox);
-        textPetId.text = null;
+
+        if (textPetId != null) textPetId.text = null;
+
         currentPet = null;
         currentOwnerData = null;
         ownerName = null;
@@ -141,7 +159,9 @@ public class Owner : Interactables
 
         PetManager.Instance.DespawnPet(currentPet);
         PlayerDialogueController.Instance?.CancelConversationFor(dialogueBox);
-        textPetId.text = null;
+
+        if (textPetId != null) textPetId.text = null;
+
         currentPet.isOwnerArrived = false;
         currentPet = null;
         currentOwnerData = null;

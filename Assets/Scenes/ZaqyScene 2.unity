@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 18368239}
   - component: {fileID: 18368238}
   - component: {fileID: 18368237}
+  - component: {fileID: 18368240}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -359,6 +360,22 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &18368240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18368235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e129162c4ff524f8c8f6d272f82fc9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueBox
+  boxRoot: {fileID: 755649798}
+  dialogueText: {fileID: 1938365295}
+  iconImage: {fileID: 0}
+  charsPerSecond: 30
 --- !u!1 &90349205
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,7 +556,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 105957971}
   interactCollider: {fileID: 105957969}
   textPetId: {fileID: 0}
-  dialogueBox: {fileID: 0}
+  dialogueBox: {fileID: 18368240}
   catIcon: {fileID: 0}
   advanceLines:
   - Could you tell me more?
@@ -1712,14 +1729,13 @@ GameObject:
   - component: {fileID: 698011461}
   - component: {fileID: 698011464}
   - component: {fileID: 698011463}
-  - component: {fileID: 698011465}
   m_Layer: 5
   m_Name: TextBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &698011460
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1738,7 +1754,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 1153.7668, y: 93.2}
-  m_SizeDelta: {x: 41.40625, y: 74.72}
+  m_SizeDelta: {x: 0, y: 74.72}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &698011461
 MonoBehaviour:
@@ -1818,22 +1834,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 2
   m_VerticalFit: 0
---- !u!114 &698011465
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 698011459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e129162c4ff524f8c8f6d272f82fc9ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueBox
-  boxRoot: {fileID: 698011459}
-  dialogueText: {fileID: 709876279}
-  iconImage: {fileID: 0}
-  charsPerSecond: 30
 --- !u!1 &709876277
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,9 +1866,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 698011460}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -27.36}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &709876279
@@ -1893,15 +1893,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 99efcc14e2e334b609b0ee7c46b305a7, type: 2}
+  m_sharedMaterial: {fileID: 8305750598324877322, guid: 99efcc14e2e334b609b0ee7c46b305a7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1918,8 +1918,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2231,7 +2231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &755649799
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2250,7 +2250,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 834.2562, y: 93.2}
-  m_SizeDelta: {x: 41.40625, y: 74.72}
+  m_SizeDelta: {x: 0, y: 74.72}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &755649800
 MonoBehaviour:
@@ -2888,6 +2888,7 @@ GameObject:
   - component: {fileID: 1243620964}
   - component: {fileID: 1243620963}
   - component: {fileID: 1243620962}
+  - component: {fileID: 1243620965}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2979,6 +2980,22 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 2
   m_TargetDisplay: 0
+--- !u!114 &1243620965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243620960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e129162c4ff524f8c8f6d272f82fc9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueBox
+  boxRoot: {fileID: 698011459}
+  dialogueText: {fileID: 709876279}
+  iconImage: {fileID: 0}
+  charsPerSecond: 30
 --- !u!1 &1256394991
 GameObject:
   m_ObjectHideFlags: 0
@@ -3100,7 +3117,6 @@ MonoBehaviour:
   boxRoot: {fileID: 1416103033}
   reactionText: {fileID: 163164849}
   charsPerSecond: 30
-  defaultHideDelay: 2
 --- !u!114 &1256394997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3114,7 +3130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDialogueController
   nextButton: {fileID: 2008954158}
-  skipClickArea: {fileID: 250278517}
+  skipButton: {fileID: 250278517}
 --- !u!1 &1264324320
 GameObject:
   m_ObjectHideFlags: 0
@@ -3600,7 +3616,6 @@ GameObject:
   - component: {fileID: 1416103037}
   - component: {fileID: 1416103036}
   - component: {fileID: 1416103035}
-  - component: {fileID: 1416103039}
   m_Layer: 5
   m_Name: TextBox
   m_TagString: Untagged
@@ -3706,22 +3721,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1416103033}
   m_CullTransparentMesh: 1
---- !u!114 &1416103039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1416103033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ab3fc4080e00450bbaad8941192c9f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerReactionBox
-  boxRoot: {fileID: 1416103033}
-  reactionText: {fileID: 163164849}
-  charsPerSecond: 30
-  defaultHideDelay: 2
 --- !u!1 &1508637204
 GameObject:
   m_ObjectHideFlags: 0
@@ -3811,7 +3810,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1508637208}
   interactCollider: {fileID: 1508637206}
   textPetId: {fileID: 0}
-  dialogueBox: {fileID: 698011465}
+  dialogueBox: {fileID: 1243620965}
   catIcon: {fileID: 0}
   advanceLines:
   - Could you tell me more?
@@ -4587,9 +4586,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 755649799}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -27.36}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1938365295
@@ -4614,15 +4613,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 99efcc14e2e334b609b0ee7c46b305a7, type: 2}
+  m_sharedMaterial: {fileID: 8305750598324877322, guid: 99efcc14e2e334b609b0ee7c46b305a7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -4639,8 +4638,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

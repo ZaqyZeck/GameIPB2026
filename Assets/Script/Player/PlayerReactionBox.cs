@@ -13,7 +13,6 @@ public class PlayerReactionBox : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] float charsPerSecond = 30f;
-    [SerializeField] float defaultHideDelay = 2f;
 
     Coroutine activeRoutine;
     Action pendingCallback;
@@ -27,24 +26,33 @@ public class PlayerReactionBox : MonoBehaviour
     }
 
     /// <summary>
-    /// Types out the given line. If hideDelay is negative, the default hide delay is used.
-    /// Pass 0 to leave it up indefinitely until Hide() is called (used during conversations,
-    /// so the controller decides exactly when it disappears).
-    /// onTypingComplete fires as soon as typing finishes, before any auto-hide delay.
+    /// Activates the box with empty text, without typing anything yet.
+    /// Used at conversation start so both boxes appear together.
     /// </summary>
-    public void ShowLine(string text, float hideDelay = -1f, Action onTypingComplete = null)
+    public void ShowIdle()
+    {
+        boxRoot.SetActive(true);
+        reactionText.text = string.Empty;
+        reactionText.maxVisibleCharacters = 0;
+    }
+
+    /// <summary>
+    /// Types out a new line into the box. Box stays active/visible afterward -
+    /// caller decides when to Hide() it (e.g. only at end of conversation).
+    /// </summary>
+    public void ShowLine(string text, Action onTypingComplete = null)
     {
         if (string.IsNullOrEmpty(text)) return;
 
         if (activeRoutine != null) StopCoroutine(activeRoutine);
         pendingCallback = onTypingComplete;
-        activeRoutine = StartCoroutine(TypeThenHide(text, hideDelay < 0f ? defaultHideDelay : hideDelay));
+        activeRoutine = StartCoroutine(TypeText(text));
     }
 
-    public void ShowRandomLine(string[] lines, float hideDelay = -1f, Action onTypingComplete = null)
+    public void ShowRandomLine(string[] lines, Action onTypingComplete = null)
     {
         if (lines == null || lines.Length == 0) return;
-        ShowLine(lines[UnityEngine.Random.Range(0, lines.Length)], hideDelay, onTypingComplete);
+        ShowLine(lines[UnityEngine.Random.Range(0, lines.Length)], onTypingComplete);
     }
 
     public void CompleteTyping()
@@ -54,13 +62,20 @@ public class PlayerReactionBox : MonoBehaviour
         FinishTyping();
     }
 
-    IEnumerator TypeThenHide(string fullText, float hideDelay)
+    IEnumerator TypeText(string fullText)
     {
         boxRoot.SetActive(true);
         IsTyping = true;
+
         reactionText.text = fullText;
         reactionText.maxVisibleCharacters = 0;
         reactionText.ForceMeshUpdate();
+
+        if (reactionText.textInfo.characterCount == 0)
+        {
+            yield return null;
+            reactionText.ForceMeshUpdate();
+        }
 
         int totalChars = reactionText.textInfo.characterCount;
         int visible = 0;
@@ -72,13 +87,6 @@ public class PlayerReactionBox : MonoBehaviour
         }
 
         FinishTyping();
-
-        if (hideDelay > 0f)
-        {
-            yield return new WaitForSeconds(hideDelay);
-            Hide();
-        }
-        // hideDelay == 0 means "stay up until told otherwise" - do nothing further.
     }
 
     void FinishTyping()

@@ -31,13 +31,19 @@ public class DialogueBox : MonoBehaviour
     public void ShowPage(DialoguePage page, Action onTypingComplete = null)
     {
         boxRoot.SetActive(true);
+        Debug.Log($"[DialogueBox] boxRoot active state is now: {boxRoot.activeInHierarchy} (activeSelf: {boxRoot.activeSelf}), name={boxRoot.name}");
+
         if (iconImage != null)
         {
             iconImage.gameObject.SetActive(page.icon != null);
             iconImage.sprite = page.icon;
         }
+        else if (page.icon != null)
+        {
+            Debug.LogWarning($"[DialogueBox] Page wants an icon but iconImage is not assigned on {name}");
+        }
 
-            if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         pendingCallback = onTypingComplete;
         typingCoroutine = StartCoroutine(TypeText(page.text));
     }

@@ -9,7 +9,7 @@ public class PlayerDialogueController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Button nextButton;
-    [SerializeField] private Button skipClickArea; // transparent, covers the boxes; click = skip current typing
+    [SerializeField] private Button skipButton;
 
     private DialogueBox activeOwnerBox;
     private List<DialoguePage> pages;
@@ -23,8 +23,9 @@ public class PlayerDialogueController : MonoBehaviour
     {
         Instance = this;
         nextButton.onClick.AddListener(OnNextClicked);
-        skipClickArea.onClick.AddListener(OnSkipClicked);
+        skipButton.onClick.AddListener(OnSkipClicked);
         nextButton.gameObject.SetActive(false);
+        skipButton.gameObject.SetActive(false);
     }
 
     public void StartConversation(DialogueBox ownerBox, List<DialoguePage> newPages, string[] newAdvanceLines, string[] newFarewellLines)
@@ -36,13 +37,12 @@ public class PlayerDialogueController : MonoBehaviour
         currentPageIndex = 0;
 
         PlayerMovement.Instance?.SetMovementLocked(true);
+
+        // Both boxes come up together and stay up for the whole conversation.
+        PlayerReactionBox.Instance?.ShowIdle();
         ShowOwnerPage(currentPageIndex);
     }
 
-    /// <summary>
-    /// Force-closes the conversation immediately (e.g. owner's patience ran out).
-    /// Only acts if this owner's box is the one currently active.
-    /// </summary>
     public void CancelConversationFor(DialogueBox ownerBox)
     {
         if (activeOwnerBox != ownerBox) return;
@@ -50,6 +50,7 @@ public class PlayerDialogueController : MonoBehaviour
         activeOwnerBox?.Hide();
         PlayerReactionBox.Instance?.Hide();
         nextButton.gameObject.SetActive(false);
+        skipButton.gameObject.SetActive(false);
         waitingForNext = false;
         activeOwnerBox = null;
         pages = null;
@@ -67,6 +68,7 @@ public class PlayerDialogueController : MonoBehaviour
 
         waitingForNext = false;
         nextButton.gameObject.SetActive(false);
+        skipButton.gameObject.SetActive(true);
         activeOwnerBox.ShowPage(pages[index], OnOwnerLineFinishedTyping);
     }
 
@@ -74,24 +76,12 @@ public class PlayerDialogueController : MonoBehaviour
     {
         waitingForNext = true;
         nextButton.gameObject.SetActive(true);
+        skipButton.gameObject.SetActive(false);
     }
 
     private void OnNextClicked()
     {
-        // Clicking Next while something is mid-type just finishes it instantly.
-        if (activeOwnerBox != null && activeOwnerBox.IsTyping)
-        {
-            activeOwnerBox.CompleteTyping();
-            return;
-        }
-        if (PlayerReactionBox.Instance != null && PlayerReactionBox.Instance.IsTyping)
-        {
-            PlayerReactionBox.Instance.CompleteTyping();
-            return;
-        }
-
         if (!waitingForNext) return;
-
         AdvanceConversation();
     }
 
@@ -115,12 +105,14 @@ public class PlayerDialogueController : MonoBehaviour
         currentPageIndex++;
         bool isLastPage = currentPageIndex >= pages.Count;
 
-        activeOwnerBox.Hide(); // owner's line steps aside while the player responds
-
+        // No hiding here anymore - the owner box just keeps showing its last
+        // line while the player's box updates with a new one.
         string[] lineBank = isLastPage ? farewellLines : advanceLines;
         string line = (lineBank != null && lineBank.Length > 0)
             ? lineBank[UnityEngine.Random.Range(0, lineBank.Length)]
             : null;
+
+        skipButton.gameObject.SetActive(!string.IsNullOrEmpty(line));
 
         if (string.IsNullOrEmpty(line))
         {
@@ -128,18 +120,21 @@ public class PlayerDialogueController : MonoBehaviour
             return;
         }
 
-        PlayerReactionBox.Instance.ShowLine(line, 0f, () => OnPlayerLineFinished(isLastPage));
+        PlayerReactionBox.Instance.ShowLine(line, () => OnPlayerLineFinished(isLastPage));
     }
 
     private void OnPlayerLineFinished(bool isLastPage)
     {
+        skipButton.gameObject.SetActive(false);
+
         if (isLastPage)
         {
             EndConversation();
         }
         else
         {
-            PlayerReactionBox.Instance?.Hide();
+            // Owner box updates to the next page while player's box just keeps
+            // showing its last reaction line underneath - nothing gets hidden.
             ShowOwnerPage(currentPageIndex);
         }
     }
@@ -150,9 +145,10 @@ public class PlayerDialogueController : MonoBehaviour
         activeOwnerBox = null;
         pages = null;
         nextButton.gameObject.SetActive(false);
+        skipButton.gameObject.SetActive(false);
         waitingForNext = false;
 
         PlayerMovement.Instance?.SetMovementLocked(false);
-        PlayerReactionBox.Instance?.HideAfterDelay(1.5f); // let the farewell line linger briefly
+        PlayerReactionBox.Instance?.HideAfterDelay(1.5f);
     }
 }
