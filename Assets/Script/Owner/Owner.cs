@@ -111,7 +111,7 @@ public class Owner : Interactables
         currentPet = wantedPet;
         currentOwnerData = newOwnerData;
         ownerName = currentOwnerData.ownerName;
-        textPetId.text = currentPet.petId.ToString();
+        if(textPetId != null ) textPetId.text = currentPet.petId.ToString();
         interactCollider.enabled = true;
         isInLine = true;
 

@@ -109,12 +109,15 @@ public class AuthenUI : MonoBehaviour
             return;
         }
 
+        Debug.Log("Registering...");
         SetLoading(true);
         ClearStatus();
         await AuthenticationManager.Instance.RegisterAsync(
             registerUsernameInput.text.Trim(),
             registerPasswordInput.text);
         SetLoading(false);
+        Debug.Log("Done Registering...");
+
     }
 
     private void OnSignOutClicked()

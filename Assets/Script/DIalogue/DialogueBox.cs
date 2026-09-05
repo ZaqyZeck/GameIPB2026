@@ -31,11 +31,13 @@ public class DialogueBox : MonoBehaviour
     public void ShowPage(DialoguePage page, Action onTypingComplete = null)
     {
         boxRoot.SetActive(true);
+        if (iconImage != null)
+        {
+            iconImage.gameObject.SetActive(page.icon != null);
+            iconImage.sprite = page.icon;
+        }
 
-        iconImage.gameObject.SetActive(page.icon != null);
-        iconImage.sprite = page.icon;
-
-        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+            if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         pendingCallback = onTypingComplete;
         typingCoroutine = StartCoroutine(TypeText(page.text));
     }
