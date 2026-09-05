@@ -21,6 +21,7 @@ public class PetManager : MonoBehaviour
     public bool isPetAvailable;
 
     private int petIdCounter = 0;
+    private Pet newestPet;
     private void Awake()
     {
         Instance = this;
@@ -71,7 +72,7 @@ public class PetManager : MonoBehaviour
         Debug.Log($"Pet mendapatkan PetData: {petData.petName}");
 
         Pet newPet = Instantiate(petPrefabs[0], spawnPosition, Quaternion.identity).GetComponent<Pet>();
-
+        newestPet = newPet;
         petIdCounter++;
         newPet.petId = petIdCounter;
 
@@ -120,7 +121,7 @@ public class PetManager : MonoBehaviour
 
         foreach (Pet ghostPet in ghostPets)
         {
-            if (!ghostPet.isOwnerArrived)
+            if (!ghostPet.isOwnerArrived && ghostPet.isAccepted)
             {
                 availablePets.Add(ghostPet);
             }
@@ -233,16 +234,15 @@ public class PetManager : MonoBehaviour
 
     public bool CanSpawnPet()
     {
-        if (ghostPets.Count >= maxPet)
-            return false;
+        if (ghostPets.Count >= maxPet) return false;
 
-        if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
-            return false;
+        if (newestPet != null) if (!newestPet.isAccepted) return false;
+
+        if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0) return false;
 
         foreach (PetData petData in petDatas.petDatas)
         {
-            if (!CheckDoublePetData(petData))
-                return true;
+            if (!CheckDoublePetData(petData)) return true;
         }
 
         return false;
@@ -253,7 +253,7 @@ public class PetManager : MonoBehaviour
         List<Pet> result = new();
         foreach (Pet pet in ghostPets)
         {
-            if (pet.BehaviorController.HasHiddenAction(trait))
+            if (pet.BehaviorController.HasHiddenAction(trait) && pet.isAccepted)
                 result.Add(pet);
         }
         return result;

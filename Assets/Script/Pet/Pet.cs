@@ -7,6 +7,7 @@ public class Pet : MonoBehaviour, IHoldable
 {
     public int petId;
     public bool isOwnerArrived;
+    public bool isAccepted;
     public PetData petData;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] PetMovement movement;

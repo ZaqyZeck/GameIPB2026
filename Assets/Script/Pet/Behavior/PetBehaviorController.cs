@@ -32,7 +32,7 @@ public class PetBehaviorController : MonoBehaviour
 
     private void Update()
     {
-        if (pet.petData == null || isStopBehaviour) return;
+        if (pet.petData == null || isStopBehaviour || !pet.isAccepted) return;
         if (pet.GetInteractable().isPickuped) return;
 
         if (!habitRevealed)

@@ -16,7 +16,11 @@ public class InteractablePet : Interactables
 
     public override void OnInteract(PlayerInteract player)
     {
-        
+        if (!ownerPet.isAccepted)
+        {
+            GotAccepted();
+            return;
+        }
         if (ownerPet.petData.hiddenAction != ActionTrait.Football && ownerPet.petData.hiddenAction != ActionTrait.CatToy)
         {
             player.PickUpTargetObject();
@@ -107,5 +111,10 @@ public class InteractablePet : Interactables
         currentToy.gameObject.transform.SetParent(interactableParent);
         currentToy.DropBehaviour();
         currentToy = null;
+    }
+
+    void GotAccepted()
+    {
+        ownerPet.isAccepted = true;
     }
 }
