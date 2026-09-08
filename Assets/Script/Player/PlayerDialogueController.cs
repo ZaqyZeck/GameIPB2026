@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem; // Added for the New Input System
 
 public class PlayerDialogueController : MonoBehaviour
 {
@@ -28,6 +29,38 @@ public class PlayerDialogueController : MonoBehaviour
         skipButton.gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        bool fastForwardInput = false;
+
+        // Check for any keyboard key, left mouse click, or the bottom gamepad button (A/Cross)
+        if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
+        {
+            fastForwardInput = true;
+        }
+        else if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            fastForwardInput = true;
+        }
+        else if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)
+        {
+            fastForwardInput = true;
+        }
+
+        // Fast-forward typing
+        if (fastForwardInput)
+        {
+            if (activeOwnerBox != null && activeOwnerBox.IsTyping)
+            {
+                activeOwnerBox.CompleteTyping();
+            }
+            else if (PlayerReactionBox.Instance != null && PlayerReactionBox.Instance.IsTyping)
+            {
+                PlayerReactionBox.Instance.CompleteTyping();
+            }
+        }
+    }
+
     public void StartConversation(DialogueBox ownerBox, List<DialoguePage> newPages, string[] newAdvanceLines, string[] newFarewellLines)
     {
         activeOwnerBox = ownerBox;
@@ -38,7 +71,8 @@ public class PlayerDialogueController : MonoBehaviour
 
         PlayerMovement.Instance?.SetMovementLocked(true);
 
-        // Both boxes come up together and stay up for the whole conversation.
+        skipButton.gameObject.SetActive(true);
+
         PlayerReactionBox.Instance?.ShowIdle();
         ShowOwnerPage(currentPageIndex);
     }
@@ -68,7 +102,6 @@ public class PlayerDialogueController : MonoBehaviour
 
         waitingForNext = false;
         nextButton.gameObject.SetActive(false);
-        skipButton.gameObject.SetActive(true);
         activeOwnerBox.ShowPage(pages[index], OnOwnerLineFinishedTyping);
     }
 
@@ -76,7 +109,6 @@ public class PlayerDialogueController : MonoBehaviour
     {
         waitingForNext = true;
         nextButton.gameObject.SetActive(true);
-        skipButton.gameObject.SetActive(false);
     }
 
     private void OnNextClicked()
@@ -87,14 +119,7 @@ public class PlayerDialogueController : MonoBehaviour
 
     private void OnSkipClicked()
     {
-        if (activeOwnerBox != null && activeOwnerBox.IsTyping)
-        {
-            activeOwnerBox.CompleteTyping();
-        }
-        else if (PlayerReactionBox.Instance != null && PlayerReactionBox.Instance.IsTyping)
-        {
-            PlayerReactionBox.Instance.CompleteTyping();
-        }
+        EndConversation();
     }
 
     private void AdvanceConversation()
@@ -105,14 +130,10 @@ public class PlayerDialogueController : MonoBehaviour
         currentPageIndex++;
         bool isLastPage = currentPageIndex >= pages.Count;
 
-        // No hiding here anymore - the owner box just keeps showing its last
-        // line while the player's box updates with a new one.
         string[] lineBank = isLastPage ? farewellLines : advanceLines;
         string line = (lineBank != null && lineBank.Length > 0)
             ? lineBank[UnityEngine.Random.Range(0, lineBank.Length)]
             : null;
-
-        skipButton.gameObject.SetActive(!string.IsNullOrEmpty(line));
 
         if (string.IsNullOrEmpty(line))
         {
@@ -125,16 +146,12 @@ public class PlayerDialogueController : MonoBehaviour
 
     private void OnPlayerLineFinished(bool isLastPage)
     {
-        skipButton.gameObject.SetActive(false);
-
         if (isLastPage)
         {
             EndConversation();
         }
         else
         {
-            // Owner box updates to the next page while player's box just keeps
-            // showing its last reaction line underneath - nothing gets hidden.
             ShowOwnerPage(currentPageIndex);
         }
     }
