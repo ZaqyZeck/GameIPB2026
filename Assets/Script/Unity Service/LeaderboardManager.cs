@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Unity.Services.Authentication;
+using Unity.Services.Core;
 using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Exceptions;
 using Unity.Services.Leaderboards.Models;
@@ -48,6 +49,38 @@ public class LeaderboardManager : MonoBehaviour
     }
 
     // ---------------------------------------------------------------
+    //  WORKAROUND for a known Unity bug (Leaderboards package 2.3.x):
+    //  "LeaderboardsService.Instance" intermittently throws
+    //  ServicesInitializationException ("has not been initialized")
+    //  even right after a successful call through the same property.
+    //  See: Unity Discussions - "LeaderboardsService.Instance is null
+    //  even after UnityServices have been initialized"
+    //  Fix: fall back to resolving the service via the core registry.
+    // ---------------------------------------------------------------
+    private ILeaderboardsService _leaderboardsService;
+
+    private ILeaderboardsService Leaderboards
+    {
+        get
+        {
+            try
+            {
+                // The normal, documented path.
+                return LeaderboardsService.Instance;
+            }
+            catch (Exception)
+            {
+                // Known-bug fallback: resolve directly from the core service registry.
+                if (_leaderboardsService == null)
+                {
+                    _leaderboardsService = UnityServices.Instance.GetLeaderboardsService();
+                }
+                return _leaderboardsService;
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------
     //  ADD SCORE
     // ---------------------------------------------------------------
 
@@ -58,15 +91,19 @@ public class LeaderboardManager : MonoBehaviour
     /// </summary>
     public async Task<LeaderboardEntry> AddScoreAsync(double score)
     {
-        if (!EnsureSignedIn()) return null;
+        CheckServices();
+        DebugPrintLeaderboardIdChars(); // TEMP: remove once the id issue is confirmed fixed
+        if (!await EnsureReadyAsync()) return null;
 
         try
         {
             await EnsurePlayerNameIsSetAsync();
 
-            LeaderboardEntry entry = await LeaderboardsService.Instance.AddPlayerScoreAsync(leaderboardId, score);
+            LeaderboardEntry entry = await Leaderboards.AddPlayerScoreAsync(leaderboardId, score);
+
             Log($"Score submitted: {entry.PlayerName} -> {entry.Score} (rank {entry.Rank})");
             OnScoreAdded?.Invoke(entry);
+
             return entry;
         }
         catch (LeaderboardsException ex)
@@ -93,12 +130,13 @@ public class LeaderboardManager : MonoBehaviour
     /// </summary>
     public async Task<LeaderboardPageResult> GetTopScoresAsync(int limit = 50, int offset = 0)
     {
+        if (!await EnsureReadyAsync()) return null;
         if (!EnsureSignedIn()) return new LeaderboardPageResult(new List<LeaderboardEntry>(), 0);
 
         try
         {
             var options = new GetScoresOptions { Offset = offset, Limit = limit };
-            LeaderboardScoresPage scoresPage = await LeaderboardsService.Instance.GetScoresAsync(leaderboardId, options);
+            LeaderboardScoresPage scoresPage = await Leaderboards.GetScoresAsync(leaderboardId, options);
 
             Log($"Fetched {scoresPage.Results.Count} leaderboard entries. Offset: {offset}, Total: {scoresPage.Total}");
 
@@ -131,11 +169,12 @@ public class LeaderboardManager : MonoBehaviour
     /// </summary>
     public async Task<LeaderboardEntry> GetPlayerScoreAsync()
     {
+        if (!await EnsureReadyAsync()) return null;
         if (!EnsureSignedIn()) return null;
 
         try
         {
-            LeaderboardEntry entry = await LeaderboardsService.Instance.GetPlayerScoreAsync(leaderboardId);
+            LeaderboardEntry entry = await Leaderboards.GetPlayerScoreAsync(leaderboardId);
             OnPlayerScoreLoaded?.Invoke(entry);
             return entry;
         }
@@ -182,22 +221,35 @@ public class LeaderboardManager : MonoBehaviour
     {
         try
         {
+            if (AuthenticationManager.Instance == null)
+            {
+                LogError("AuthenticationManager not found.");
+                return;
+            }
+
+            string username = AuthenticationManager.Instance.PlayerName;
+
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                LogError("Username is empty. Cannot set leaderboard player name.");
+                return;
+            }
+
             string currentName = await AuthenticationService.Instance.GetPlayerNameAsync();
 
-            if (string.IsNullOrEmpty(currentName) || currentName.StartsWith(AuthenticationService.Instance.PlayerId.Substring(0, 5)))
+            if (currentName != username)
             {
-                string desiredName = AuthenticationManager.Instance != null && !string.IsNullOrEmpty(AuthenticationManager.Instance.PlayerName)
-                    ? AuthenticationManager.Instance.PlayerName
-                    : $"Player{UnityEngine.Random.Range(1000, 9999)}";
-
-                await AuthenticationService.Instance.UpdatePlayerNameAsync(desiredName);
-                Log($"Player name set to '{desiredName}'.");
+                await AuthenticationService.Instance.UpdatePlayerNameAsync(username);
+                Log($"Leaderboard player name updated to '{username}'.");
+            }
+            else
+            {
+                Log($"Leaderboard player name already set to '{username}'.");
             }
         }
         catch (Exception ex)
         {
-            // Non-fatal: if this fails, the score submission can still proceed.
-            LogError($"Could not set player name: {ex.Message}");
+            LogError($"Could not set leaderboard player name: {ex.Message}");
         }
     }
 
@@ -219,5 +271,50 @@ public class LeaderboardManager : MonoBehaviour
     private void LogError(string message)
     {
         if (logDebugMessages) Debug.LogError($"[Leaderboard] {message}");
+    }
+
+    private async Task<bool> EnsureReadyAsync()
+    {
+        if (AuthenticationManager.Instance == null)
+        {
+            LogError("AuthenticationManager not found.");
+            OnError?.Invoke("Authentication Manager is missing.");
+            return false;
+        }
+
+        await AuthenticationManager.Instance.WaitForInitializationAsync();
+
+        if (!AuthenticationManager.Instance.IsInitialized)
+        {
+            LogError("Unity Services initialization failed.");
+            OnError?.Invoke("Unity Services is not ready.");
+            return false;
+        }
+
+        if (AuthenticationService.Instance == null || !AuthenticationService.Instance.IsSignedIn)
+        {
+            LogError("Player is not signed in.");
+            OnError?.Invoke("You must be logged in to use the leaderboard.");
+            return false;
+        }
+
+        return true;
+    }
+
+    private void DebugPrintLeaderboardIdChars()
+    {
+        var codes = new System.Text.StringBuilder();
+        foreach (char c in leaderboardId)
+        {
+            codes.Append($"'{c}'(U+{(int)c:X4}) ");
+        }
+        Debug.Log($"[UGS CHECK] leaderboardId=\"{leaderboardId}\" length={leaderboardId.Length} chars=[{codes}]");
+    }
+
+    private void CheckServices()
+    {
+        Debug.Log($"[UGS CHECK] Unity Services State: {UnityServices.State}");
+        Debug.Log($"[UGS CHECK] Authentication Signed In: {AuthenticationService.Instance != null && AuthenticationService.Instance.IsSignedIn}");
+        Debug.Log($"[UGS CHECK] Player ID: {AuthenticationService.Instance?.PlayerId}");
     }
 }

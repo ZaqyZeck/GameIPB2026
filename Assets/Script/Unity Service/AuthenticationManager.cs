@@ -18,7 +18,7 @@ using UnityEngine;
 public class AuthenticationManager : MonoBehaviour
 {
     public static AuthenticationManager Instance { get; private set; }
-
+    private Task initializationTask;
     [Header("Debug")]
     [SerializeField] private bool logDebugMessages = true;
 
@@ -38,18 +38,18 @@ public class AuthenticationManager : MonoBehaviour
 
     public bool IsInitialized { get; private set; }
 
-    private async void Awake()
+    private void Awake()
     {
-        // Singleton pattern
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        await InitializeUnityServices();
+        initializationTask = InitializeUnityServices();
     }
 
     private void OnEnable()
@@ -83,12 +83,11 @@ public class AuthenticationManager : MonoBehaviour
             AuthenticationService.Instance.Expired -= HandleSessionExpired;
             AuthenticationService.Instance.Expired += HandleSessionExpired;
 
-            IsInitialized = true;
-            Log("Unity Services initialized.");
-            OnInitialized?.Invoke();
-
-            // Try to silently sign back in with a cached session token, if one exists.
             await TryAutoLoginAsync();
+
+            IsInitialized = true;
+            Log("Unity Services initialized and authentication ready.");
+            OnInitialized?.Invoke();
         }
         catch (Exception e)
         {
@@ -97,6 +96,13 @@ public class AuthenticationManager : MonoBehaviour
         }
     }
 
+    public async Task WaitForInitializationAsync()
+    {
+        if (initializationTask != null)
+        {
+            await initializationTask;
+        }
+    }
     /// <summary>
     /// If a valid session token is cached on this device (from a previous login),
     /// this signs the player back in automatically without needing credentials.

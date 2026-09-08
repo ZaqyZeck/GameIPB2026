@@ -2471,6 +2471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 617613898}
   - component: {fileID: 617613897}
+  - component: {fileID: 617613899}
   m_Layer: 0
   m_Name: AuthenticationManager
   m_TagString: Untagged
@@ -2506,6 +2507,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &617613899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617613896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebf83d23fc0965d4491863a31768e484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UnityServicesCheck
 --- !u!1 &667673576
 GameObject:
   m_ObjectHideFlags: 0
@@ -4297,7 +4310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8195edb60ec5d3d43b37ab2d0bc1cd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LeaderboardManager
-  leaderboardId: ' Reputationglobal_highscore'
+  leaderboardId: reputationscore
   logDebugMessages: 1
 --- !u!4 &1350483583
 Transform:
