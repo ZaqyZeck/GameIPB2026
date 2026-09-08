@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class InteractableWindow : Interactables
 {
-    [SerializeField] private GameObject[] windows;
+    [SerializeField] private GameObject windowOpen;
+    [SerializeField] private GameObject windowClose;
+    [SerializeField] private SpriteRenderer closeWindowRenderer;
+    [SerializeField] private Sprite closeWindowHover;
+    [SerializeField] private Sprite closeWindowDefault;
     [SerializeField] private float callArea = 5f;
     [SerializeField] private float openDuration = 10f;
 
@@ -32,10 +36,8 @@ public class InteractableWindow : Interactables
 
     private void OpenWindow()
     {
-        for (int i = 0; i < windows.Length; i++)
-        {
-            windows[i].SetActive(true);
-        }
+        windowOpen.SetActive(true);
+        windowClose.SetActive(false);
 
         isOpen = true;
         openTimer = openDuration;
@@ -45,10 +47,8 @@ public class InteractableWindow : Interactables
 
     private void CloseWindow()
     {
-        for (int i = 0; i < windows.Length; i++)
-        {
-            windows[i].SetActive(false);
-        }
+        windowOpen.SetActive(false);
+        windowClose.SetActive(true);
 
         isOpen = false;
         openTimer = 0f;
@@ -74,6 +74,30 @@ public class InteractableWindow : Interactables
                     pet.BehaviorController.TryExecuteAction(ActionTrait.Sunbathe);
                 });
             }
+        }
+    }
+
+    public override void OnSelectedHover()
+    {
+        TurnOnOutline(true);
+    }
+
+    public override void OnDeselectedHover()
+    {
+        TurnOnOutline(false);
+    }
+
+    void TurnOnOutline(bool isOn)
+    {
+        if (closeWindowRenderer == null) return;
+        if (isOn)
+        {
+            closeWindowRenderer.sprite = closeWindowHover;
+        }
+        else
+        {
+            //Debug.Log("dawdawwdwawda");
+            closeWindowRenderer.sprite = closeWindowDefault;
         }
     }
 }

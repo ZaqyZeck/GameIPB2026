@@ -89,7 +89,7 @@ public class LeaderboardManager : MonoBehaviour
     /// Unity Leaderboards keeps the player's best score by default
     /// (configurable as Best/Last/etc. per-leaderboard in the dashboard).
     /// </summary>
-    public async Task<LeaderboardEntry> AddScoreAsync(double score)
+    public async Task<LeaderboardEntry> AddScoreAsync(long score)
     {
         CheckServices();
         DebugPrintLeaderboardIdChars(); // TEMP: remove once the id issue is confirmed fixed
@@ -120,6 +120,28 @@ public class LeaderboardManager : MonoBehaviour
         return null;
     }
 
+    public async Task<LeaderboardEntry> SubmitAnonymousScoreAsync(long score, string playerName)
+    {
+        try
+        {
+            await AuthenticationManager.Instance.LoginAnonimAsync(playerName);
+
+            LeaderboardEntry entry = await LeaderboardManager.Instance.AddScoreAsync(score);
+
+            if (entry != null)
+            {
+                Debug.Log($"Score berhasil: {entry.Score}, Player: {entry.PlayerName}");
+
+                AuthenticationManager.Instance.SignOut(true);
+            }
+            return entry;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Gagal submit score: {ex.Message}");
+            return null;
+        }
+    }
     // ---------------------------------------------------------------
     //  GET TOP SCORES
     // ---------------------------------------------------------------

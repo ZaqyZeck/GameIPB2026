@@ -18,10 +18,12 @@ public class PetManager : MonoBehaviour
 
     [SerializeField] float spawnTimer;
     [SerializeField] Vector3 spawnPosition;
+    [SerializeField] Shader petShader; // implement shader material saat instantiatePet
     public bool isPetAvailable;
 
     private int petIdCounter = 0;
-    private Pet newestPet;
+    private PetData petDataAtDoor;
+    public bool isPetAtDoor { get; private set; }
     private void Awake()
     {
         Instance = this;
@@ -32,7 +34,7 @@ public class PetManager : MonoBehaviour
     {
         if(spawnTimer > 0 )
         {
-            if (CanSpawnPet())
+            if (CanAddPetAtDoor())
             {
                 spawnTimer -= Time.deltaTime;
             }
@@ -41,13 +43,44 @@ public class PetManager : MonoBehaviour
         else
         {
             spawnTimer = Random.Range(minSpawnTime, maxSpawnTime);
-            SpawnPet();
+            AddPetAtDoor();
         }
     }
 
-    void SpawnPet()
+    public void SpawnPet()
     {
-        if (!CanSpawnPet())
+        if (petDataAtDoor == null) return;
+        if (!TryRollUniqueTraits(petDataAtDoor))
+        {
+            Debug.Log("Gagal mendapatkan kombinasi trait (warna/habit/action) yang unik.");
+            return;
+        }
+
+        Debug.Log($"Pet mendapatkan PetData: {petDataAtDoor.petName}");
+
+        Pet newPet = Instantiate(petPrefabs[0], spawnPosition, Quaternion.identity).GetComponent<Pet>();
+        //newestPet = newPet;
+        petIdCounter++;
+        newPet.petId = petIdCounter;
+
+        AddPetToList(newPet);
+        newPet.Spawn(petDataAtDoor);
+
+        if (petShader != null)
+        {
+            Material petMaterial = new Material(petShader);
+            petMaterial.SetColor("_Color", petDataAtDoor.specialColor);
+            newPet.SetMaterial(petMaterial);
+        }
+
+        GameEventBus.OnPetSpawned?.Invoke(petDataAtDoor);
+        petDataAtDoor = null;
+        isPetAtDoor = false;
+    }
+
+    void AddPetAtDoor()
+    {
+        if (!CanAddPetAtDoor())
         {
             return;
         }
@@ -60,25 +93,9 @@ public class PetManager : MonoBehaviour
             return;
         }
 
-        // Clone so we never mutate the shared PetProfileSO asset data.
         PetData petData = template.Clone();
-
-        if (!TryRollUniqueTraits(petData))
-        {
-            Debug.Log("Gagal mendapatkan kombinasi trait (warna/habit/action) yang unik.");
-            return;
-        }
-
-        Debug.Log($"Pet mendapatkan PetData: {petData.petName}");
-
-        Pet newPet = Instantiate(petPrefabs[0], spawnPosition, Quaternion.identity).GetComponent<Pet>();
-        newestPet = newPet;
-        petIdCounter++;
-        newPet.petId = petIdCounter;
-
-        AddPetToList(newPet);
-        newPet.Spawn(petData);
-        GameEventBus.OnPetSpawned?.Invoke(petData);
+        petDataAtDoor = petData;
+        isPetAtDoor = true;
     }
 
     public void DespawnPet(Pet ghostPet)
@@ -121,7 +138,7 @@ public class PetManager : MonoBehaviour
 
         foreach (Pet ghostPet in ghostPets)
         {
-            if (!ghostPet.isOwnerArrived && ghostPet.isAccepted)
+            if (!ghostPet.isOwnerArrived)
             {
                 availablePets.Add(ghostPet);
             }
@@ -232,11 +249,11 @@ public class PetManager : MonoBehaviour
                Mathf.Abs(a.a - b.a) < eps;
     }
 
-    public bool CanSpawnPet()
+    public bool CanAddPetAtDoor()
     {
         if (ghostPets.Count >= maxPet) return false;
 
-        if (newestPet != null) if (!newestPet.isAccepted) return false;
+        if (isPetAtDoor) return false;
 
         if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0) return false;
 
@@ -253,7 +270,7 @@ public class PetManager : MonoBehaviour
         List<Pet> result = new();
         foreach (Pet pet in ghostPets)
         {
-            if (pet.BehaviorController.HasHiddenAction(trait) && pet.isAccepted)
+            if (pet.BehaviorController.HasHiddenAction(trait))
                 result.Add(pet);
         }
         return result;

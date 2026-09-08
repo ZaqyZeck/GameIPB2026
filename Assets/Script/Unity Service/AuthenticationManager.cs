@@ -334,4 +334,29 @@ public class AuthenticationManager : MonoBehaviour
             AuthenticationService.Instance.Expired -= HandleSessionExpired;
         }
     }
+
+    public async Task LoginAnonimAsync(string playerName)
+    {
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        await UbahNamaPlayer(playerName);
+    }
+
+    public async Task UbahNamaPlayer(string namaBaru)
+    {
+        try
+        {
+            // Panggil API Unity untuk memperbarui nama
+            string namaHasilUpdate = await AuthenticationService.Instance.UpdatePlayerNameAsync(namaBaru);
+            Debug.Log($"Nama player berhasil diganti menjadi: {namaHasilUpdate}");
+        }
+        catch (AuthenticationException ex)
+        {
+            Debug.LogError($"Gagal mengubah nama: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Terjadi kesalahan sistem: {ex.Message}");
+        }
+    }
 }

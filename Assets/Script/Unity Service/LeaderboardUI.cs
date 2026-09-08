@@ -78,7 +78,7 @@ public class LeaderboardUI : MonoBehaviour
         SetLoading(true);
         ShowStatus("Submitting score...");
 
-        var entry = await LeaderboardManager.Instance.AddScoreAsync(TestScoreAmount);
+        var entry = await LeaderboardManager.Instance.SubmitAnonymousScoreAsync(TestScoreAmount, "anonim");
 
         if (entry != null)
         {
@@ -278,5 +278,26 @@ public class LeaderboardUI : MonoBehaviour
     {
         if (statusText != null)
             statusText.text = message;
+    }
+
+    private async void AddScore(long scoreAmount, string playerName)
+    {
+        if (isLoading) return;
+
+        SetLoading(true);
+        ShowStatus("Submitting score...");
+
+        var entry = await LeaderboardManager.Instance.SubmitAnonymousScoreAsync(scoreAmount, "playerName");
+
+        if (entry != null)
+        {
+            ShowStatus($"Score submitted! New total: {entry.Score}");
+            await RefreshPlayerRank();
+        }
+
+        currentPage = 0;
+        await RefreshLeaderboardAsync();
+
+        SetLoading(false);
     }
 }

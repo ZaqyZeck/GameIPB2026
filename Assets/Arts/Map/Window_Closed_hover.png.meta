@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 26de17325104935428ddf1c8195d8306
+guid: c509e1e9af4a82a45a40a13a5e98a368
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4822058421816823129
-    second: pet bed_0
+      213: 5740288502826611941
+    second: Window_Closed_hover_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pet bed_0
+      name: Window_Closed_hover_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 358
-        height: 178
+        x: 229
+        y: 498
+        width: 299
+        height: 351
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7a27d69e96b941db0800000000000000
-      internalID: -4822058421816823129
+      spriteID: 5e43d3fdaf999af40800000000000000
+      internalID: 5740288502826611941
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: cff5739cc352af445bbbceca9c0dfe77
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -146,11 +146,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":358.0,"y":178.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      pet bed_0: -4822058421816823129
+      Window_Closed_hover_0: 5740288502826611941
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

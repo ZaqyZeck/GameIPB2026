@@ -7,7 +7,7 @@ public class Pet : MonoBehaviour, IHoldable
 {
     public int petId;
     public bool isOwnerArrived;
-    public bool isAccepted;
+    //public bool isAccepted;
     public PetData petData;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] PetMovement movement;
@@ -18,7 +18,8 @@ public class Pet : MonoBehaviour, IHoldable
     [SerializeField] Vector3 targetSpawn;
     [SerializeField] TextMeshPro textPetId;
     [SerializeField] TextMeshPro textPetAction;
-
+    [SerializeField] SpriteRenderer petRenderer;
+    public Material PetMaterial {  get; private set; }
     public PetMovement Movement => movement;
     public PetAnimation Animation => petAnimation;
     public Transform Transform => transform;
@@ -87,5 +88,11 @@ public class Pet : MonoBehaviour, IHoldable
     public void ChangeTextAction(string text)
     {
         textPetAction.text = text;
+    }
+
+    public void SetMaterial(Material material)
+    {
+        if (petRenderer != null) petRenderer.material = material;
+        PetMaterial = material;
     }
 }

@@ -541,6 +541,8 @@ MonoBehaviour:
   targetSpawn: {x: 5.75, y: -3.75, z: 0}
   textPetId: {fileID: 479771380384152824}
   textPetAction: {fileID: 9113636316332043246}
+  petRenderer: {fileID: 3931222213587269898}
+  petMaterial: {fileID: 0}
 --- !u!114 &6903472403721547917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,6 +574,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetBehaviorController
   pet: {fileID: 5936869539581823035}
+  habitInterval: 10
+  habitRevealed: 0
+  isDoingAction: 0
+  isDoingHabit: 0
+  isStopBehaviour: 0
+  isWandering: 0
 --- !u!114 &3624374341971409518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -604,6 +612,7 @@ MonoBehaviour:
   dropDistance: 0.5
   dropDuration: 0.3
   easeDrop: 1
+  petMaterial: {fileID: 0}
   isPickuped: 0
 --- !u!114 &1463753482885765304
 MonoBehaviour:

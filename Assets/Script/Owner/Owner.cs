@@ -11,6 +11,7 @@ public class Owner : Interactables
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Collider2D interactCollider;
     [SerializeField] private TextMeshPro textPetId;
+    [SerializeField] private Material ownerMaterial;
 
     [Header("Patience UI")]
     [Tooltip("Assign the 'Fill Mask' here so it shrinks over time.")]
@@ -63,6 +64,11 @@ public class Owner : Interactables
             patienceTimer = patienceAmount;
             DespawnWithoutPet();
         }
+    }
+
+    private void Start()
+    {
+        if (ownerMaterial != null) ownerMaterial.SetFloat("_outlineOn", 0f);
     }
 
     private void UpdatePatienceUI()
@@ -176,5 +182,30 @@ public class Owner : Interactables
     public OwnerData GetOwnerData()
     {
         return currentOwnerData;
+    }
+
+
+    public override void OnSelectedHover()
+    {
+        TurnOnOutline(true);
+    }
+
+    public override void OnDeselectedHover()
+    {
+        TurnOnOutline(false);
+    }
+
+    void TurnOnOutline(bool isOn)
+    {
+        if (ownerMaterial == null) return;
+        if (isOn)
+        {
+            ownerMaterial.SetFloat("_outlineOn", 1.0f);
+        }
+        else
+        {
+            //Debug.Log("dawdawwdwawda");
+            ownerMaterial.SetFloat("_outlineOn", 0f);
+        }
     }
 }

@@ -9,18 +9,18 @@ public class InteractablePet : Interactables
     [SerializeField] private float dropDistance = 0.5f;
     [SerializeField] private float dropDuration = 0.3f;
     [SerializeField] private Ease easeDrop = Ease.Linear;
+    //[SerializeField] private Material petMaterial;
     //[SerializeField] private Transform interactableParent;
     public bool isPickuped;
     bool isPlaying;
     InteractableObject currentToy;
 
+    //private void Start()
+    //{
+    //    if (petMaterial != null) petMaterial.SetFloat("_outlineOn", 0f);
+    //}
     public override void OnInteract(PlayerInteract player)
     {
-        if (!ownerPet.isAccepted)
-        {
-            GotAccepted();
-            return;
-        }
         if (ownerPet.petData.hiddenAction != ActionTrait.Football && ownerPet.petData.hiddenAction != ActionTrait.CatToy)
         {
             player.PickUpTargetObject();
@@ -113,8 +113,32 @@ public class InteractablePet : Interactables
         currentToy = null;
     }
 
-    void GotAccepted()
+    //void GotAccepted()
+    //{
+    //    ownerPet.isAccepted = true;
+    //}
+
+    public override void OnSelectedHover()
     {
-        ownerPet.isAccepted = true;
+        TurnOnOutline(true);
+    }
+
+    public override void OnDeselectedHover()
+    {
+        TurnOnOutline(false);
+    }
+
+    void TurnOnOutline(bool isOn)
+    {
+        if (ownerPet.PetMaterial == null) return;
+        if (isOn)
+        {
+            ownerPet.PetMaterial.SetFloat("_outlineOn", 1.0f);
+        }
+        else
+        {
+            //Debug.Log("dawdawwdwawda");
+            ownerPet.PetMaterial.SetFloat("_outlineOn", 0f);
+        }
     }
 }

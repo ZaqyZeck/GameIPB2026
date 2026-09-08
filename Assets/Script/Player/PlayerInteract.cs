@@ -66,16 +66,18 @@ public class PlayerInteract : MonoBehaviour
 
         Collider2D[] colliders = Physics2D.OverlapPointAll(worldPosition);
 
-        currentHoverObject = null;
-
         foreach (Collider2D collider in colliders)
         {
             if (collider.CompareTag("interactable"))
             {
                 currentHoverObject = collider.transform;
-                break;
+                Interactables interactableObject =  currentHoverObject.GetComponent<Interactables>();
+                if (interactableObject != null)  interactableObject.OnSelectedHover();
+                return;
             }
         }
+
+        DeselectHover();
     }
     public void SelectTargetObject()
     {
@@ -93,6 +95,9 @@ public class PlayerInteract : MonoBehaviour
     }
     void DeselectHover()
     {
+        if (currentHoverObject == null) return;
+        Interactables interactableObject = currentHoverObject.GetComponent<Interactables>();
+        if (interactableObject != null) interactableObject.OnDeselectedHover();
         currentHoverObject = null;
     }
 
