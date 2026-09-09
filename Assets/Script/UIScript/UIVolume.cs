@@ -4,16 +4,22 @@ using Ohm.UISystem;
 
 public class UIVolume : UIBase
 {
-    //[Header("References")]
-    // [SerializeField] private Button closeButton;
+    [Header("References")]
+    [SerializeField] private Button closeButton;
+    [SerializeField] private Slider generalVolumeSlider;
+    [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private Slider sfxVolumeSlider;
 
-    // public override void Show(bool instant = false)
-    // {
-    //     base.Show(instant);
-    // }
+    void Start()
+    {
+        SetUpButton();
+    }
 
-    // public override void Hide(bool instant = false)
-    // {
-    //     base.Hide(instant);
-    // }
+    public void SetUpButton()
+    {
+        closeButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.OnEscape();
+        });
+    }
 }

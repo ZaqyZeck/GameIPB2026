@@ -17,6 +17,7 @@ namespace Ohm.UISystem
         public static readonly Type UIPauseMenu = typeof(UIPauseMenu);
         public static readonly Type UISettings = typeof(UISettings);
         public static readonly Type UITesting = typeof(UITesting);
+        public static readonly Type UITutorial = typeof(UITutorial);
         public static readonly Type UIVolume = typeof(UIVolume);
     }
 }

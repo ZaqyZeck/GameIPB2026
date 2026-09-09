@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302976690498fb94b85bbf952d2ea4ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIGameOver
-  layer: 0
+  layer: 1
   spawnBehavior: 2
   configData:
     pauseGame: 0
@@ -412,6 +412,9 @@ MonoBehaviour:
   transitionController: {fileID: 0}
   firstSelected: {fileID: 0}
   isActive: 0
+  saveButton: {fileID: 8234415784806081330}
+  nameInputField: {fileID: 3059677978527976510}
+  scoreText: {fileID: 2646361096275184447}
 --- !u!1 &5773766648390755068
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,3 +1281,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5919841752256945086, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
   m_PrefabInstance: {fileID: 2052198088289956500}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8234415784806081330 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+  m_PrefabInstance: {fileID: 2052198088289956500}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button

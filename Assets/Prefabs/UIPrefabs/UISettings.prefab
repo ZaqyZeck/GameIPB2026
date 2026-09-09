@@ -196,6 +196,10 @@ MonoBehaviour:
   transitionController: {fileID: 0}
   firstSelected: {fileID: 0}
   isActive: 0
+  closeButton: {fileID: 6349311933969791964}
+  generalVolumeSlider: {fileID: 229234679779413759}
+  musicVolumeSlider: {fileID: 802993555227640966}
+  sfxVolumeSlider: {fileID: 2562840998922911819}
 --- !u!1001 &3900420050470087290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -204,6 +208,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2513236810007098226}
     m_Modifications:
+    - target: {fileID: 1913934286989709587, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1913934286989709587, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -8542653549661865833, guid: 3fd89e34177993845a26bb3e2676dbf6, type: 3}
+    - target: {fileID: 1913934286989709587, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4017552541174404335, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
       propertyPath: m_Name
       value: Close
@@ -288,15 +304,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8541989599908769615, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
       propertyPath: m_text
       value: close
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 6980182840736595086, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+--- !u!114 &6349311933969791964 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+  m_PrefabInstance: {fileID: 3900420050470087290}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!224 &7207610892770980292 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5919841752256945086, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
@@ -464,6 +516,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5073348267582368612, guid: 66710feaf69dc8048acdc04c3437f1d3, type: 3}
   m_PrefabInstance: {fileID: 5177264134012940794}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &229234679779413759 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4969495649583496965, guid: 66710feaf69dc8048acdc04c3437f1d3, type: 3}
+  m_PrefabInstance: {fileID: 5177264134012940794}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1001 &5752222164128398211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -626,6 +689,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5073348267582368612, guid: 66710feaf69dc8048acdc04c3437f1d3, type: 3}
   m_PrefabInstance: {fileID: 5752222164128398211}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &802993555227640966 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4969495649583496965, guid: 66710feaf69dc8048acdc04c3437f1d3, type: 3}
+  m_PrefabInstance: {fileID: 5752222164128398211}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1001 &7450708303159394126
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -788,3 +862,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5073348267582368612, guid: 66710feaf69dc8048acdc04c3437f1d3, type: 3}
   m_PrefabInstance: {fileID: 7450708303159394126}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2562840998922911819 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4969495649583496965, guid: 66710feaf69dc8048acdc04c3437f1d3, type: 3}
+  m_PrefabInstance: {fileID: 7450708303159394126}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider

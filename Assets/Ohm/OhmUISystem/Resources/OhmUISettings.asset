@@ -21,6 +21,7 @@ MonoBehaviour:
   - {fileID: 3291069048834010780, guid: 2eb12e8322ffc6c40ab37cfb1d142108, type: 3}
   - {fileID: 6464178209369449219, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
   - {fileID: 8456775493180908909, guid: f3e55001209cc8c4282b9e6d280e577d, type: 3}
+  - {fileID: 5321509501820568136, guid: 510b4e52be6655d478a8e4c50d6f3b8a, type: 3}
   startUI:
     typeName: UIMainMenu, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   closeAllOnSceneChange: 0

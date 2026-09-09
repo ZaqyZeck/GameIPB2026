@@ -5,22 +5,22 @@ using Ohm.UISystem;
 public class UIPauseMenu : UIBase
 {
     [SerializeField] private Button resumeButton;
-    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button homeButton;
 
     void Awake()
     {
         if (resumeButton != null)
             resumeButton.onClick.AddListener(ResumeButton);
-        if (settingsButton != null)
-            settingsButton.onClick.AddListener(ShowSettingsMenu);
+        if (homeButton != null)
+            homeButton.onClick.AddListener(BackToMenu);
     }
 
     public void ResumeButton()
     {
         UIManager.Instance.OnEscape();
     }
-    public void ShowSettingsMenu()
+    public void BackToMenu()
     {
-        UIManager.Instance.ShowUI(UIType.UISettings);
+        // UIManager.Instance.ShowUI(UIType.UISettings);
     }
 }

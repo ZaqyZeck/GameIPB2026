@@ -241,9 +241,8 @@ MonoBehaviour:
   transitionController: {fileID: 0}
   firstSelected: {fileID: 0}
   isActive: 0
-  pauseButton: {fileID: 0}
-  rotateLeftButton: {fileID: 0}
-  rotateRightButton: {fileID: 0}
+  pauseButton: {fileID: 1567886822044224574}
+  scoreText: {fileID: 3626023202381670133}
 --- !u!1 &4108463302999302917
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,27 +558,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
-      value: 0.28627452
+      value: 0.5283019
       objectReference: {fileID: 0}
     - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
       propertyPath: m_Colors.m_SelectedColor.g
-      value: 0.28627452
+      value: 0.5283019
       objectReference: {fileID: 0}
     - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
       propertyPath: m_Colors.m_SelectedColor.r
-      value: 0.28627452
+      value: 0.5283019
       objectReference: {fileID: 0}
     - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.2830189
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.2830189
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.2830189
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8541989599908769615, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
       propertyPath: m_text
@@ -591,6 +590,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+--- !u!114 &1567886822044224574 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7943323685857677734, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}
+  m_PrefabInstance: {fileID: 8934607364431551896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!224 &3015611553270793766 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5919841752256945086, guid: e98ac9180860bad46be681a569a0e8d4, type: 3}

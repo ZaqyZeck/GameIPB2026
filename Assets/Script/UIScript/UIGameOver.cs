@@ -1,19 +1,23 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Ohm.UISystem;
+using TMPro;
 
 public class UIGameOver : UIBase
 {
-    //[Header("References")]
-    // [SerializeField] private Button closeButton;
+    [Header("References")]
+    [SerializeField] private Button saveButton;
+    [SerializeField] private TMP_InputField nameInputField;
+    [SerializeField] private TextMeshProUGUI scoreText;
 
-    // public override void Show(bool instant = false)
-    // {
-    //     base.Show(instant);
-    // }
+    void Awake()
+    {
+        if (saveButton != null)
+            saveButton.onClick.AddListener(SaveButton);
+    }
 
-    // public override void Hide(bool instant = false)
-    // {
-    //     base.Hide(instant);
-    // }
+    private void SaveButton()
+    {
+        
+    }
 }

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using Ohm.UISystem;
 
-public class UICredit : UIBase
+public class UITutorial : UIBase
 {
     [Header("References")]
     [SerializeField] private Button closeButton;

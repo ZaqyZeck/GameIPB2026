@@ -8,8 +8,10 @@ using Ohm.UISystem;
 public class UIMainMenu : UIBase
 {
     [SerializeField] private Button startButton;
-    [SerializeField] private Button optionsButton;
     [SerializeField] private Button exitButton;
+    [SerializeField] private Button volumeButton;
+    [SerializeField] private Button creditButton;
+    [SerializeField] private Button tutorialButton;
 
     void Start()
     {
@@ -22,9 +24,17 @@ public class UIMainMenu : UIBase
             // GameManager.Instance.LoadScene(SceneType.Gameplay);
             Debug.Log("Start Game Clicked");
         });
-        optionsButton.onClick.AddListener(() =>
+        volumeButton.onClick.AddListener(() =>
         {
-            UIManager.Instance.ShowUI<UISettings>();
+            UIManager.Instance.ShowUI<UIVolume>();
+        });
+        creditButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ShowUI<UICredit>();
+        });
+        tutorialButton.onClick.AddListener(() =>
+        {
+            UIManager.Instance.ShowUI<UITutorial>();
         });
         exitButton.onClick.AddListener(() =>
         {
