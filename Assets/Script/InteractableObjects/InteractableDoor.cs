@@ -43,6 +43,7 @@ public class InteractableDoor : Interactables
         openTimer = openDuration;
 
         PetManager.Instance.SpawnPet();
+        TurnOnOutline(false);
     }
 
     private void CloseDoor()

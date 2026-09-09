@@ -30,6 +30,7 @@ public class Owner : Interactables
     private string[] farewellLines = { "Okay, I'll be right back.", "Got it, thank you!", "Alright, I'll go look." };
 
     private Pet currentPet;
+    [SerializeField] int currentPetId;
     private OwnerData currentOwnerData;
 
     public bool isInLine;
@@ -124,6 +125,7 @@ public class Owner : Interactables
         currentPet = wantedPet;
         currentOwnerData = newOwnerData;
         ownerName = currentOwnerData.ownerName;
+        currentPetId = currentPet.petId;
 
         if (textPetId != null) textPetId.text = currentPet.petId.ToString();
 
@@ -149,7 +151,7 @@ public class Owner : Interactables
     {
         if (!isInLine) return;
         PetManager.Instance.DespawnPet(currentPet);
-        currentPet.isOwnerArrived = false;
+        //currentPet.isOwnerArrived = false;
         ReputationManager.Instance.Reward(100);
         ResetOwnerState();
         DespawnAnimation();

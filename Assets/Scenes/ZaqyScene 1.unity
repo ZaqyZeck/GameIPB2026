@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Owner
   ownerName: 
-  patienceAmount: 60
+  patienceAmount: 30
   spriteRenderer: {fileID: 105957971}
   interactCollider: {fileID: 105957969}
   textPetId: {fileID: 0}
@@ -463,6 +463,7 @@ MonoBehaviour:
   - Okay, I'll be right back.
   - Got it, thank you!
   - Alright, I'll go look.
+  currentPetId: 0
   isInLine: 0
 --- !u!212 &105957971
 SpriteRenderer:
@@ -4369,7 +4370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Owner
   ownerName: 
-  patienceAmount: 60
+  patienceAmount: 30
   spriteRenderer: {fileID: 1508637208}
   interactCollider: {fileID: 1508637206}
   textPetId: {fileID: 0}
@@ -4386,6 +4387,7 @@ MonoBehaviour:
   - Okay, I'll be right back.
   - Got it, thank you!
   - Alright, I'll go look.
+  currentPetId: 0
   isInLine: 0
 --- !u!212 &1508637208
 SpriteRenderer:

@@ -47,16 +47,21 @@ public class TreasureHunterBehavior : IHabitBehavior, IDialogueDescribable
 
     private void StopHabit(Pet pet)
     {
+        Debug.Log("treasure stop scrtaing");
         pet.BehaviorController.ResetHabitTimer();
     }
 
     private void GoToDigSpot(Pet pet)
     {
-        if (PetSpotRegistry.Instance == null) return;
+        //if (PetSpotRegistry.Instance == null)
+        //{
+        //    Debug.LogError("gak ada dig spot buat habit");
+        //    return;
+        //}
 
         isGoingToDig = true;
 
-        Vector3 digPosition = PetSpotRegistry.Instance.GetRandomDigSpot();
+        Vector3 digPosition = MapManager.Instance.GetRandomPositionIn(MapManager.Instance.PetArea);
 
         pet.ChangeTextAction("goto dig");
         pet.Movement.MoveTo(digPosition, () => StartDigging(pet));

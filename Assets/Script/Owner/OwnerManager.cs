@@ -11,7 +11,7 @@ public class OwnerManager : MonoBehaviour
     [SerializeField] float minSpawnTime = 10f;
     [SerializeField] float maxSpawnTime = 15f;
 
-    bool isLineFull ;
+    [SerializeField] bool isLineFull ;
 
     private void Awake()
     {

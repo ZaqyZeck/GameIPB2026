@@ -66,18 +66,34 @@ public class PlayerInteract : MonoBehaviour
 
         Collider2D[] colliders = Physics2D.OverlapPointAll(worldPosition);
 
+        DeselectHover();
+
+        Collider2D closestCollider = null;
+        float closestY = float.MaxValue;
+
         foreach (Collider2D collider in colliders)
         {
-            if (collider.CompareTag("interactable"))
+            if (!collider.CompareTag("interactable")) continue;
+
+            float y = collider.transform.position.y;
+
+            if (y < closestY)
             {
-                currentHoverObject = collider.transform;
-                Interactables interactableObject =  currentHoverObject.GetComponent<Interactables>();
-                if (interactableObject != null)  interactableObject.OnSelectedHover();
-                return;
+                closestY = y;
+                closestCollider = collider;
             }
         }
 
-        DeselectHover();
+        if (closestCollider == null) return;
+
+        currentHoverObject = closestCollider.transform;
+
+        Interactables interactableObject = currentHoverObject.GetComponent<Interactables>();
+
+        if (interactableObject != null)
+        {
+            interactableObject.OnSelectedHover();
+        }
     }
     public void SelectTargetObject()
     {
