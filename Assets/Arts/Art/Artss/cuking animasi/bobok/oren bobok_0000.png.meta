@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: 8991a28e456ae4a27bb3b710c0aa0e48
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4678952980784662491
+    second: oren bobok_0000_0
+  - first:
+      213: 6539566380288094092
+    second: oren bobok_0000_1
+  - first:
+      213: -8855238162674932894
+    second: oren bobok_0000_2
+  - first:
+      213: -7658169771467298623
+    second: oren bobok_0000_3
+  - first:
+      213: 9102031545199300062
+    second: oren bobok_0000_4
+  - first:
+      213: -9220343037464938446
+    second: oren bobok_0000_5
+  - first:
+      213: -6205550058512526658
+    second: oren bobok_0000_6
+  - first:
+      213: -7596882608879335275
+    second: oren bobok_0000_7
+  - first:
+      213: 7461092632121515898
+    second: oren bobok_0000_8
+  - first:
+      213: 4195165326718916517
+    second: oren bobok_0000_9
+  - first:
+      213: 7662712302158507296
+    second: oren bobok_0000_10
+  - first:
+      213: -8195980936304921086
+    second: oren bobok_0000_11
+  - first:
+      213: 7655218170742280785
+    second: oren bobok_0000_12
+  - first:
+      213: -6871069684858742936
+    second: oren bobok_0000_13
+  - first:
+      213: 4320228203844503625
+    second: oren bobok_0000_14
+  - first:
+      213: 3829384046605704781
+    second: oren bobok_0000_15
+  - first:
+      213: -344872405350485593
+    second: oren bobok_0000_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 2048
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: oren bobok_0000_0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 3863
+        width: 1677
+        height: 406
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 528339bdd05011fb0800000000000000
+      internalID: -4678952980784662491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_1
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 1196
+        width: 4102
+        height: 2591
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8fa82a89f431ca50800000000000000
+      internalID: 6539566380288094092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_2
+      rect:
+        serializedVersion: 2
+        x: 4397
+        y: 2586
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2632740eecfdb1580800000000000000
+      internalID: -8855238162674932894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_3
+      rect:
+        serializedVersion: 2
+        x: 4437
+        y: 2544
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c8ae06ea27b8b590800000000000000
+      internalID: -7658169771467298623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_4
+      rect:
+        serializedVersion: 2
+        x: 4390
+        y: 2512
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: edd010a3779e05e70800000000000000
+      internalID: 9102031545199300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_5
+      rect:
+        serializedVersion: 2
+        x: 4443
+        y: 2510
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 238f7a0ebd2ca0080800000000000000
+      internalID: -9220343037464938446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_6
+      rect:
+        serializedVersion: 2
+        x: 4406
+        y: 2468
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb2d476a91571e9a0800000000000000
+      internalID: -6205550058512526658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_7
+      rect:
+        serializedVersion: 2
+        x: 4450
+        y: 2438
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59887696483729690800000000000000
+      internalID: -7596882608879335275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_8
+      rect:
+        serializedVersion: 2
+        x: 4470
+        y: 2446
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a7f13e5e7302b8760800000000000000
+      internalID: 7461092632121515898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_9
+      rect:
+        serializedVersion: 2
+        x: 4408
+        y: 2390
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a7dd1143a8383a30800000000000000
+      internalID: 4195165326718916517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_10
+      rect:
+        serializedVersion: 2
+        x: 4396
+        y: 2366
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02d6c227d3c675a60800000000000000
+      internalID: 7662712302158507296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_11
+      rect:
+        serializedVersion: 2
+        x: 4387
+        y: 2356
+        width: 17
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 206fba933c6024e80800000000000000
+      internalID: -8195980936304921086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_12
+      rect:
+        serializedVersion: 2
+        x: 4426
+        y: 2165
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15295310e5ccc3a60800000000000000
+      internalID: 7655218170742280785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_13
+      rect:
+        serializedVersion: 2
+        x: 4425
+        y: 2122
+        width: 28
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8671a0fa68e05a0a0800000000000000
+      internalID: -6871069684858742936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_14
+      rect:
+        serializedVersion: 2
+        x: 4402
+        y: 2087
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94886ce69a884fb30800000000000000
+      internalID: 4320228203844503625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_15
+      rect:
+        serializedVersion: 2
+        x: 4386
+        y: 2046
+        width: 20
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4e1b7e5084b42530800000000000000
+      internalID: 3829384046605704781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oren bobok_0000_16
+      rect:
+        serializedVersion: 2
+        x: 4414
+        y: 2054
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a1ff32ef54c63bf0800000000000000
+      internalID: -344872405350485593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      oren bobok_0000_0: -4678952980784662491
+      oren bobok_0000_1: 6539566380288094092
+      oren bobok_0000_10: 7662712302158507296
+      oren bobok_0000_11: -8195980936304921086
+      oren bobok_0000_12: 7655218170742280785
+      oren bobok_0000_13: -6871069684858742936
+      oren bobok_0000_14: 4320228203844503625
+      oren bobok_0000_15: 3829384046605704781
+      oren bobok_0000_16: -344872405350485593
+      oren bobok_0000_2: -8855238162674932894
+      oren bobok_0000_3: -7658169771467298623
+      oren bobok_0000_4: 9102031545199300062
+      oren bobok_0000_5: -9220343037464938446
+      oren bobok_0000_6: -6205550058512526658
+      oren bobok_0000_7: -7596882608879335275
+      oren bobok_0000_8: 7461092632121515898
+      oren bobok_0000_9: 4195165326718916517
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

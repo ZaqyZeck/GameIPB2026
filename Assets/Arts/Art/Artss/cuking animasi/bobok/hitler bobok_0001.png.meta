@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: 78e7c9d2ad80b4976bd319ee234d69c8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1295799073403611008
+    second: hitler bobok_0001_0
+  - first:
+      213: -6444369921218145755
+    second: hitler bobok_0001_1
+  - first:
+      213: -4079906897006124060
+    second: hitler bobok_0001_2
+  - first:
+      213: 2431509889497487110
+    second: hitler bobok_0001_3
+  - first:
+      213: -5190973783579204675
+    second: hitler bobok_0001_4
+  - first:
+      213: -8407718702704267015
+    second: hitler bobok_0001_5
+  - first:
+      213: 6003476147390198123
+    second: hitler bobok_0001_6
+  - first:
+      213: -3646655329097237427
+    second: hitler bobok_0001_7
+  - first:
+      213: 938731513804451212
+    second: hitler bobok_0001_8
+  - first:
+      213: -3847901072102076941
+    second: hitler bobok_0001_9
+  - first:
+      213: 2034881277280466204
+    second: hitler bobok_0001_10
+  - first:
+      213: 6371809331784357843
+    second: hitler bobok_0001_11
+  - first:
+      213: -359328080242814155
+    second: hitler bobok_0001_12
+  - first:
+      213: -1920324331000348679
+    second: hitler bobok_0001_13
+  - first:
+      213: -2453552771483106693
+    second: hitler bobok_0001_14
+  - first:
+      213: 6739079227113976895
+    second: hitler bobok_0001_15
+  - first:
+      213: 7529968977697054314
+    second: hitler bobok_0001_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 2048
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: hitler bobok_0001_0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 3863
+        width: 1677
+        height: 406
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 087a08e446a9bf110800000000000000
+      internalID: 1295799073403611008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_1
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 1196
+        width: 4102
+        height: 2591
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 522949c43bff096a0800000000000000
+      internalID: -6444369921218145755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_2
+      rect:
+        serializedVersion: 2
+        x: 4397
+        y: 2586
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e3a84f1b424167c0800000000000000
+      internalID: -4079906897006124060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_3
+      rect:
+        serializedVersion: 2
+        x: 4437
+        y: 2544
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 607d85f9c557eb120800000000000000
+      internalID: 2431509889497487110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_4
+      rect:
+        serializedVersion: 2
+        x: 4390
+        y: 2512
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db36567c8d4f5f7b0800000000000000
+      internalID: -5190973783579204675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_5
+      rect:
+        serializedVersion: 2
+        x: 4443
+        y: 2510
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f077e9c268c15b80800000000000000
+      internalID: -8407718702704267015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_6
+      rect:
+        serializedVersion: 2
+        x: 4406
+        y: 2468
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6139be8fb1a05350800000000000000
+      internalID: 6003476147390198123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_7
+      rect:
+        serializedVersion: 2
+        x: 4450
+        y: 2438
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4cbfda8c4a746dc0800000000000000
+      internalID: -3646655329097237427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_8
+      rect:
+        serializedVersion: 2
+        x: 4470
+        y: 2446
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8d67c3965b070d00800000000000000
+      internalID: 938731513804451212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_9
+      rect:
+        serializedVersion: 2
+        x: 4408
+        y: 2390
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fdc28aac52899ac0800000000000000
+      internalID: -3847901072102076941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_10
+      rect:
+        serializedVersion: 2
+        x: 4396
+        y: 2366
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c15356c8db95d3c10800000000000000
+      internalID: 2034881277280466204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_11
+      rect:
+        serializedVersion: 2
+        x: 4387
+        y: 2356
+        width: 17
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d79685f3d63d6850800000000000000
+      internalID: 6371809331784357843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_12
+      rect:
+        serializedVersion: 2
+        x: 4426
+        y: 2165
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 533dd4bc309630bf0800000000000000
+      internalID: -359328080242814155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_13
+      rect:
+        serializedVersion: 2
+        x: 4425
+        y: 2122
+        width: 28
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9ff3f2df133a955e0800000000000000
+      internalID: -1920324331000348679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_14
+      rect:
+        serializedVersion: 2
+        x: 4402
+        y: 2087
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b72031af0ca33fdd0800000000000000
+      internalID: -2453552771483106693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_15
+      rect:
+        serializedVersion: 2
+        x: 4386
+        y: 2046
+        width: 20
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f34b7551ad4068d50800000000000000
+      internalID: 6739079227113976895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler bobok_0001_16
+      rect:
+        serializedVersion: 2
+        x: 4414
+        y: 2054
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6e1855c3e2df7860800000000000000
+      internalID: 7529968977697054314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      hitler bobok_0001_0: 1295799073403611008
+      hitler bobok_0001_1: -6444369921218145755
+      hitler bobok_0001_10: 2034881277280466204
+      hitler bobok_0001_11: 6371809331784357843
+      hitler bobok_0001_12: -359328080242814155
+      hitler bobok_0001_13: -1920324331000348679
+      hitler bobok_0001_14: -2453552771483106693
+      hitler bobok_0001_15: 6739079227113976895
+      hitler bobok_0001_16: 7529968977697054314
+      hitler bobok_0001_2: -4079906897006124060
+      hitler bobok_0001_3: 2431509889497487110
+      hitler bobok_0001_4: -5190973783579204675
+      hitler bobok_0001_5: -8407718702704267015
+      hitler bobok_0001_6: 6003476147390198123
+      hitler bobok_0001_7: -3646655329097237427
+      hitler bobok_0001_8: 938731513804451212
+      hitler bobok_0001_9: -3847901072102076941
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

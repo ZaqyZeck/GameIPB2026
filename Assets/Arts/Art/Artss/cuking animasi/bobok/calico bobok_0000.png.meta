@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: a4feb2d799f0b48e68beaad2b5d37efc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1595732740599476007
+    second: calico bobok_0000_0
+  - first:
+      213: -5575983795135109947
+    second: calico bobok_0000_1
+  - first:
+      213: 3134506202369853739
+    second: calico bobok_0000_2
+  - first:
+      213: 5662412153779847456
+    second: calico bobok_0000_3
+  - first:
+      213: 2081493444719874268
+    second: calico bobok_0000_4
+  - first:
+      213: 5528070921044168636
+    second: calico bobok_0000_5
+  - first:
+      213: 1492888484255937152
+    second: calico bobok_0000_6
+  - first:
+      213: 8164577573994414619
+    second: calico bobok_0000_7
+  - first:
+      213: 7146066589971926630
+    second: calico bobok_0000_8
+  - first:
+      213: 1172463977378589412
+    second: calico bobok_0000_9
+  - first:
+      213: 6741414138880265357
+    second: calico bobok_0000_10
+  - first:
+      213: -7406164904292100588
+    second: calico bobok_0000_11
+  - first:
+      213: 262378127182942492
+    second: calico bobok_0000_12
+  - first:
+      213: -1760400022447478540
+    second: calico bobok_0000_13
+  - first:
+      213: -3245877653704019195
+    second: calico bobok_0000_14
+  - first:
+      213: 1539184716151100423
+    second: calico bobok_0000_15
+  - first:
+      213: 8003947309483895367
+    second: calico bobok_0000_16
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 2048
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: calico bobok_0000_0
+      rect:
+        serializedVersion: 2
+        x: 817
+        y: 3863
+        width: 1677
+        height: 406
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d09b18e681dad9e0800000000000000
+      internalID: -1595732740599476007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_1
+      rect:
+        serializedVersion: 2
+        x: 385
+        y: 1196
+        width: 4102
+        height: 2591
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c423a9f7402e92b0800000000000000
+      internalID: -5575983795135109947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_2
+      rect:
+        serializedVersion: 2
+        x: 4397
+        y: 2586
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b298382a8c0008b20800000000000000
+      internalID: 3134506202369853739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_3
+      rect:
+        serializedVersion: 2
+        x: 4437
+        y: 2544
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02107e56adde49e40800000000000000
+      internalID: 5662412153779847456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_4
+      rect:
+        serializedVersion: 2
+        x: 4390
+        y: 2512
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd015de7243f2ec10800000000000000
+      internalID: 2081493444719874268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_5
+      rect:
+        serializedVersion: 2
+        x: 4443
+        y: 2510
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbf0106b637a7bc40800000000000000
+      internalID: 5528070921044168636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_6
+      rect:
+        serializedVersion: 2
+        x: 4406
+        y: 2468
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 082b851ba2ec7b410800000000000000
+      internalID: 1492888484255937152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_7
+      rect:
+        serializedVersion: 2
+        x: 4450
+        y: 2438
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b12ce07bb086e4170800000000000000
+      internalID: 8164577573994414619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_8
+      rect:
+        serializedVersion: 2
+        x: 4470
+        y: 2446
+        width: 11
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66e409cb3bdeb2360800000000000000
+      internalID: 7146066589971926630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_9
+      rect:
+        serializedVersion: 2
+        x: 4408
+        y: 2390
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4eaa79386cd654010800000000000000
+      internalID: 1172463977378589412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_10
+      rect:
+        serializedVersion: 2
+        x: 4396
+        y: 2366
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8c01c711705e8d50800000000000000
+      internalID: 6741414138880265357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_11
+      rect:
+        serializedVersion: 2
+        x: 4387
+        y: 2356
+        width: 17
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41654b35244083990800000000000000
+      internalID: -7406164904292100588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_12
+      rect:
+        serializedVersion: 2
+        x: 4426
+        y: 2165
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c11529b348724a300800000000000000
+      internalID: 262378127182942492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_13
+      rect:
+        serializedVersion: 2
+        x: 4425
+        y: 2122
+        width: 28
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f8ad6fa18dc197e0800000000000000
+      internalID: -1760400022447478540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_14
+      rect:
+        serializedVersion: 2
+        x: 4402
+        y: 2087
+        width: 18
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 503f79aa87354f2d0800000000000000
+      internalID: -3245877653704019195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_15
+      rect:
+        serializedVersion: 2
+        x: 4386
+        y: 2046
+        width: 20
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70495e928584c5510800000000000000
+      internalID: 1539184716151100423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico bobok_0000_16
+      rect:
+        serializedVersion: 2
+        x: 4414
+        y: 2054
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74a2bb6dbabb31f60800000000000000
+      internalID: 8003947309483895367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      calico bobok_0000_0: -1595732740599476007
+      calico bobok_0000_1: -5575983795135109947
+      calico bobok_0000_10: 6741414138880265357
+      calico bobok_0000_11: -7406164904292100588
+      calico bobok_0000_12: 262378127182942492
+      calico bobok_0000_13: -1760400022447478540
+      calico bobok_0000_14: -3245877653704019195
+      calico bobok_0000_15: 1539184716151100423
+      calico bobok_0000_16: 8003947309483895367
+      calico bobok_0000_2: 3134506202369853739
+      calico bobok_0000_3: 5662412153779847456
+      calico bobok_0000_4: 2081493444719874268
+      calico bobok_0000_5: 5528070921044168636
+      calico bobok_0000_6: 1492888484255937152
+      calico bobok_0000_7: 8164577573994414619
+      calico bobok_0000_8: 7146066589971926630
+      calico bobok_0000_9: 1172463977378589412
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
