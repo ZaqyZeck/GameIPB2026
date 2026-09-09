@@ -415,6 +415,107 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 142245559143502436, guid: a089af04f2effec4596bbafd3467f359, type: 3}
   m_PrefabInstance: {fileID: 1056699955}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1174132274
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1174132276}
+  - component: {fileID: 1174132275}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1174132275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174132274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 979eeb38ecb7af44ebaa5b8478a326ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  _scenes:
+  - type: 0
+    scene:
+      _sceneAsset: {fileID: 102900000, guid: 30dc0a95ba4527242bbfb44573280feb, type: 3}
+      _scenePath: Assets/Scenes/MainMenu.unity
+      _sceneName: MainMenu
+  - type: 1
+    scene:
+      _sceneAsset: {fileID: 102900000, guid: c091ee2d1f0cc224ea315e37092ab57e, type: 3}
+      _scenePath: Assets/Scenes/ZaqyScene 1.unity
+      _sceneName: ZaqyScene 1
+  _defaultTransition: {fileID: 11400000, guid: 800cf4f007f3e6a4d85d89ee6e2d175c, type: 2}
+  _restartTransition: {fileID: 11400000, guid: 800cf4f007f3e6a4d85d89ee6e2d175c, type: 2}
+  bgmMainMenu:
+    _entity: {fileID: 11400000, guid: dc8e04c01df58d14f892348d99c3a788, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  bgmGameplay:
+    _entity: {fileID: 11400000, guid: deb75fa9453ba0d4091cf232b1715bc0, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  ui_click:
+    _entity: {fileID: 11400000, guid: f18a7d8d963dfa04cb880a7608a6958b, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  meow:
+    _entity: {fileID: 11400000, guid: fb7b410fbaa22544bb68e07c0ae3a37a, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  meowAngry:
+    _entity: {fileID: 11400000, guid: 9af42a2308eb93f4ca08f8f6a227e145, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  meowSleep:
+    _entity: {fileID: 11400000, guid: 9af42a2308eb93f4ca08f8f6a227e145, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  dog:
+    _entity: {fileID: 11400000, guid: e28c4b6235b4af347b6dd17efd8d8301, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  dogAngry:
+    _entity: {fileID: 11400000, guid: 5fa8294891141864da530f07aa5aa290, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  dogSleep:
+    _entity: {fileID: 11400000, guid: 5e5ce720d5410dc47b1b89aa268ea138, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  lonceng:
+    _entity: {fileID: 11400000, guid: e91241ef32c46644e9eee3d884c36c63, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  defaultMaster: 0.5
+  defaultBGM: 0.5
+  defaultSFX: 0.5
+  _bgmFadeTime: 0.5
+--- !u!4 &1174132276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174132274}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1385216653
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1249,3 +1350,4 @@ SceneRoots:
   - {fileID: 702158943}
   - {fileID: 1056699955}
   - {fileID: 888203797}
+  - {fileID: 1174132276}

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 30dc0a95ba4527242bbfb44573280feb
+  - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
@@ -13,6 +16,6 @@ EditorBuildSettings:
     guid: c091ee2d1f0cc224ea315e37092ab57e
   - enabled: 1
     path: Assets/Scenes/ZaqyScene 2.unity
-    guid: e82de8723a39e485683c70c80b3607cb
+    guid: 615c8c11096cf470c857a5a37ac53fc0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
