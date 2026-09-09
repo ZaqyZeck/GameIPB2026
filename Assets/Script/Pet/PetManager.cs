@@ -11,19 +11,24 @@ public class PetManager : MonoBehaviour
     [SerializeField] private PetProfileSO petDatas;
     [SerializeField] private GameObject[] petPrefabs;
     [SerializeField] private List<Pet> ghostPets = new();
+    [SerializeField] private List<PetData> petsAtDoor = new();
     [SerializeField] private Collider2D barrierCollider;
     [SerializeField] private int maxPet;
+    //[SerializeField] private int maxPetAtDoor = 3;
     [SerializeField] float minSpawnTime = 10f;
     [SerializeField] float maxSpawnTime = 15f;
 
     [SerializeField] float spawnTimer;
     [SerializeField] Vector3 spawnPosition;
-    [SerializeField] Shader petShader; // implement shader material saat instantiatePet
+    [SerializeField] Shader petShader;
+
     public bool isPetAvailable;
+    public bool isPetAtDoor => petsAtDoor.Count > 0;
+
+    public int PetAtDoorCount => petsAtDoor.Count;
 
     private int petIdCounter = 0;
-    private PetData petDataAtDoor;
-    public bool isPetAtDoor { get; private set; }
+
     private void Awake()
     {
         Instance = this;
@@ -32,13 +37,12 @@ public class PetManager : MonoBehaviour
 
     private void Update()
     {
-        if(spawnTimer > 0 )
+        if (spawnTimer > 0f)
         {
             if (CanAddPetAtDoor())
             {
                 spawnTimer -= Time.deltaTime;
             }
-            
         }
         else
         {
@@ -47,38 +51,7 @@ public class PetManager : MonoBehaviour
         }
     }
 
-    public void SpawnPet()
-    {
-        if (petDataAtDoor == null) return;
-        if (!TryRollUniqueTraits(petDataAtDoor))
-        {
-            Debug.Log("Gagal mendapatkan kombinasi trait (warna/habit/action) yang unik.");
-            return;
-        }
-
-        Debug.Log($"Pet mendapatkan PetData: {petDataAtDoor.petName}");
-
-        Pet newPet = Instantiate(petPrefabs[0], spawnPosition, Quaternion.identity).GetComponent<Pet>();
-        //newestPet = newPet;
-        petIdCounter++;
-        newPet.petId = petIdCounter;
-
-        AddPetToList(newPet);
-        newPet.Spawn(petDataAtDoor);
-
-        if (petShader != null)
-        {
-            Material petMaterial = new Material(petShader);
-            petMaterial.SetColor("_Color", petDataAtDoor.specialColor);
-            newPet.SetMaterial(petMaterial);
-        }
-
-        GameEventBus.OnPetSpawned?.Invoke(petDataAtDoor);
-        petDataAtDoor = null;
-        isPetAtDoor = false;
-    }
-
-    void AddPetAtDoor()
+    private void AddPetAtDoor()
     {
         if (!CanAddPetAtDoor())
         {
@@ -94,8 +67,62 @@ public class PetManager : MonoBehaviour
         }
 
         PetData petData = template.Clone();
-        petDataAtDoor = petData;
-        isPetAtDoor = true;
+
+        petsAtDoor.Add(petData);
+
+        Debug.Log($"Pet {petData.petName} menunggu di pintu. Jumlah: {petsAtDoor.Count}/{maxPet}");
+    }
+
+    public void DoorOpen()
+    {
+        if (petsAtDoor.Count == 0)
+        {
+            Debug.Log("Tidak ada pet yang menunggu di pintu.");
+            return;
+        }
+
+        int availableSlot = maxPet - ghostPets.Count;
+        int spawnCount = Mathf.Min(petsAtDoor.Count, availableSlot);
+
+        for (int i = 0; i < spawnCount; i++)
+        {
+            PetData petData = petsAtDoor[0];
+            petsAtDoor.RemoveAt(0);
+
+            SpawnPet(petData);
+        }
+
+        Debug.Log($"DoorOpen: {spawnCount} pet berhasil di-spawn. Sisa antrean: {petsAtDoor.Count}");
+    }
+
+    private void SpawnPet(PetData petData)
+    {
+        if (petData == null) return;
+
+        if (!TryRollUniqueTraits(petData))
+        {
+            Debug.Log("Gagal mendapatkan kombinasi trait (warna/habit/action) yang unik.");
+            return;
+        }
+
+        Debug.Log($"Pet mendapatkan PetData: {petData.petName}");
+
+        Pet newPet = Instantiate(petPrefabs[0], spawnPosition, Quaternion.identity).GetComponent<Pet>();
+
+        petIdCounter++;
+        newPet.petId = petIdCounter;
+
+        AddPetToList(newPet);
+        newPet.Spawn(petData);
+
+        if (petShader != null)
+        {
+            Material petMaterial = new Material(petShader);
+            petMaterial.SetColor("_Color", petData.specialColor);
+            newPet.SetMaterial(petMaterial);
+        }
+
+        GameEventBus.OnPetSpawned?.Invoke(petData);
     }
 
     public void DespawnPet(Pet ghostPet)
@@ -120,6 +147,7 @@ public class PetManager : MonoBehaviour
 
         return barrierCollider.bounds.center;
     }
+
     private PetData GetAvailablePetData()
     {
         if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
@@ -132,6 +160,7 @@ public class PetManager : MonoBehaviour
 
         return availablePetDatas[Random.Range(0, availablePetDatas.Count)];
     }
+
     public Pet GetAvailableGhostPet()
     {
         List<Pet> availablePets = new();
@@ -156,6 +185,7 @@ public class PetManager : MonoBehaviour
     {
         ghostPets.Add(ghostPet);
     }
+
     public void RemovePetFromList(Pet ghostPet)
     {
         ghostPets.Remove(ghostPet);
@@ -167,6 +197,7 @@ public class PetManager : MonoBehaviour
         {
             if (!pet.isOwnerArrived) return true;
         }
+
         return false;
     }
 
@@ -174,20 +205,15 @@ public class PetManager : MonoBehaviour
     {
         foreach (Pet ghostPet in ghostPets)
         {
-            // Compare by name rather than reference: spawned pets hold a
-            // Clone() of the template, not the original PetProfileSO entry.
             if (ghostPet.petData != null && ghostPet.petData.petName == newPetData.petName)
                 return true;
         }
+
         return false;
     }
 
     private const int MaxTraitRollAttempts = 30;
 
-    // Rolls a random color (from petDatas.colorPool), HabitTrait and ActionTrait
-    // onto petData, retrying until the resulting combo doesn't match any
-    // currently-spawned pet. Returns false if it couldn't find a free combo
-    // within MaxTraitRollAttempts (e.g. pool exhausted).
     private bool TryRollUniqueTraits(PetData petData)
     {
         Color[] colorPool = (petDatas != null && petDatas.colorPool != null && petDatas.colorPool.Length > 0)
@@ -227,6 +253,7 @@ public class PetManager : MonoBehaviour
         foreach (Pet ghostPet in ghostPets)
         {
             PetData other = ghostPet.petData;
+
             if (other == null) continue;
 
             if (other.hiddenHabit == habit &&
@@ -243,6 +270,7 @@ public class PetManager : MonoBehaviour
     private static bool ColorsApproximatelyEqual(Color a, Color b)
     {
         const float eps = 0.001f;
+
         return Mathf.Abs(a.r - b.r) < eps &&
                Mathf.Abs(a.g - b.g) < eps &&
                Mathf.Abs(a.b - b.b) < eps &&
@@ -251,15 +279,15 @@ public class PetManager : MonoBehaviour
 
     public bool CanAddPetAtDoor()
     {
-        if (ghostPets.Count >= maxPet) return false;
+        if (ghostPets.Count + petsAtDoor.Count >= maxPet) return false;
 
-        if (isPetAtDoor) return false;
-
-        if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0) return false;
+        if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
+            return false;
 
         foreach (PetData petData in petDatas.petDatas)
         {
-            if (!CheckDoublePetData(petData)) return true;
+            if (!CheckDoublePetData(petData))
+                return true;
         }
 
         return false;
@@ -268,11 +296,13 @@ public class PetManager : MonoBehaviour
     public List<Pet> GetPetsWithAction(ActionTrait trait)
     {
         List<Pet> result = new();
+
         foreach (Pet pet in ghostPets)
         {
             if (pet.BehaviorController.HasHiddenAction(trait))
                 result.Add(pet);
         }
+
         return result;
     }
 }
