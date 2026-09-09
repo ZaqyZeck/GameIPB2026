@@ -16,7 +16,7 @@ public static class PetBehaviorFactory
     {
         { ActionTrait.Football, new FootballActionBehavior() },
         { ActionTrait.Sunbathe, new SunbatheActionBehavior() },
-        { ActionTrait.FishToy,  new FishToyActionBehavior() },
+        { ActionTrait.MiceToy,  new MiceToyActionBehavior() },
         { ActionTrait.CatToy,   new CatToyActionBehavior() },
     };
 

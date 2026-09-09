@@ -8,7 +8,7 @@ public class CatToyActionBehavior : IActionBehavior, IDialogueDescribable
     {
         pet.ChangeTextAction("play mouse");
         pet.Movement.Stop();
-        pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play);
+        pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play_Bulu);
         Debug.Log($"{pet.name} swats the cat toy!");
     }
 

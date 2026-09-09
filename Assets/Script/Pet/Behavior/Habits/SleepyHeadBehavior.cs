@@ -45,7 +45,7 @@ public class SleepyHeadBehavior : IHabitBehavior, IDialogueDescribable
         isSleeping = false;
 
         pet.Movement.Stop();
-        pet.GetPetAnimation().SetSitting(false);
+        pet.GetPetAnimation().ResetAction();
     }
 
     private void StopHabit(Pet pet)
@@ -78,7 +78,7 @@ public class SleepyHeadBehavior : IHabitBehavior, IDialogueDescribable
 
         pet.ChangeTextAction("sleep");
         pet.Movement.Stop();
-        pet.GetPetAnimation().SetSitting(true);
+        pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Sleep);
 
         Debug.LogWarning(pet.petData.petName + " is sleeping");
     }
@@ -86,7 +86,7 @@ public class SleepyHeadBehavior : IHabitBehavior, IDialogueDescribable
     private void WakeUp(Pet pet)
     {
         isSleeping = false;
-        pet.GetPetAnimation().SetSitting(false);
+        pet.GetPetAnimation().ResetAction();
     }
 
     public string GetDialogueText() => "My cat loves to nap anywhere it can find a cozy spot.";

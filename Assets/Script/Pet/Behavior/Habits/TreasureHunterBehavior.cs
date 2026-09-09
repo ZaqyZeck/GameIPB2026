@@ -75,7 +75,7 @@ public class TreasureHunterBehavior : IHabitBehavior, IDialogueDescribable
 
         pet.ChangeTextAction("DIGGING");
         pet.Movement.Stop();
-
+        pet.Animation.TriggerAction(PetAnimationIds.ActionId_Claw);
         Debug.Log($"{pet.petData.petName} started digging");
     }
 

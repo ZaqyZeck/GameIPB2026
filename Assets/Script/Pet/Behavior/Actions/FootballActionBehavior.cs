@@ -8,7 +8,7 @@ public class FootballActionBehavior : IActionBehavior, IDialogueDescribable
     {
         pet.ChangeTextAction("play ball");
         pet.Movement.Stop();
-        pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play);
+        pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play_Bola);
         Debug.Log($"{pet.name} plays football!");
     }
 
