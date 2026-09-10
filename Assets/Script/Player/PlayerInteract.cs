@@ -159,8 +159,8 @@ public class PlayerInteract : MonoBehaviour
     }
     public void FlipHoldTransform(bool isXPositif)
     {
-        if (isXPositif) holdTransform.localPosition = new Vector3(0.5f, 0.5f, 0);
-        else holdTransform.localPosition = new Vector3(-0.5f, 0.5f, 0);
+        if (isXPositif) holdTransform.localPosition = new Vector3(0.5f, 0f, 0);
+        else holdTransform.localPosition = new Vector3(-0.5f, 0f, 0);
     }
 
     public void InteractTarget()
