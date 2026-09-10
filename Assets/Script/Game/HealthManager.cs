@@ -29,7 +29,12 @@ public class HealthManager : MonoBehaviour
         OnHealthChanged?.Invoke(before, health);
         if (healthText != null) healthText.text = "Health: " + health;
         if (health == 0)
+        {
             OnDeath?.Invoke();
+            GameEventBus.OnLevelWin?.Invoke();
+            Debug.LogWarning("Menaaaaang");
+        }
+            
     }
     public int GetHealth() => health;
 

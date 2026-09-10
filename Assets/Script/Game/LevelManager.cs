@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class LevelManager : MonoBehaviour
 {
@@ -36,11 +37,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void OnLevelWin()
+    private async void OnLevelWin()
     {
         float reputationScore = ReputationManager.Instance.GetScore();
 
         // submint score ke leaderboard secara anonim dengan nama "ben"
+        await LeaderboardManager.Instance.SubmitAnonymousScoreAsync((long) reputationScore, "anonim");
         ChangeState(GameState.End);
     } 
 

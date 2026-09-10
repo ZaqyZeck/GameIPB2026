@@ -126,7 +126,7 @@ public class LeaderboardManager : MonoBehaviour
         {
             await AuthenticationManager.Instance.LoginAnonimAsync(playerName);
 
-            LeaderboardEntry entry = await LeaderboardManager.Instance.AddScoreAsync(score);
+            LeaderboardEntry entry = await AddScoreAsync(score);
 
             if (entry != null)
             {

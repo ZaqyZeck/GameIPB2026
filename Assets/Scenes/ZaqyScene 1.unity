@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Owner
   ownerName: 
-  patienceAmount: 30
+  patienceAmount: 20
   spriteRenderer: {fileID: 105957971}
   interactCollider: {fileID: 105957969}
   textPetId: {fileID: 0}
@@ -454,7 +454,6 @@ MonoBehaviour:
   patienceFillRect: {fileID: 764415121}
   patienceBarObject: {fileID: 637199596}
   dialogueBox: {fileID: 1471641120}
-  catIcon: {fileID: 0}
   advanceLines:
   - Could you tell me more?
   - Go on...
@@ -1664,6 +1663,9 @@ GameObject:
   - component: {fileID: 711913297}
   - component: {fileID: 711913296}
   - component: {fileID: 711913295}
+  - component: {fileID: 711913299}
+  - component: {fileID: 711913298}
+  - component: {fileID: 711913300}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -1718,6 +1720,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &711913298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711913294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38939fa3623c90b40941d00d8116f434, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AuthenticationManager
+  logDebugMessages: 1
+--- !u!114 &711913299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711913294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8195edb60ec5d3d43b37ab2d0bc1cd29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LeaderboardManager
+  leaderboardId: reputationscore
+  logDebugMessages: 1
+--- !u!114 &711913300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711913294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2977a8fd5a3605749ac0810178ccf094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LevelManager
+  state: 0
 --- !u!1 &720743418
 GameObject:
   m_ObjectHideFlags: 0
@@ -4502,7 +4544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Owner
   ownerName: 
-  patienceAmount: 30
+  patienceAmount: 20
   spriteRenderer: {fileID: 1508637208}
   interactCollider: {fileID: 1508637206}
   textPetId: {fileID: 0}
@@ -4510,7 +4552,6 @@ MonoBehaviour:
   patienceFillRect: {fileID: 1112996513}
   patienceBarObject: {fileID: 1944085922}
   dialogueBox: {fileID: 1313575287}
-  catIcon: {fileID: 0}
   advanceLines:
   - Could you tell me more?
   - Go on...

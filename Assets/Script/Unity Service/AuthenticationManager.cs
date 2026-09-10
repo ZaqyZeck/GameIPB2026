@@ -83,7 +83,7 @@ public class AuthenticationManager : MonoBehaviour
             AuthenticationService.Instance.Expired -= HandleSessionExpired;
             AuthenticationService.Instance.Expired += HandleSessionExpired;
 
-            await TryAutoLoginAsync();
+            //await TryAutoLoginAsync();
 
             IsInitialized = true;
             Log("Unity Services initialized and authentication ready.");
