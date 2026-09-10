@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607ec532b0a764a8ca6047d5670fc615, type: 3}
+  m_Name: IconCalico
+  m_EditorClassIdentifier: Assembly-CSharp::PetIconSet
+  petType: 3
+  typeIcon: {fileID: 2152435787208944178, guid: df28a70f0ec604af0bb10db982976f1c, type: 3}
+  habitIcons:
+  - habit: 1
+    icon: {fileID: 4347341491811462203, guid: e1d0481cc91ad469caacb840428fd05a, type: 3}
+  - habit: 3
+    icon: {fileID: 7674626149301108812, guid: f9e2903397d07426285073ab5f591f57, type: 3}

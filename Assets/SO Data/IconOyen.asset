@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607ec532b0a764a8ca6047d5670fc615, type: 3}
+  m_Name: IconOyen
+  m_EditorClassIdentifier: Assembly-CSharp::PetIconSet
+  petType: 1
+  typeIcon: {fileID: -1499900109277536864, guid: 146828653867d47be9146e41fe5ba5e0, type: 3}
+  habitIcons:
+  - habit: 1
+    icon: {fileID: -5325606880850505348, guid: abaebabc9bf194960879fcc5fbdfee81, type: 3}
+  - habit: 3
+    icon: {fileID: 0}

@@ -103,7 +103,7 @@ public class Owner : Interactables
 
         Sprite typeIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetTypeIcon(petData.petType) : null;
         Sprite habitIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetHabitIcon(petData.petType, petData.hiddenHabit) : null;
-        Sprite actionIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetActionIcon(petData.petType, petData.hiddenAction) : null;
+        Sprite actionIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetActionIcon(petData.hiddenAction) : null;
 
         List<DialoguePage> pages = new List<DialoguePage>
         {

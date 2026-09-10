@@ -6,8 +6,10 @@ public class PetIconDatabase : MonoBehaviour
     public static PetIconDatabase Instance;
 
     [SerializeField] private List<PetIconSet> iconSets = new();
+    [SerializeField] private List<ActionIconEntry> actionIcons = new();
 
-    private Dictionary<PetType, PetIconSet> lookup;
+    private Dictionary<PetType, PetIconSet> typeLookup;
+    private Dictionary<ActionTrait, Sprite> actionLookup;
 
     private void Awake()
     {
@@ -17,27 +19,39 @@ public class PetIconDatabase : MonoBehaviour
 
     private void BuildLookup()
     {
-        lookup = new Dictionary<PetType, PetIconSet>();
-
+        typeLookup = new Dictionary<PetType, PetIconSet>();
         foreach (PetIconSet set in iconSets)
         {
             if (set == null) continue;
-            lookup[set.petType] = set;
+            typeLookup[set.petType] = set;
+        }
+
+        actionLookup = new Dictionary<ActionTrait, Sprite>();
+        foreach (ActionIconEntry entry in actionIcons)
+        {
+            actionLookup[entry.action] = entry.icon;
         }
     }
 
     public Sprite GetTypeIcon(PetType type)
     {
-        return lookup != null && lookup.TryGetValue(type, out PetIconSet set) ? set.typeIcon : null;
+        return typeLookup != null && typeLookup.TryGetValue(type, out PetIconSet set) ? set.typeIcon : null;
     }
 
     public Sprite GetHabitIcon(PetType type, HabitTrait habit)
     {
-        return lookup != null && lookup.TryGetValue(type, out PetIconSet set) ? set.GetHabitIcon(habit) : null;
+        return typeLookup != null && typeLookup.TryGetValue(type, out PetIconSet set) ? set.GetHabitIcon(habit) : null;
     }
 
-    public Sprite GetActionIcon(PetType type, ActionTrait action)
+    public Sprite GetActionIcon(ActionTrait action)
     {
-        return lookup != null && lookup.TryGetValue(type, out PetIconSet set) ? set.GetActionIcon(action) : null;
+        return actionLookup != null && actionLookup.TryGetValue(action, out Sprite icon) ? icon : null;
     }
+}
+
+[System.Serializable]
+public class ActionIconEntry
+{
+    public ActionTrait action;
+    public Sprite icon;
 }

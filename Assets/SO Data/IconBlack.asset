@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607ec532b0a764a8ca6047d5670fc615, type: 3}
+  m_Name: IconBlack
+  m_EditorClassIdentifier: Assembly-CSharp::PetIconSet
+  petType: 5
+  typeIcon: {fileID: 1248301920996441117, guid: 216fac40e7c914851b8808c41550a186, type: 3}
+  habitIcons:
+  - habit: 1
+    icon: {fileID: -8692730412011628294, guid: 8d12175f045f04e23a502baf228c2f23, type: 3}
+  - habit: 3
+    icon: {fileID: 6241483124882448303, guid: b54e2fbb1baa0462c85d31471f12b8b8, type: 3}

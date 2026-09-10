@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 607ec532b0a764a8ca6047d5670fc615, type: 3}
+  m_Name: IconSiamese
+  m_EditorClassIdentifier: Assembly-CSharp::PetIconSet
+  petType: 0
+  typeIcon: {fileID: -5106396533832540882, guid: 438bc3f3bb44d409598f1841cb7ea1d4, type: 3}
+  habitIcons:
+  - habit: 1
+    icon: {fileID: -4485127594691217108, guid: d0955f51b81a34dbe96c9ac8fe0821a3, type: 3}
+  - habit: 3
+    icon: {fileID: -6265136392211227296, guid: 09578c9d98656476ea79993a8f2d4183, type: 3}

@@ -650,6 +650,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1174132276}
   - component: {fileID: 1174132275}
+  - component: {fileID: 1174132277}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -741,6 +742,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1174132277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174132274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e27e2ffc9bf824deda57939c6236fb62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetIconDatabase
+  iconSets:
+  - {fileID: 11400000, guid: b641882fb43cf43dcb988aa5657a848c, type: 2}
+  - {fileID: 11400000, guid: 5feaea312e8f74192a08a67ebd44041d, type: 2}
+  - {fileID: 11400000, guid: 5add83d026d854cff8d1c772c913befb, type: 2}
+  - {fileID: 11400000, guid: d1a099ad9671a419abde8221226b168b, type: 2}
+  - {fileID: 11400000, guid: 187be755817fd4285a6d9a225f1b5a41, type: 2}
+  - {fileID: 11400000, guid: 27d46d62bfdbc4edfa44d6c52499aedf, type: 2}
+  actionIcons:
+  - action: 1
+    icon: {fileID: 228663082792738388, guid: 82c2bc300dcfd49a798385e8f1b69102, type: 3}
+  - action: 2
+    icon: {fileID: -5895797641759373032, guid: 88d9687d2965c4c7caefa3c5681c1537, type: 3}
+  - action: 3
+    icon: {fileID: -3863137157702377635, guid: a0c445c8675d046c393e27066618fba9, type: 3}
+  - action: 4
+    icon: {fileID: -4745237664472261435, guid: 28f30bce65baa412ebe1dad671c73e13, type: 3}
 --- !u!1 &1358452912
 GameObject:
   m_ObjectHideFlags: 0
