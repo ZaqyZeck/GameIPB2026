@@ -9,6 +9,7 @@ public class FootballActionBehavior : IActionBehavior, IDialogueDescribable
         pet.ChangeTextAction("play ball");
         pet.Movement.Stop();
         pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play_Bola);
+        pet.ShowActionIcon(ActionTrait.Football);
         Debug.Log($"{pet.name} plays football!");
     }
 
@@ -16,6 +17,7 @@ public class FootballActionBehavior : IActionBehavior, IDialogueDescribable
     {
         pet.ChangeTextAction("xplay ball");
         pet.Animation.SetSitting(false);
+        pet.HideActionIcon();
         pet.GetInteractable().StopPlayToy();
     }
 

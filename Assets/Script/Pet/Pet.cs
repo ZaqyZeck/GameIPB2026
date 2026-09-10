@@ -1,7 +1,9 @@
+using System.Collections;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Pet : MonoBehaviour, IHoldable
 {
@@ -21,6 +23,12 @@ public class Pet : MonoBehaviour, IHoldable
     [SerializeField] TextMeshPro textPetAction;
     [SerializeField] SpriteRenderer petRenderer;
     [SerializeField] Collider2D petCollider;
+
+    [Header("Action Icon")]
+    [SerializeField] private Image actionIconImage;
+    [SerializeField] private float actionIconDuration = 5f;
+    private Coroutine actionIconCoroutine;
+
     public Material PetMaterial { get; private set; }
     public PetMovement Movement => movement;
     public PetAnimation Animation => petAnimation;
@@ -108,5 +116,39 @@ public class Pet : MonoBehaviour, IHoldable
     {
         if (petRenderer != null) petRenderer.material = material;
         PetMaterial = material;
+    }
+
+    public void ShowActionIcon(ActionTrait trait)
+    {
+        if (actionIconImage == null) return;
+
+        Sprite icon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetActionIcon(trait) : null;
+
+        if (icon == null) return;
+
+        if (actionIconCoroutine != null) StopCoroutine(actionIconCoroutine);
+
+        actionIconImage.sprite = icon;
+        actionIconImage.gameObject.SetActive(true);
+
+        actionIconCoroutine = StartCoroutine(HideActionIconAfterDelay(actionIconDuration));
+    }
+
+    public void HideActionIcon()
+    {
+        if (actionIconCoroutine != null)
+        {
+            StopCoroutine(actionIconCoroutine);
+            actionIconCoroutine = null;
+        }
+
+        if (actionIconImage != null) actionIconImage.gameObject.SetActive(false);
+    }
+
+    private IEnumerator HideActionIconAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        actionIconImage.gameObject.SetActive(false);
+        actionIconCoroutine = null;
     }
 }

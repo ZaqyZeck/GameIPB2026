@@ -9,6 +9,7 @@ public class CatToyActionBehavior : IActionBehavior, IDialogueDescribable
         pet.ChangeTextAction("play mouse");
         pet.Movement.Stop();
         pet.GetPetAnimation().TriggerAction(PetAnimationIds.ActionId_Play_Bulu);
+        pet.ShowActionIcon(ActionTrait.CatToy);
         Debug.Log($"{pet.name} swats the cat toy!");
     }
 
@@ -16,6 +17,7 @@ public class CatToyActionBehavior : IActionBehavior, IDialogueDescribable
     {
         pet.ChangeTextAction("xplay mouse");
         pet.Animation.SetSitting(false);
+        pet.HideActionIcon();
         pet.GetInteractable().StopPlayToy();
     }
 
