@@ -1,4 +1,3 @@
-// PetProfileSO.cs
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +18,8 @@ public class PetData
     [Header("Identitas Arwah")]
     public string petName = "Unknown Soul";
     public Sprite petSprite; // Base appearance
+    public PetSpecies species;
+    public PetType petType;
 
     [Header("Ciri-Ciri Kasat Mata (Immediate)")]
     public VisualTrait visualTrait;
@@ -37,6 +38,8 @@ public class PetData
         {
             petName = petName,
             petSprite = petSprite,
+            species = species,
+            petType = petType,
             visualTrait = visualTrait,
             specialColor = specialColor,
             hiddenHabit = hiddenHabit,

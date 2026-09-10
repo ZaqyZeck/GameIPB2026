@@ -24,3 +24,19 @@ public enum ActionTrait
     MiceToy,
     CatToy
 }
+
+public enum PetSpecies
+{
+    Cat,
+    Dog
+}
+
+public enum PetType
+{
+    Siamese,
+    Oyen,
+    Mustache,
+    Calico,
+    Golden,
+    Black
+}

@@ -21,7 +21,6 @@ public class Owner : Interactables
 
     [Header("Dialogue")]
     [SerializeField] private DialogueBox dialogueBox;
-    [SerializeField] private Sprite catIcon;
 
     [Header("Player Reaction Lines")]
     [SerializeField]
@@ -87,21 +86,30 @@ public class Owner : Interactables
         else OpenDialogue();
     }
 
-    private void OpenDialogue()
+        private void OpenDialogue()
     {
         if (currentPet == null || currentPet.petData == null || dialogueBox == null || PlayerDialogueController.Instance == null) return;
 
-        IHabitBehavior habit = PetBehaviorFactory.GetHabitBehavior(currentPet.petData.hiddenHabit);
-        IActionBehavior action = PetBehaviorFactory.GetActionBehavior(currentPet.petData.hiddenAction);
+        PetData petData = currentPet.petData;
+
+        IHabitBehavior habit = PetBehaviorFactory.GetHabitBehavior(petData.hiddenHabit);
+        IActionBehavior action = PetBehaviorFactory.GetActionBehavior(petData.hiddenAction);
 
         string habitText = (habit as IDialogueDescribable)?.GetDialogueText() ?? "Hmm, not sure what it likes to do.";
         string actionText = (action as IDialogueDescribable)?.GetDialogueText() ?? "Hmm, not sure what it does.";
 
+        string speciesLabel = petData.species == PetSpecies.Dog ? "dog" : "cat";
+        string greetingText = $"Have you seen my {speciesLabel}?";
+
+        Sprite typeIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetTypeIcon(petData.petType) : null;
+        Sprite habitIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetHabitIcon(petData.petType, petData.hiddenHabit) : null;
+        Sprite actionIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetActionIcon(petData.petType, petData.hiddenAction) : null;
+
         List<DialoguePage> pages = new List<DialoguePage>
         {
-            new DialoguePage { text = "Do you see my cat?", icon = catIcon },
-            new DialoguePage { text = habitText, icon = null },
-            new DialoguePage { text = actionText, icon = null },
+            new DialoguePage { text = greetingText, icon = typeIcon },
+            new DialoguePage { text = habitText, icon = habitIcon },
+            new DialoguePage { text = actionText, icon = actionIcon },
         };
 
         PlayerDialogueController.Instance.StartConversation(dialogueBox, pages, advanceLines, farewellLines);
