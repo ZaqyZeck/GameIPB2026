@@ -153,6 +153,7 @@ public class Owner : Interactables
         ResetOwnerState();
         DespawnAnimation();
         OwnerManager.Instance.CheckLine();
+        HealthManager.Instance.TakeDamage();
     }
 
     public void DespawnWithPet()

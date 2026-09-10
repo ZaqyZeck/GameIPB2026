@@ -70,4 +70,16 @@ public class ReputationManager : MonoBehaviour
         history.Clear();
     }
 
+    private int CalculateScore(ScoreVariable scoreVariable)
+    {
+        int calculatedScore = 0;
+        return calculatedScore;
+    }
+}
+
+public class ScoreVariable
+{
+    public float currentPatience;
+    public float maxPatience;
+    public int descriptionCounter;
 }

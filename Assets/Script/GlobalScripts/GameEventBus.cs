@@ -8,6 +8,10 @@ public static class GameEventBus
     public static Action<HabitTrait> OnMemoryUnlocked;
     public static Action OnReunionSuccess;
 
+    public static Action OnLevelWin;
+    public static Action OnPause;
+    public static Action OnResume;
+
     //Volume
     #region [Audio]
     public static Action<float> onValueChangeMaster;
