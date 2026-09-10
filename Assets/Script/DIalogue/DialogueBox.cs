@@ -16,6 +16,7 @@ public class DialogueBox : MonoBehaviour
 
     private Coroutine typingCoroutine;
     private Action pendingCallback;
+    private Sprite pendingIcon;
 
     public bool IsTyping { get; private set; }
 
@@ -24,10 +25,6 @@ public class DialogueBox : MonoBehaviour
         Hide();
     }
 
-    /// <summary>
-    /// Shows this owner's line for the given page. onTypingComplete fires once
-    /// the full line has finished typing out.
-    /// </summary>
     public void ShowPage(DialoguePage page, Action onTypingComplete = null)
     {
         boxRoot.SetActive(true);
@@ -35,13 +32,10 @@ public class DialogueBox : MonoBehaviour
 
         if (iconImage != null)
         {
-            iconImage.gameObject.SetActive(page.icon != null);
-            iconImage.sprite = page.icon;
+            iconImage.gameObject.SetActive(false);
         }
-        else if (page.icon != null)
-        {
-            Debug.LogWarning($"[DialogueBox] Page wants an icon but iconImage is not assigned on {name}");
-        }
+
+        pendingIcon = page.icon;
 
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         pendingCallback = onTypingComplete;
@@ -81,9 +75,26 @@ public class DialogueBox : MonoBehaviour
         IsTyping = false;
         dialogueText.maxVisibleCharacters = dialogueText.textInfo.characterCount;
 
+        ShowIcon();
+
         Action callback = pendingCallback;
         pendingCallback = null;
         callback?.Invoke();
+    }
+
+    private void ShowIcon()
+    {
+        if (iconImage == null)
+        {
+            if (pendingIcon != null)
+            {
+                Debug.LogWarning($"[DialogueBox] Page wants an icon but iconImage is not assigned on {name}");
+            }
+            return;
+        }
+
+        iconImage.gameObject.SetActive(pendingIcon != null);
+        iconImage.sprite = pendingIcon;
     }
 
     public void Hide()
@@ -92,5 +103,7 @@ public class DialogueBox : MonoBehaviour
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         IsTyping = false;
         pendingCallback = null;
+        pendingIcon = null;
+        if (iconImage != null) iconImage.gameObject.SetActive(false);
     }
 }

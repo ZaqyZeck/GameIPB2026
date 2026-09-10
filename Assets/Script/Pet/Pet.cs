@@ -21,7 +21,7 @@ public class Pet : MonoBehaviour, IHoldable
     [SerializeField] TextMeshPro textPetAction;
     [SerializeField] SpriteRenderer petRenderer;
     [SerializeField] Collider2D petCollider;
-    public Material PetMaterial {  get; private set; }
+    public Material PetMaterial { get; private set; }
     public PetMovement Movement => movement;
     public PetAnimation Animation => petAnimation;
     public Transform Transform => transform;
@@ -55,6 +55,8 @@ public class Pet : MonoBehaviour, IHoldable
 
         textPetId.text = petId.ToString();
 
+        petAnimation.SetSpriteLibraryForType(petData.petType);
+
         //SpawnAnimation();
     }
 
@@ -70,9 +72,9 @@ public class Pet : MonoBehaviour, IHoldable
     }
     void SpawnAnimation()
     {
-        spriteRenderer.DOFade(1f, 1f).OnComplete(()=> 
-        { 
-            movement.MoveTo(MapManager.Instance.GetRandomPositionIn(MapManager.Instance.doorOpenArea)); 
+        spriteRenderer.DOFade(1f, 1f).OnComplete(() =>
+        {
+            movement.MoveTo(MapManager.Instance.GetRandomPositionIn(MapManager.Instance.doorOpenArea));
         });
         petCollider.enabled = true;
     }

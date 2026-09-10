@@ -53,15 +53,15 @@ public class TreasureHunterBehavior : IHabitBehavior, IDialogueDescribable
 
     private void GoToDigSpot(Pet pet)
     {
-        //if (PetSpotRegistry.Instance == null)
-        //{
-        //    Debug.LogError("gak ada dig spot buat habit");
-        //    return;
-        //}
+        if (MapManager.Instance == null || MapManager.Instance.treasureHuntArea == null || MapManager.Instance.treasureHuntArea.Length == 0)
+        {
+            Debug.LogError("gak ada treasure hunt area buat habit");
+            return;
+        }
 
         isGoingToDig = true;
 
-        Vector3 digPosition = MapManager.Instance.GetRandomPositionIn(MapManager.Instance.PetArea);
+        Vector3 digPosition = MapManager.Instance.GetRandomPositionInArray(MapManager.Instance.treasureHuntArea);
 
         pet.ChangeTextAction("goto dig");
         pet.Movement.MoveTo(digPosition, () => StartDigging(pet));
@@ -82,8 +82,9 @@ public class TreasureHunterBehavior : IHabitBehavior, IDialogueDescribable
     private void FinishDigging(Pet pet)
     {
         isDigging = false;
+        pet.Animation.ResetAction();
         Debug.Log($"{pet.petData.petName} finished digging");
     }
 
-    public string GetDialogueText() => "It's always digging around, looking for buried treasure.";
+    public string GetDialogueText() => "Every so often it claws at a wall, convinced there's treasure buried inside.";
 }

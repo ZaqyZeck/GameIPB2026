@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D.Animation;
 
@@ -6,6 +8,9 @@ public class PetAnimation : MonoBehaviour
     [SerializeField] private Animator petAnimator;
     [SerializeField] private SpriteRenderer petRenderer;
     [SerializeField] private SpriteResolver petResolver;
+    [SerializeField] private SpriteLibrary petSpriteLibrary;
+
+    [SerializeField] private List<PetTypeLibraryEntry> spriteLibrariesByType = new();
 
     private static readonly int IsWalkingHash = Animator.StringToHash("isWalking");
     private static readonly int IsSittingHash = Animator.StringToHash("isSitting");
@@ -55,4 +60,27 @@ public class PetAnimation : MonoBehaviour
         if (petResolver == null) return;
         petResolver.SetCategoryAndLabel(category, label);
     }
+
+    public void SetSpriteLibraryForType(PetType type)
+    {
+        if (petSpriteLibrary == null) return;
+
+        foreach (PetTypeLibraryEntry entry in spriteLibrariesByType)
+        {
+            if (entry.petType == type)
+            {
+                petSpriteLibrary.spriteLibraryAsset = entry.spriteLibraryAsset;
+                return;
+            }
+        }
+
+        Debug.LogWarning($"[PetAnimation] No SpriteLibraryAsset assigned for type {type} on {name}");
+    }
+}
+
+[Serializable]
+public class PetTypeLibraryEntry
+{
+    public PetType petType;
+    public SpriteLibraryAsset spriteLibraryAsset;
 }

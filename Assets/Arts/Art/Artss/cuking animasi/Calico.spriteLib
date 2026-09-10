@@ -107,24 +107,24 @@ MonoBehaviour:
     m_OverrideEntries:
     - m_Name: 0
       m_Hash: 886824737
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 21300000, guid: 685f3bf9ce3f94b40b6bc6049e1516c4, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 21300000, guid: 685f3bf9ce3f94b40b6bc6049e1516c4, type: 3}
     - m_Name: 1
       m_Hash: 64810935
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 21300000, guid: a176cfcd865ff4dd6bfd05f47dc0bf6e, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 21300000, guid: a176cfcd865ff4dd6bfd05f47dc0bf6e, type: 3}
     - m_Name: 2
       m_Hash: 450215437
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 21300000, guid: 1bb794921e0a648d7b14b32fce05c3b5, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 21300000, guid: 1bb794921e0a648d7b14b32fce05c3b5, type: 3}
     - m_Name: 3
       m_Hash: 768773787
-      m_Sprite: {fileID: 0}
+      m_Sprite: {fileID: 21300000, guid: 690767b13cf0d4cdd89f9256961f0192, type: 3}
       m_FromMain: 0
-      m_SpriteOverride: {fileID: 0}
+      m_SpriteOverride: {fileID: 21300000, guid: 690767b13cf0d4cdd89f9256961f0192, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 4
   - m_Name: Sleep
@@ -143,8 +143,40 @@ MonoBehaviour:
       m_SpriteOverride: {fileID: 21300000, guid: 1fbc620b50cbb4e8786837fe442ea34c, type: 3}
     m_FromMain: 0
     m_EntryOverrideCount: 2
-  - m_Name: Play Toy
-    m_Hash: 188990429
+  - m_Name: Claw
+    m_Hash: 464495858
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: 0
+      m_Hash: 886824737
+      m_Sprite: {fileID: 21300000, guid: f457cf1f5317b4bf984dd56c3d0101d3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: f457cf1f5317b4bf984dd56c3d0101d3, type: 3}
+    - m_Name: 1
+      m_Hash: 64810935
+      m_Sprite: {fileID: 21300000, guid: 634a539f029104ccba9e4cfc0c3394f3, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 634a539f029104ccba9e4cfc0c3394f3, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: Play Ball
+    m_Hash: 645327881
+    m_CategoryList: []
+    m_OverrideEntries:
+    - m_Name: 0
+      m_Hash: 886824737
+      m_Sprite: {fileID: 21300000, guid: 51ddcc16dd47f48bb8eafe4eaa189e9e, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 51ddcc16dd47f48bb8eafe4eaa189e9e, type: 3}
+    - m_Name: 1
+      m_Hash: 64810935
+      m_Sprite: {fileID: 21300000, guid: 410c807abd26b41fa89e3995d2db1a41, type: 3}
+      m_FromMain: 0
+      m_SpriteOverride: {fileID: 21300000, guid: 410c807abd26b41fa89e3995d2db1a41, type: 3}
+    m_FromMain: 0
+    m_EntryOverrideCount: 2
+  - m_Name: Play Mice
+    m_Hash: 239208844
     m_CategoryList: []
     m_OverrideEntries:
     - m_Name: 0
@@ -160,5 +192,5 @@ MonoBehaviour:
     m_FromMain: 0
     m_EntryOverrideCount: 2
   m_PrimaryLibraryGUID: 
-  m_ModificationHash: 639246547959370810
+  m_ModificationHash: 639246611648044950
   m_Version: 1

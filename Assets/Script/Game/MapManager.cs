@@ -9,11 +9,14 @@ public class MapManager : MonoBehaviour
     public Collider2D doorArea;
     public Collider2D doorOpenArea;
     public Collider2D[] bedCollders;
+    public Collider2D[] treasureHuntArea;
     public Transform interactableParent;
+
     private void Awake()
     {
         Instance = this;
     }
+
     public Vector3 GetRandomPositionIn(Collider2D area)
     {
         Bounds bounds = area.bounds;
@@ -29,6 +32,17 @@ public class MapManager : MonoBehaviour
         }
 
         return area.bounds.center;
+    }
+
+    public Vector3 GetRandomPositionInArray(Collider2D[] areas)
+    {
+        if (areas == null || areas.Length == 0) return transform.position;
+
+        Collider2D chosen = areas[Random.Range(0, areas.Length)];
+
+        if (chosen == null) return transform.position;
+
+        return GetRandomPositionIn(chosen);
     }
 
     public Vector3 GetPositionNear(Vector3 position, Vector3 targetPosition)

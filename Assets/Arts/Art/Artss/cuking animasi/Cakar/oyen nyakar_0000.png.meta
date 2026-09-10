@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: b54e2fbb1baa0462c85d31471f12b8b8
+guid: b75bf627856cd424196d461450d807b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6241483124882448303
-    second: Frame 20_0
+      213: 4454394109236807169
+    second: oyen nyakar_0000_0
+  - first:
+      213: -9165192664952334730
+    second: oyen nyakar_0000_1
+  - first:
+      213: 7829393869592178882
+    second: oyen nyakar_0000_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +52,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 185
+  spritePixelsToUnits: 2048
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +119,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frame 20_0
+      name: oyen nyakar_0000_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 165
-        height: 166
+        x: 1061
+        y: 433
+        width: 3622
+        height: 3893
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +134,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: faf963255d33e9650800000000000000
-      internalID: 6241483124882448303
+      spriteID: 10607aa87df21dd30800000000000000
+      internalID: 4454394109236807169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oyen nyakar_0000_1
+      rect:
+        serializedVersion: 2
+        x: 2307
+        y: 4111
+        width: 966
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 676108b94d1bec080800000000000000
+      internalID: -9165192664952334730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: oyen nyakar_0000_2
+      rect:
+        serializedVersion: 2
+        x: 4016
+        y: 0
+        width: 57
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c0b9a31e3897ac60800000000000000
+      internalID: 7829393869592178882
       vertices: []
       indices: 
       edges: []
@@ -148,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Frame 20_0: 6241483124882448303
+      oyen nyakar_0000_0: 4454394109236807169
+      oyen nyakar_0000_1: -9165192664952334730
+      oyen nyakar_0000_2: 7829393869592178882
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

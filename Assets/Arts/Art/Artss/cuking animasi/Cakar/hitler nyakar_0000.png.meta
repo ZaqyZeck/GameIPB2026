@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: b54e2fbb1baa0462c85d31471f12b8b8
+guid: e25bc285094534e8aae9ec3f3ff2e64d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6241483124882448303
-    second: Frame 20_0
+      213: -9114780378525250059
+    second: hitler nyakar_0000_0
+  - first:
+      213: 2997459122491837965
+    second: hitler nyakar_0000_1
+  - first:
+      213: -5970227071095661932
+    second: hitler nyakar_0000_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +52,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 185
+  spritePixelsToUnits: 2048
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +119,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frame 20_0
+      name: hitler nyakar_0000_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 165
-        height: 166
+        x: 1061
+        y: 433
+        width: 3622
+        height: 3893
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +134,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: faf963255d33e9650800000000000000
-      internalID: 6241483124882448303
+      spriteID: 5fd4d44b98bc18180800000000000000
+      internalID: -9114780378525250059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler nyakar_0000_1
+      rect:
+        serializedVersion: 2
+        x: 2307
+        y: 4111
+        width: 966
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0e41e0d03d199920800000000000000
+      internalID: 2997459122491837965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hitler nyakar_0000_2
+      rect:
+        serializedVersion: 2
+        x: 4016
+        y: 0
+        width: 57
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49a1ce64c1e752da0800000000000000
+      internalID: -5970227071095661932
       vertices: []
       indices: 
       edges: []
@@ -148,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Frame 20_0: 6241483124882448303
+      hitler nyakar_0000_0: -9114780378525250059
+      hitler nyakar_0000_1: 2997459122491837965
+      hitler nyakar_0000_2: -5970227071095661932
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

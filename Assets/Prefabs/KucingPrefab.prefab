@@ -455,7 +455,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: f07a93e35a3624f3ca1f29bead2d505a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 35a03322bb0cd4de897d2efcbc006e82, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
@@ -529,6 +529,8 @@ MonoBehaviour:
   petData:
     petName: Unknown Soul
     petSprite: {fileID: 0}
+    species: 0
+    petType: 0
     visualTrait: 0
     specialColor: {r: 1, g: 1, b: 1, a: 1}
     hiddenHabit: 0
@@ -596,6 +598,20 @@ MonoBehaviour:
   petAnimator: {fileID: 6503803699437720789}
   petRenderer: {fileID: 3931222213587269898}
   petResolver: {fileID: 3728483775909779085}
+  petSpriteLibrary: {fileID: 6120435355111725230}
+  spriteLibrariesByType:
+  - petType: 0
+    spriteLibraryAsset: {fileID: 7108339969198208228, guid: d6ad53bbfd4084c1fa34b19371995dcb, type: 3}
+  - petType: 1
+    spriteLibraryAsset: {fileID: 7108339969198208228, guid: 525a988f7a4d04d22a570639c3275e79, type: 3}
+  - petType: 2
+    spriteLibraryAsset: {fileID: 7108339969198208228, guid: 5812b06e2abc445f5b73bdb607635953, type: 3}
+  - petType: 3
+    spriteLibraryAsset: {fileID: 7108339969198208228, guid: 48a0ce154aa37472d940e4b8b65f2c32, type: 3}
+  - petType: 4
+    spriteLibraryAsset: {fileID: 7108339969198208228, guid: 52fdb85092b7f4ff492288bc6013faa5, type: 3}
+  - petType: 5
+    spriteLibraryAsset: {fileID: 7108339969198208228, guid: bcfa2208ebee44a5c9f5fc24d5351904, type: 3}
 --- !u!114 &8936162723813097491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -668,10 +684,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
-  m_CategoryHash: 2.3516784e-38
+  m_CategoryHash: 2.9057915e-22
   m_labelHash: 0.00000040954276
   m_SpriteKey: 0
-  m_SpriteHash: 655371835
+  m_SpriteHash: 756210857
 --- !u!95 &6503803699437720789
 Animator:
   serializedVersion: 7

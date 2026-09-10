@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: b54e2fbb1baa0462c85d31471f12b8b8
+guid: f457cf1f5317b4bf984dd56c3d0101d3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6241483124882448303
-    second: Frame 20_0
+      213: 6662046055511691747
+    second: calico nyakar_0000_0
+  - first:
+      213: -6677646751923806879
+    second: calico nyakar_0000_1
+  - first:
+      213: -4460619463546422082
+    second: calico nyakar_0000_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +52,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 185
+  spritePixelsToUnits: 2048
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,13 +119,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frame 20_0
+      name: calico nyakar_0000_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 165
-        height: 166
+        x: 1061
+        y: 433
+        width: 3622
+        height: 3893
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +134,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: faf963255d33e9650800000000000000
-      internalID: 6241483124882448303
+      spriteID: 3e111182797547c50800000000000000
+      internalID: 6662046055511691747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico nyakar_0000_1
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 4111
+        width: 966
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16d5a08a8ab3453a0800000000000000
+      internalID: -6677646751923806879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: calico nyakar_0000_2
+      rect:
+        serializedVersion: 2
+        x: 4016
+        y: 0
+        width: 57
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebc3f153b32b812c0800000000000000
+      internalID: -4460619463546422082
       vertices: []
       indices: 
       edges: []
@@ -148,7 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Frame 20_0: 6241483124882448303
+      calico nyakar_0000_0: 6662046055511691747
+      calico nyakar_0000_1: -6677646751923806879
+      calico nyakar_0000_2: -4460619463546422082
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
