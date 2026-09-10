@@ -7,6 +7,7 @@ public class MapManager : MonoBehaviour
     public Collider2D PetArea;
     public Collider2D sunlightArea;
     public Collider2D doorArea;
+    public Collider2D doorOpenArea;
     public Collider2D[] bedCollders;
     public Transform interactableParent;
     private void Awake()

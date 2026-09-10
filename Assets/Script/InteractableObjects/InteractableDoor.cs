@@ -35,14 +35,14 @@ public class InteractableDoor : Interactables
 
     private void OpenDoor()
     {
-        if (!PetManager.Instance.isPetAtDoor || isOpen) return;
+        if (!PetManager.Instance.isPetsAtDoor || isOpen) return;
         windowOpen.SetActive(true);
         windowClose.SetActive(false);
 
         isOpen = true;
         openTimer = openDuration;
 
-        // PetManager.Instance.SpawnPet();
+         PetManager.Instance.DoorOpen();
         TurnOnOutline(false);
     }
 

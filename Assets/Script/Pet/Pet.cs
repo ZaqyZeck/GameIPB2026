@@ -7,6 +7,7 @@ public class Pet : MonoBehaviour, IHoldable
 {
     public int petId;
     public bool isOwnerArrived;
+    public bool isEnteredDoor;
     //public bool isAccepted;
     public PetData petData;
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -19,6 +20,7 @@ public class Pet : MonoBehaviour, IHoldable
     [SerializeField] TextMeshPro textPetId;
     [SerializeField] TextMeshPro textPetAction;
     [SerializeField] SpriteRenderer petRenderer;
+    [SerializeField] Collider2D petCollider;
     public Material PetMaterial {  get; private set; }
     public PetMovement Movement => movement;
     public PetAnimation Animation => petAnimation;
@@ -46,13 +48,19 @@ public class Pet : MonoBehaviour, IHoldable
         isOwnerArrived = true;
     }
 
-    public void Spawn(PetData newPetData)
+    public void SpawnAtDoor(PetData newPetData)
     {
         petData = newPetData;
         behaviorController.Initialize(petData);
 
         textPetId.text = petId.ToString();
 
+        //SpawnAnimation();
+    }
+
+    public void EnterDoor()
+    {
+        isEnteredDoor = true;
         SpawnAnimation();
     }
 
@@ -62,7 +70,11 @@ public class Pet : MonoBehaviour, IHoldable
     }
     void SpawnAnimation()
     {
-        spriteRenderer.DOFade(1f, 1f).OnComplete(()=> { movement.MoveTo(targetSpawn); });
+        spriteRenderer.DOFade(1f, 1f).OnComplete(()=> 
+        { 
+            movement.MoveTo(MapManager.Instance.GetRandomPositionIn(MapManager.Instance.doorOpenArea)); 
+        });
+        petCollider.enabled = true;
     }
 
     void DespawnAnimation()

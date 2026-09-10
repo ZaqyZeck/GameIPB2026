@@ -11,7 +11,7 @@ public class PetManager : MonoBehaviour
     [SerializeField] private PetProfileSO petDatas;
     [SerializeField] private GameObject[] petPrefabs;
     [SerializeField] private List<Pet> ghostPets = new();
-    [SerializeField] private List<PetData> petsAtDoor = new();
+    //[SerializeField] private List<PetData> petsAtDoor = new();
     [SerializeField] private Collider2D barrierCollider;
     [SerializeField] private int maxPet;
     //[SerializeField] private int maxPetAtDoor = 3;
@@ -23,9 +23,9 @@ public class PetManager : MonoBehaviour
     [SerializeField] Shader petShader;
 
     public bool isPetAvailable;
-    public bool isPetAtDoor => petsAtDoor.Count > 0;
+    public bool isPetsAtDoor;
 
-    public int PetAtDoorCount => petsAtDoor.Count;
+    //public int PetAtDoorCount => petsAtDoor.Count;
 
     private int petIdCounter = 0;
 
@@ -68,34 +68,21 @@ public class PetManager : MonoBehaviour
 
         PetData petData = template.Clone();
 
-        petsAtDoor.Add(petData);
-
-        Debug.Log($"Pet {petData.petName} menunggu di pintu. Jumlah: {petsAtDoor.Count}/{maxPet}");
+        SpawnPetAtDoor(petData);
+        isPetsAtDoor = true;
     }
 
     public void DoorOpen()
     {
-        if (petsAtDoor.Count == 0)
+        foreach(Pet pet in ghostPets)
         {
-            Debug.Log("Tidak ada pet yang menunggu di pintu.");
-            return;
+            if (pet.isEnteredDoor) continue;
+            pet.EnterDoor();
         }
-
-        int availableSlot = maxPet - ghostPets.Count;
-        int spawnCount = Mathf.Min(petsAtDoor.Count, availableSlot);
-
-        for (int i = 0; i < spawnCount; i++)
-        {
-            PetData petData = petsAtDoor[0];
-            petsAtDoor.RemoveAt(0);
-
-            SpawnPet(petData);
-        }
-
-        Debug.Log($"DoorOpen: {spawnCount} pet berhasil di-spawn. Sisa antrean: {petsAtDoor.Count}");
+        isPetsAtDoor = false;
     }
 
-    private void SpawnPet(PetData petData)
+    private void SpawnPetAtDoor(PetData petData)
     {
         if (petData == null) return;
 
@@ -113,7 +100,7 @@ public class PetManager : MonoBehaviour
         newPet.petId = petIdCounter;
 
         AddPetToList(newPet);
-        newPet.Spawn(petData);
+        newPet.SpawnAtDoor(petData);
 
         if (petShader != null)
         {
@@ -279,7 +266,7 @@ public class PetManager : MonoBehaviour
 
     public bool CanAddPetAtDoor()
     {
-        if (ghostPets.Count + petsAtDoor.Count >= maxPet) return false;
+        if (ghostPets.Count >= maxPet) return false;
 
         if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
             return false;

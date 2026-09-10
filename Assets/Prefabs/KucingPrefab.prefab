@@ -456,7 +456,7 @@ SpriteRenderer:
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: f07a93e35a3624f3ca1f29bead2d505a, type: 3}
-  m_Color: {r: 1, g: 0.5222672, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -472,7 +472,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5179462446187314528}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -525,6 +525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pet
   petId: 0
   isOwnerArrived: 0
+  isEnteredDoor: 0
   petData:
     petName: Unknown Soul
     petSprite: {fileID: 0}
@@ -542,6 +543,7 @@ MonoBehaviour:
   textPetId: {fileID: 479771380384152824}
   textPetAction: {fileID: 9113636316332043246}
   petRenderer: {fileID: 3931222213587269898}
+  petCollider: {fileID: 2027777344167743591}
 --- !u!114 &6903472403721547917
 MonoBehaviour:
   m_ObjectHideFlags: 0
