@@ -24,6 +24,7 @@ public class PlayerInteract : MonoBehaviour
     }
     private void Update()
     {
+        if (!LevelManager.Instance.IsPlaying) return;
         SelectHoverObject();
 
         bool inputLocked = PlayerMovement.Instance != null && PlayerMovement.Instance.IsMovementLocked;

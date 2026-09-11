@@ -32,6 +32,7 @@ public class PetBehaviorController : MonoBehaviour
 
     private void Update()
     {
+        if (!LevelManager.Instance.IsPlaying) return;
         if (!pet.isEnteredDoor) return;
         if (pet.petData == null || isStopBehaviour) return;
         if (pet.GetInteractable().isPickuped) return;

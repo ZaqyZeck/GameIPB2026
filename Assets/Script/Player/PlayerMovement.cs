@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (!LevelManager.Instance.IsPlaying) return;
         if (haveTarget && !isMovementLocked) GoToTarget();
     }
 

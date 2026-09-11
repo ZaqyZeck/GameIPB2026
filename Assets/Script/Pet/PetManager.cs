@@ -37,6 +37,7 @@ public class PetManager : MonoBehaviour
 
     private void Update()
     {
+        if (!LevelManager.Instance.IsPlaying) return;
         if (spawnTimer > 0f)
         {
             if (CanAddPetAtDoor())

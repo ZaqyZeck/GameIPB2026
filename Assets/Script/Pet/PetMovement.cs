@@ -70,6 +70,7 @@ public class PetMovement : MonoBehaviour
 
     private void Update()
     {
+        if (!LevelManager.Instance.IsPlaying) return;
         if (!destination.HasValue || petInteractable.isPickuped)
         {
             IsMoving = false;

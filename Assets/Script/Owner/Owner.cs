@@ -54,6 +54,7 @@ public class Owner : Interactables
 
     private void Update()
     {
+        if (!LevelManager.Instance.IsPlaying) return;
         if (patienceTimer >= 0 && isInLine)
         {
             patienceTimer -= Time.deltaTime;

@@ -3,6 +3,7 @@ using UnityEngine.SocialPlatforms.Impl;
 
 public class LevelManager : MonoBehaviour
 {
+    public static LevelManager Instance;
     public enum GameState { Playing, Pause, End}
 
     public GameState state = GameState.Playing;
@@ -10,6 +11,10 @@ public class LevelManager : MonoBehaviour
     public bool IsEnded => state == GameState.End;
     public bool IsPause => state == GameState.Pause;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void OnEnable()
     {
         GameEventBus.OnLevelWin += OnLevelWin;
@@ -29,10 +34,13 @@ public class LevelManager : MonoBehaviour
         switch(state)
         {
             case GameState.Playing:
+                Time.timeScale = 1f;
                 break;
             case GameState.Pause:
+                Time.timeScale = 0f;
                 break;
             case GameState.End:
+                Time.timeScale = 0f;
                 break;
         }
     }

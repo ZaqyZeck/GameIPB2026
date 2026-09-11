@@ -21,7 +21,8 @@ public class OwnerManager : MonoBehaviour
 
     private void Update()
     {
-        if(spawnTimer <= 0f)
+        if (!LevelManager.Instance.IsPlaying) return;
+        if (spawnTimer <= 0f)
         {
             spawnTimer = Random.Range(minSpawnTime, maxSpawnTime);
             RandomSpawnOwner();
