@@ -22,6 +22,9 @@ public class UIPauseMenu : UIBase
     }
     public void BackToMenu()
     {
-        // UIManager.Instance.ShowUI(UIType.UISettings);
+        
+        UIGameplay.ResetReputation();
+
+        GameManager.Instance.LoadMainMenu();
     }
 }
