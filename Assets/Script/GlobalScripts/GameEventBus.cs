@@ -13,6 +13,8 @@ public static class GameEventBus
     public static Action OnResume;
     public static Action OnWin;
 
+    public static Action<int, int> OnReputationChange;
+    public static Action<int, int> OnTakeDamage;
     //Volume
     #region [Audio]
     public static Action<float> onValueChangeMaster;

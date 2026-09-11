@@ -121,27 +121,34 @@ public class LeaderboardManager : MonoBehaviour
     }
 
     public async Task<LeaderboardEntry> SubmitAnonymousScoreAsync(long score, string playerName)
-    {
-        try
         {
-            await AuthenticationManager.Instance.LoginAnonimAsync(playerName);
-
-            LeaderboardEntry entry = await AddScoreAsync(score);
-
-            if (entry != null)
+            try
             {
-                Debug.Log($"Score berhasil: {entry.Score}, Player: {entry.PlayerName}");
+                if (AuthenticationService.Instance != null && AuthenticationService.Instance.IsSignedIn)
+                {
+                    AuthenticationManager.Instance.SignOut(true);
+                }
 
-                AuthenticationManager.Instance.SignOut(true);
+                await AuthenticationManager.Instance.LoginAnonimAsync(playerName);
+
+                LeaderboardEntry entry = await AddScoreAsync(score);
+
+                if (entry != null)
+                {
+                    Debug.Log($"Score berhasil: {entry.Score}, Player: {entry.PlayerName}");
+
+                    AuthenticationManager.Instance.SignOut(true);
+                }
+
+                return entry;
             }
-            return entry;
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Gagal submit score: {ex.Message}");
-            return null;
-        }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Gagal submit score: {ex.Message}");
+                return null;
+            }
     }
+
     // ---------------------------------------------------------------
     //  GET TOP SCORES
     // ---------------------------------------------------------------

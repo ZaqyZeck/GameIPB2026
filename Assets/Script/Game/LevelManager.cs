@@ -17,14 +17,16 @@ public class LevelManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameEventBus.OnSubmitScore += OnLevelWin;
+        //GameEventBus.OnSubmitScore += OnLevelWin;
+        GameEventBus.OnWin += OnLevelWin;
         GameEventBus.OnPause += OnLevelPause;
         GameEventBus.OnResume += OnLevelResume;
     }
 
     private void OnDisable()
     {
-        GameEventBus.OnSubmitScore -= OnLevelWin;
+        //GameEventBus.OnSubmitScore -= OnLevelWin;
+        GameEventBus.OnWin -= OnLevelWin;
         GameEventBus.OnPause -= OnLevelPause;
         GameEventBus.OnResume -= OnLevelResume;
     }
@@ -45,12 +47,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private async void OnLevelWin()
+    private void OnLevelWin()
     {
-        float reputationScore = ReputationManager.Instance.GetScore();
+        //float reputationScore = ReputationManager.Instance.GetScore();
 
         // submint score ke leaderboard secara anonim dengan nama "ben"
-        await LeaderboardManager.Instance.SubmitAnonymousScoreAsync((long) reputationScore, "anonim");
+        //await LeaderboardManager.Instance.SubmitAnonymousScoreAsync((long) reputationScore, "anonim");
         ChangeState(GameState.End);
     } 
 

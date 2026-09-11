@@ -1,4 +1,5 @@
 using System;
+using Ohm.UISystem;
 using TMPro;
 using UnityEngine;
 
@@ -27,11 +28,13 @@ public class HealthManager : MonoBehaviour
         health = Mathf.Clamp(health - Mathf.Abs(amount), 0, maxHealth);
 
         OnHealthChanged?.Invoke(before, health);
+        GameEventBus.OnTakeDamage?.Invoke(before, health);
         if (healthText != null) healthText.text = "Health: " + health;
         if (health == 0)
         {
             OnDeath?.Invoke();
             GameEventBus.OnWin?.Invoke();
+            UIManager.Instance.ShowUI<UIGameOver>();
             Debug.LogWarning("Menaaaaang");
         }
             

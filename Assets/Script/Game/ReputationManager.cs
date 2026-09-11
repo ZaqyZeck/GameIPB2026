@@ -49,7 +49,9 @@ public class ReputationManager : MonoBehaviour
         });
 
         if(reputationText != null) reputationText.text = "Reputation: " + score;
+
         OnReputationChanged?.Invoke(before, score);
+        GameEventBus.OnReputationChange(before, score);
 
         return score;
     }
