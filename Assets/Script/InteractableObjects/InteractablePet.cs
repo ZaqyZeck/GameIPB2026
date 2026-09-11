@@ -85,6 +85,7 @@ public class InteractablePet : Interactables
 
         currentToy?.SetVisible(false);
         ownerPet.BehaviorController.TryExecuteAction(ownerPet.petData.hiddenAction);
+        PlayToySound();
     }
 
     public void StopPlayToy()
@@ -115,7 +116,7 @@ public class InteractablePet : Interactables
 
         if (angryReactionCoroutine != null) StopCoroutine(angryReactionCoroutine);
         angryReactionCoroutine = StartCoroutine(AngryReactionRoutine());
-
+        PlayAngrySound();
         DropToy();
     }
 
@@ -161,4 +162,33 @@ public class InteractablePet : Interactables
             ownerPet.PetMaterial.SetFloat("_outlineOn", 0f);
         }
     }
+    void PlayAngrySound()
+{
+    if (GameManager.Instance == null) return;
+    if (ownerPet == null || ownerPet.petData == null) return;
+
+    if (ownerPet.petData.species == PetSpecies.Cat)
+    {
+        GameManager.Instance.PlayAudio(GameManager.Instance.meowAngry);
+    }
+    else if (ownerPet.petData.species == PetSpecies.Dog)
+    {
+        GameManager.Instance.PlayAudio(GameManager.Instance.dogAngry);
+    }
+    
+}
+void PlayToySound()
+{
+    if (GameManager.Instance == null) return;
+    if (ownerPet == null || ownerPet.petData == null) return;
+
+    if (ownerPet.petData.species == PetSpecies.Cat)
+    {
+        GameManager.Instance.PlayAudio(GameManager.Instance.meow);
+    }
+    else if (ownerPet.petData.species == PetSpecies.Dog)
+    {
+        GameManager.Instance.PlayAudio(GameManager.Instance.dog);
+    }
+}
 }
