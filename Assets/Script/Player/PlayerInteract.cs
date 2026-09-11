@@ -157,10 +157,24 @@ public class PlayerInteract : MonoBehaviour
         if (Vector3.Distance(transform.position, currentTargetObject.position) <= pickUpRange) return true;
         return false;
     }
-    public void FlipHoldTransform(bool isXPositif)
+    public void FlipHoldTransform(float xMovement, bool isIdle)
     {
-        if (isXPositif) holdTransform.localPosition = new Vector3(0.5f, 0f, 0);
-        else holdTransform.localPosition = new Vector3(-0.5f, 0f, 0);
+        if (isIdle)
+        {
+            holdTransform.localPosition = new Vector3(0f, 0f, 0);
+            return;
+        }
+
+        if (xMovement > 0)
+        {
+            holdTransform.localPosition = new Vector3(0.5f, 0f, 0);
+        }
+        else
+        {
+            holdTransform.localPosition = new Vector3(-0.5f, 0f, 0);
+        }
+        //if (isXPositif) holdTransform.localPosition = new Vector3(0.5f, 0f, 0);
+        //else 
     }
 
     public void InteractTarget()

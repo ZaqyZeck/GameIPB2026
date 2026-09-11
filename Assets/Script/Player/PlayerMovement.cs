@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement Instance;
 
     [SerializeField] PlayerInteract playerInteract;
+    [SerializeField] PlayerAnimation playerAnimation;
     [SerializeField] PolygonCollider2D playerArea;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Seeker seeker;
@@ -43,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         seeker.StartPath(transform.position, targetPosition, OnPathComplete);
 
         bool isXPositif = targetPosition.x - transform.position.x > 0f;
-        HandleFlip(isXPositif);
+        //HandleFlip(isXPositif);
 
         haveTarget = true;
     }
@@ -96,11 +97,15 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 direction = waypoint - transform.position;
 
-        if (direction.sqrMagnitude > 0.001f)
-        {
-            bool isXPositif = direction.x > 0f;
-            HandleFlip(isXPositif);
-        }
+        //if (direction.sqrMagnitude > 0.001f)
+        //{
+        //    bool isXPositif = direction.x > 0f;
+        //    HandleFlip(isXPositif);
+        //}
+
+        //playerAnimation.SetIsIdle(false);
+        //playerAnimation.SetXMovement(direction.x);
+        HandleAnimation(direction.x, false);
 
         transform.position = Vector3.MoveTowards(transform.position, waypoint, movementSpeed * Time.deltaTime);
 
@@ -116,7 +121,8 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerInteract.Instance.InteractTarget();
         }
-
+        //playerAnimation.SetIsIdle(true);
+        HandleAnimation(0f, true);
         StopTargeting();
     }
 
@@ -136,12 +142,15 @@ public class PlayerMovement : MonoBehaviour
         return new Vector3(validPoint.x, validPoint.y, transform.position.z);
     }
 
-    private void HandleFlip(bool isXPositif)
+    private void HandleAnimation(float xMovement, bool isIdle)
     {
-        if (spriteRenderer.flipX == isXPositif) return;
+        //if (spriteRenderer.flipX == isXPositif) return;
 
-        playerInteract.CurrentHeldHoldable?.SetFacing(isXPositif);
-        spriteRenderer.flipX = isXPositif;
-        PlayerInteract.Instance.FlipHoldTransform(isXPositif);
+        playerInteract.CurrentHeldHoldable?.SetFacing(xMovement > 0);
+        //spriteRenderer.flipX = isXPositif;
+        PlayerInteract.Instance.FlipHoldTransform(xMovement, isIdle);
+
+        playerAnimation.SetIsIdle(isIdle);
+        playerAnimation.SetXMovement(xMovement);
     }
 }

@@ -2989,7 +2989,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 6ec23328bbad4ce439545c9e53f43b8d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 85945ab8e88f9c645a45b7defb7cfe50, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4298,6 +4298,7 @@ GameObject:
   - component: {fileID: 1256394995}
   - component: {fileID: 1256394996}
   - component: {fileID: 1256394997}
+  - component: {fileID: 1256394998}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -4337,6 +4338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   playerInteract: {fileID: 1256394994}
+  playerAnimation: {fileID: 1256394998}
   playerArea: {fileID: 435032607}
   spriteRenderer: {fileID: 1513617416}
   seeker: {fileID: 1256394995}
@@ -4420,6 +4422,19 @@ MonoBehaviour:
   boxRoot: {fileID: 1903874464}
   reactionText: {fileID: 1616917925}
   charsPerSecond: 30
+--- !u!114 &1256394998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1256394991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fae5348735300b41a1323c26dd2829f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
+  animator: {fileID: 447332298}
 --- !u!1 &1264324320
 GameObject:
   m_ObjectHideFlags: 0
