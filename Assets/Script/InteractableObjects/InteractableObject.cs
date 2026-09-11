@@ -22,20 +22,11 @@ public class InteractableObject : Interactables, IHoldable
         if (objectMaterial != null) objectMaterial.SetFloat("_outlineOn", 0f);
     }
 
-    //public void OnSelected()
-    //{
-    //    TurnOnOutline(true);
-    //}
-    //public void OnDeselected()
-    //{
-    //    TurnOnOutline(false);
-    //}
     public override void OnInteract(PlayerInteract player)
     {
         player.PickUpTargetObject();
     }
 
-    //public IHoldable GetHoldable() => ownerPet;
     public void PickupBehaviour()
     {
         isPickuped = true;
@@ -79,6 +70,11 @@ public class InteractableObject : Interactables, IHoldable
     public void SetFacing(bool isFacingPositiveX)
     {
         spriteRenderer.flipX = isFacingPositiveX;
+    }
+
+    public void SetVisible(bool isVisible)
+    {
+        if (spriteRenderer != null) spriteRenderer.enabled = isVisible;
     }
 
     void TurnOnOutline(bool isOn)

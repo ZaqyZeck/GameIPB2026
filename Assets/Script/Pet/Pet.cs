@@ -29,6 +29,7 @@ public class Pet : MonoBehaviour, IHoldable
     [SerializeField] private float actionIconDuration = 5f;
     private Coroutine actionIconCoroutine;
 
+
     public Material PetMaterial { get; private set; }
     public PetMovement Movement => movement;
     public PetAnimation Animation => petAnimation;
@@ -39,12 +40,20 @@ public class Pet : MonoBehaviour, IHoldable
         petInteractable.PickupBehaviour();
         //BehaviorController.TryStopAction(petData.hiddenAction);
         BehaviorController.PickUpBehaviour(petData.hiddenAction);
+
+        petAnimation.SetWalking(false);
+        petAnimation.SetSitting(false);
+        petAnimation.ResetAction();
     }
 
     public void OnDropped(Transform dropParent)
     {
         petInteractable.DropBehaviour();
         BehaviorController.DropBehaviour();
+
+        petAnimation.SetWalking(false);
+        petAnimation.SetSitting(false);
+        petAnimation.ResetAction();
     }
 
     public void SetFacing(bool isFacingPositiveX)

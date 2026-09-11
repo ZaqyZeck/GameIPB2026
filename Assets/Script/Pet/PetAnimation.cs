@@ -45,8 +45,8 @@ public class PetAnimation : MonoBehaviour
 
     public void TriggerAction(int actionId)
     {
-        SetWalking(false);
-        SetSitting(false);
+        petAnimator.SetBool(IsWalkingHash, false);
+        petAnimator.SetBool(IsSittingHash, false);
         petAnimator.SetInteger(ActionIdHash, actionId);
     }
 

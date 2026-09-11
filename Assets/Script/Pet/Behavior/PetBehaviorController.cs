@@ -72,11 +72,6 @@ public class PetBehaviorController : MonoBehaviour
         if (actionTimer <= 0f)
         {
             TryStopAction(pet.petData.hiddenAction);
-            if (pet.petData.hiddenAction == ActionTrait.Football || pet.petData.hiddenAction == ActionTrait.CatToy || pet.petData.hiddenAction == ActionTrait.MiceToy)
-            {
-                pet.GetInteractable().StopPlayToy();
-                return;
-            }
         }
     }
 

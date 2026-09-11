@@ -141,12 +141,7 @@ public class PetManager : MonoBehaviour
         if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
             return null;
 
-        List<PetData> availablePetDatas = petDatas.petDatas.Where(petData => !CheckDoublePetData(petData)).ToList();
-
-        if (availablePetDatas.Count == 0)
-            return null;
-
-        return availablePetDatas[Random.Range(0, availablePetDatas.Count)];
+        return petDatas.petDatas[Random.Range(0, petDatas.petDatas.Count)];
     }
 
     public Pet GetAvailableGhostPet()
@@ -222,12 +217,21 @@ public class PetManager : MonoBehaviour
                 petData.specialColor = rolledColor;
                 petData.hiddenHabit = rolledHabit;
                 petData.hiddenAction = rolledAction;
+                petData.ownerSprite = RollOwnerSprite();
                 return true;
             }
         }
 
         Debug.LogError("gak ketemu trait yang cocok");
         return false;
+    }
+
+    private Sprite RollOwnerSprite()
+    {
+        if (petDatas == null || petDatas.ownerSpritePool == null || petDatas.ownerSpritePool.Length == 0)
+            return null;
+
+        return petDatas.ownerSpritePool[Random.Range(0, petDatas.ownerSpritePool.Length)];
     }
 
     private static T RandomEnumValue<T>() where T : Enum
@@ -272,16 +276,10 @@ public class PetManager : MonoBehaviour
         if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
             return false;
 
-        foreach (PetData petData in petDatas.petDatas)
-        {
-            if (!CheckDoublePetData(petData))
-                return true;
-        }
-
-        return false;
+        return true;
     }
 
-        public List<Pet> GetPetsWithAction(ActionTrait trait)
+    public List<Pet> GetPetsWithAction(ActionTrait trait)
     {
         List<Pet> result = new();
 

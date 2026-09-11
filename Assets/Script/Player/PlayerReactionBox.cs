@@ -15,6 +15,7 @@ public class PlayerReactionBox : MonoBehaviour
     [SerializeField] float charsPerSecond = 30f;
 
     Coroutine activeRoutine;
+    Coroutine delayedHideRoutine;
     Action pendingCallback;
 
     public bool IsTyping { get; private set; }
@@ -31,6 +32,8 @@ public class PlayerReactionBox : MonoBehaviour
     /// </summary>
     public void ShowIdle()
     {
+        CancelDelayedHide();
+
         boxRoot.SetActive(true);
         reactionText.text = string.Empty;
         reactionText.maxVisibleCharacters = 0;
@@ -43,6 +46,8 @@ public class PlayerReactionBox : MonoBehaviour
     public void ShowLine(string text, Action onTypingComplete = null)
     {
         if (string.IsNullOrEmpty(text)) return;
+
+        CancelDelayedHide();
 
         if (activeRoutine != null) StopCoroutine(activeRoutine);
         pendingCallback = onTypingComplete;
@@ -101,6 +106,8 @@ public class PlayerReactionBox : MonoBehaviour
 
     public void Hide()
     {
+        CancelDelayedHide();
+
         if (activeRoutine != null) StopCoroutine(activeRoutine);
         activeRoutine = null;
         IsTyping = false;
@@ -110,12 +117,23 @@ public class PlayerReactionBox : MonoBehaviour
 
     public void HideAfterDelay(float delay)
     {
-        StartCoroutine(HideAfterDelayRoutine(delay));
+        CancelDelayedHide();
+        delayedHideRoutine = StartCoroutine(HideAfterDelayRoutine(delay));
+    }
+
+    void CancelDelayedHide()
+    {
+        if (delayedHideRoutine != null)
+        {
+            StopCoroutine(delayedHideRoutine);
+            delayedHideRoutine = null;
+        }
     }
 
     IEnumerator HideAfterDelayRoutine(float delay)
     {
         yield return new WaitForSeconds(delay);
+        delayedHideRoutine = null;
         Hide();
     }
 }

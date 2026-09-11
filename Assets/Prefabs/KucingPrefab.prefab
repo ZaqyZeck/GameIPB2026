@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2472168271057253141
 RectTransform:
   m_ObjectHideFlags: 0
@@ -198,7 +198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &969744880398757454
 RectTransform:
   m_ObjectHideFlags: 0
@@ -531,7 +531,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 1b041bbd979da483986db18dcfbb609a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 18ff757570031488f80cadb458083648, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
@@ -609,6 +609,7 @@ MonoBehaviour:
     petType: 0
     visualTrait: 0
     specialColor: {r: 1, g: 1, b: 1, a: 1}
+    ownerSprite: {fileID: 0}
     hiddenHabit: 0
     timeToRevealHabit: 15
     hiddenAction: 0
@@ -707,6 +708,7 @@ MonoBehaviour:
   dropDistance: 0.5
   dropDuration: 0.3
   easeDrop: 1
+  angryReactionDuration: 0.6
   isPickuped: 0
 --- !u!114 &1463753482885765304
 MonoBehaviour:
@@ -762,10 +764,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.2D.Animation.Runtime::UnityEngine.U2D.Animation.SpriteResolver
-  m_CategoryHash: 0.36610043
+  m_CategoryHash: 8.566828e-16
   m_labelHash: 0.00000040954276
   m_SpriteKey: 0
-  m_SpriteHash: 583958934
+  m_SpriteHash: 576540836
 --- !u!95 &6503803699437720789
 Animator:
   serializedVersion: 7
@@ -849,7 +851,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &95684177555220851
 MonoBehaviour:

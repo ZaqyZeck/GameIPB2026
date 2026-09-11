@@ -13,10 +13,11 @@ public class FootballActionBehavior : IActionBehavior, IDialogueDescribable
         Debug.Log($"{pet.name} plays football!");
     }
 
-    public void StopAction(Pet pet)
+        public void StopAction(Pet pet)
     {
         pet.ChangeTextAction("xplay ball");
         pet.Animation.SetSitting(false);
+        pet.Animation.ResetAction();
         pet.HideActionIcon();
         pet.GetInteractable().StopPlayToy();
     }

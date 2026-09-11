@@ -165,14 +165,14 @@ MonoBehaviour:
     m_OverrideEntries:
     - m_Name: 0
       m_Hash: 886824737
-      m_Sprite: {fileID: 21300000, guid: 51ddcc16dd47f48bb8eafe4eaa189e9e, type: 3}
+      m_Sprite: {fileID: 21300000, guid: 5f31a7cab88a149de9cf6de05c5560c1, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: 21300000, guid: c5395c461282e42a2a327e094c9f5e49, type: 3}
+      m_SpriteOverride: {fileID: 21300000, guid: 18ff757570031488f80cadb458083648, type: 3}
     - m_Name: 1
       m_Hash: 64810935
-      m_Sprite: {fileID: 21300000, guid: 410c807abd26b41fa89e3995d2db1a41, type: 3}
+      m_Sprite: {fileID: 21300000, guid: fba00a6e863c7414ea3876bd4352ccca, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: 21300000, guid: b19cfb7ef1cb8430191013ad62903074, type: 3}
+      m_SpriteOverride: {fileID: 21300000, guid: e19b4328132984e6f94a247dd9d3dad3, type: 3}
     m_FromMain: 1
     m_EntryOverrideCount: 2
   - m_Name: Play Mice
@@ -181,16 +181,16 @@ MonoBehaviour:
     m_OverrideEntries:
     - m_Name: 0
       m_Hash: 886824737
-      m_Sprite: {fileID: 21300000, guid: 51ddcc16dd47f48bb8eafe4eaa189e9e, type: 3}
+      m_Sprite: {fileID: 21300000, guid: a5f77834c2ba24abf86dd683f78d6328, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: 21300000, guid: c5395c461282e42a2a327e094c9f5e49, type: 3}
+      m_SpriteOverride: {fileID: 21300000, guid: a05a3237ed4b141d8aa3e220cb621b9f, type: 3}
     - m_Name: 1
       m_Hash: 64810935
-      m_Sprite: {fileID: 21300000, guid: 410c807abd26b41fa89e3995d2db1a41, type: 3}
+      m_Sprite: {fileID: 21300000, guid: 322598ed03ccf4e5786d15b10ceddd1b, type: 3}
       m_FromMain: 1
-      m_SpriteOverride: {fileID: 21300000, guid: b19cfb7ef1cb8430191013ad62903074, type: 3}
+      m_SpriteOverride: {fileID: 21300000, guid: ee6b9fe1e3596409ca8068a15cf1f6f5, type: 3}
     m_FromMain: 1
     m_EntryOverrideCount: 2
   m_PrimaryLibraryGUID: 48a0ce154aa37472d940e4b8b65f2c32
-  m_ModificationHash: 639246612845646140
+  m_ModificationHash: 639247380584608430
   m_Version: 1

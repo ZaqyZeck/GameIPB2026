@@ -81,9 +81,9 @@ public class Owner : Interactables
         }
     }
 
-    public override void OnInteract(PlayerInteract player)
+     public override void OnInteract(PlayerInteract player)
     {
-        if (player.isHoldingObject) player.GivePet();
+        if (player.isHoldingObject && player.CurrentHeldHoldable is Pet) player.GivePet();
         else OpenDialogue();
     }
 
@@ -140,6 +140,8 @@ public class Owner : Interactables
 
         if (textPetId != null) textPetId.text = currentPet.petId.ToString();
 
+        ApplyOwnerSprite();
+
         patienceTimer = patienceAmount;
         if (patienceFillRect != null) patienceFillRect.sizeDelta = new Vector2(maxFillWidth, patienceFillRect.sizeDelta.y);
 
@@ -147,6 +149,15 @@ public class Owner : Interactables
         isInLine = true;
 
         SpawnAnimation();
+    }
+
+    private void ApplyOwnerSprite()
+    {
+        if (spriteRenderer == null || currentPet == null || currentPet.petData == null) return;
+
+        Sprite ownerSprite = currentPet.petData.ownerSprite;
+
+        if (ownerSprite != null) spriteRenderer.sprite = ownerSprite;
     }
 
     public void DespawnWithoutPet()

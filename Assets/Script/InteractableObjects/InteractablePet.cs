@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -9,11 +10,13 @@ public class InteractablePet : Interactables
     [SerializeField] private float dropDistance = 0.5f;
     [SerializeField] private float dropDuration = 0.3f;
     [SerializeField] private Ease easeDrop = Ease.Linear;
+    [SerializeField] private float angryReactionDuration = 0.6f;
     //[SerializeField] private Material petMaterial;
     //[SerializeField] private Transform interactableParent;
     public bool isPickuped;
     bool isPlaying;
     InteractableObject currentToy;
+    Coroutine angryReactionCoroutine;
 
     //private void Start()
     //{
@@ -21,7 +24,9 @@ public class InteractablePet : Interactables
     //}
     public override void OnInteract(PlayerInteract player)
     {
-        if (ownerPet.petData.hiddenAction != ActionTrait.Football && ownerPet.petData.hiddenAction != ActionTrait.CatToy)
+        if (ownerPet.petData.hiddenAction != ActionTrait.Football &&
+            ownerPet.petData.hiddenAction != ActionTrait.CatToy &&
+            ownerPet.petData.hiddenAction != ActionTrait.MiceToy)
         {
             player.PickUpTargetObject();
             return;
@@ -31,16 +36,11 @@ public class InteractablePet : Interactables
             player.PickUpTargetObject();
             return;
         }
-        //if (isPlaying)
-        //{
-        //    return;
-        //}
 
         currentToy = player.GiveToy(this);
 
         if (currentToy == null || isPlaying)
         {
-            //player.PickUpTargetObject();
             StopPlayToy();
             return;
         }
@@ -51,8 +51,7 @@ public class InteractablePet : Interactables
             return;
         }
 
-        //player.PickUpTargetObject();
-        StopPlayToy();
+        PlayAngryReactionAndDropToy();
     }
 
     public IHoldable GetHoldable() => ownerPet;
@@ -64,7 +63,6 @@ public class InteractablePet : Interactables
     public void DropBehaviour()
     {
         DropAnimation();
-        //ActivateCollider(); // nanti buat setelah animasi atau bagaimana ntah lah
     }
     void DropAnimation()
     {
@@ -82,6 +80,10 @@ public class InteractablePet : Interactables
     void StartPlayToy()
     {
         isPlaying = true;
+
+        ownerPet.Movement.Stop();
+
+        currentToy?.SetVisible(false);
         ownerPet.BehaviorController.TryExecuteAction(ownerPet.petData.hiddenAction);
     }
 
@@ -96,21 +98,40 @@ public class InteractablePet : Interactables
     {
         return ownerPet;
     }
-    
     void DropToy()
     {
         if (currentToy == null) return;
         Transform interactableParent = PlayerInteract.Instance.GetInteractableParent();
-        //if (interactableParent == null)
-        //{
-        //    Debug.LogError(0);
-        //    return;
-        //}
 
-        //Debug.LogError(1);
+        currentToy.SetVisible(true);
         currentToy.gameObject.transform.SetParent(interactableParent);
         currentToy.DropBehaviour();
         currentToy = null;
+    }
+
+    void PlayAngryReactionAndDropToy()
+    {
+        ownerPet.Movement.Stop();
+
+        if (angryReactionCoroutine != null) StopCoroutine(angryReactionCoroutine);
+        angryReactionCoroutine = StartCoroutine(AngryReactionRoutine());
+
+        DropToy();
+    }
+
+    IEnumerator AngryReactionRoutine()
+    {
+        float timer = angryReactionDuration;
+
+        while (timer > 0f)
+        {
+            ownerPet.Animation.TriggerAction(PetAnimationIds.ReactionId_Angry);
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+
+        ownerPet.Animation.ResetAction();
+        angryReactionCoroutine = null;
     }
 
     //void GotAccepted()
@@ -137,7 +158,6 @@ public class InteractablePet : Interactables
         }
         else
         {
-            //Debug.Log("dawdawwdwawda");
             ownerPet.PetMaterial.SetFloat("_outlineOn", 0f);
         }
     }

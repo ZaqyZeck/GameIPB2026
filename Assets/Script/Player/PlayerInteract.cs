@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -201,6 +200,8 @@ public class PlayerInteract : MonoBehaviour
         Owner owner = currentTargetObject.GetComponent<Owner>();
         if (owner == null) return;
 
+        if (!(CurrentHeldHoldable is Pet)) return;
+
         if (owner.GetPet(CurrentHeldHoldable))
         {
             RemoveObjectFromHold();
@@ -215,7 +216,6 @@ public class PlayerInteract : MonoBehaviour
 
         InteractableObject toy = CurrentHeldHoldable as InteractableObject;
         if (toy == null) return null;
-        if (toy.actionTrait != pet.GetPet().petData.hiddenAction) return null;
 
         currentHoldObject.SetParent(pet.transform);
         currentHoldObject.localPosition = Vector3.zero;

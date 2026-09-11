@@ -19,6 +19,7 @@ MonoBehaviour:
     petType: 0
     visualTrait: 0
     specialColor: {r: 0, g: 0, b: 0, a: 0}
+    ownerSprite: {fileID: 0}
     hiddenHabit: 0
     timeToRevealHabit: 0
     hiddenAction: 0
@@ -28,6 +29,7 @@ MonoBehaviour:
     petType: 4
     visualTrait: 0
     specialColor: {r: 0, g: 0, b: 0, a: 0}
+    ownerSprite: {fileID: 0}
     hiddenHabit: 0
     timeToRevealHabit: 0
     hiddenAction: 0
@@ -37,6 +39,7 @@ MonoBehaviour:
     petType: 5
     visualTrait: 0
     specialColor: {r: 0, g: 0, b: 0, a: 0}
+    ownerSprite: {fileID: 0}
     hiddenHabit: 0
     timeToRevealHabit: 0
     hiddenAction: 0
@@ -46,6 +49,7 @@ MonoBehaviour:
     petType: 2
     visualTrait: 0
     specialColor: {r: 0, g: 0, b: 0, a: 0}
+    ownerSprite: {fileID: 0}
     hiddenHabit: 0
     timeToRevealHabit: 0
     hiddenAction: 0
@@ -55,7 +59,11 @@ MonoBehaviour:
     petType: 3
     visualTrait: 0
     specialColor: {r: 0, g: 0, b: 0, a: 0}
+    ownerSprite: {fileID: 0}
     hiddenHabit: 0
     timeToRevealHabit: 0
     hiddenAction: 0
   colorPool: []
+  ownerSpritePool:
+  - {fileID: 21300000, guid: 5c236d184f3744f34a9dc2a746f3f9c6, type: 3}
+  - {fileID: 21300000, guid: ae71f35b4997944e9b4731d0870a9f93, type: 3}
