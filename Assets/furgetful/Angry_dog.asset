@@ -19,8 +19,8 @@ MonoBehaviour:
   - AudioClip: {fileID: 8300000, guid: 4bdb4d2bf3cacb64092dd2cea1d2bb7c, type: 3}
     Volume: 1
     Delay: 0
-    StartPosition: 6.452
-    EndPosition: 39.992
+    StartPosition: 7.059
+    EndPosition: 44.45
     FadeIn: 0
     FadeOut: 0
     Weight: 0
