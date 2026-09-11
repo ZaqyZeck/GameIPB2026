@@ -36,6 +36,8 @@ public class Owner : Interactables
     private float patienceTimer;
     private float maxFillWidth;
 
+    public int dialogCounter = 0;
+
     private void Awake()
     {
         patienceTimer = patienceAmount;
@@ -115,7 +117,7 @@ public class Owner : Interactables
             new DialoguePage { text = typeText, icon = typeIcon },
         };
 
-        PlayerDialogueController.Instance.StartConversation(dialogueBox, pages, advanceLines, farewellLines);
+        PlayerDialogueController.Instance.StartConversation(dialogueBox, pages, advanceLines, farewellLines, this);
     }
 
     public bool GetPet(IHoldable heldPet)
@@ -133,6 +135,7 @@ public class Owner : Interactables
     {
         if (isInLine) return;
 
+        dialogCounter = 0;
         currentPet = wantedPet;
         currentOwnerData = newOwnerData;
         ownerName = currentOwnerData.ownerName;
@@ -178,6 +181,7 @@ public class Owner : Interactables
         {
             penalty = 17;
         }
+        dialogCounter = 0;
         ReputationManager.Instance.Penalize(penalty);
 
     }
@@ -196,6 +200,12 @@ public class Owner : Interactables
         if (patienceTimer / patienceAmount > 0.6f) score = 15;
         else if (patienceTimer / patienceAmount > 0.3f) score = 10;
         else score = 5;
+
+        if (dialogCounter <= 0) score += 15;
+        else if (dialogCounter == 1) score += 10;
+        else if (dialogCounter == 2) score += 5;
+
+        dialogCounter = 0;
         ReputationManager.Instance.Reward(score);
     }
 

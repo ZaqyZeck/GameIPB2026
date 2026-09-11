@@ -9,7 +9,7 @@ public class UIGameplay : UIBase
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private SpiritStoneDisplay spiritStoneDisplay;
 
-    public static bool IsPaused { get; private set; }
+    //public static bool IsPaused { get; private set; }
 
     /// <summary>Reputasi terakhir. Dibaca UIGameOver saat game over.</summary>
     public static int Reputation { get; private set; }
@@ -36,7 +36,7 @@ public class UIGameplay : UIBase
         GameEventBus.OnReputationChange -= HandleReputationChange;
 
         // Jaring pengaman: jangan sampai scene ditinggalkan dalam keadaan timeScale 0.
-        if (IsPaused) ResumeGame();
+        if (LevelManager.Instance.IsPause) ResumeGame();
     }
 
     private void HandleTakeDamage(int before, int after)
@@ -55,7 +55,11 @@ public class UIGameplay : UIBase
 
     public void OpenPauseMenu()
     {
-        if (IsPaused) return;
+        if (!LevelManager.Instance.IsPlaying)
+        {
+            Debug.LogWarning("sudah terpause");
+            return;
+        }
 
         if (UIManager.Instance == null)
         {
@@ -66,8 +70,9 @@ public class UIGameplay : UIBase
         if (GameManager.Instance != null)
             GameManager.Instance.PlayAudio(GameManager.Instance.ui_click);
 
-        IsPaused = true;
-        Time.timeScale = 0f;
+        //IsPaused = true;
+        //Time.timeScale = 0f;
+        GameEventBus.OnPause?.Invoke();
 
         UIManager.Instance.ShowUI<UIPauseMenu>();
     }
@@ -75,15 +80,16 @@ public class UIGameplay : UIBase
     /// <summary>Panggil dari tombol Resume/Close di panel pause.</summary>
     public void ResumeGame()
     {
-        if (!IsPaused) return;
+        if (LevelManager.Instance.IsPlaying) return;
 
-        IsPaused = false;
-        Time.timeScale = 1f;
+        //IsPaused = false;
+        GameEventBus.OnResume?.Invoke();
+        //Time.timeScale = 1f;
     }
 
     public void TogglePause()
     {
-        if (IsPaused) ResumeGame();
+        if (LevelManager.Instance.IsPause) ResumeGame();
         else OpenPauseMenu();
     }
 }

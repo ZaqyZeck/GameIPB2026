@@ -18,6 +18,7 @@ public class UIPauseMenu : UIBase
     public void ResumeButton()
     {
         UIManager.Instance.OnEscape();
+        GameEventBus.OnResume?.Invoke();
     }
     public void BackToMenu()
     {

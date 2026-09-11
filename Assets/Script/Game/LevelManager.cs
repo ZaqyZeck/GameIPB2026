@@ -36,15 +36,16 @@ public class LevelManager : MonoBehaviour
         switch(state)
         {
             case GameState.Playing:
-                Time.timeScale = 1f;
+                //Time.timeScale = 1f;
                 break;
             case GameState.Pause:
-                Time.timeScale = 0f;
+                //Time.timeScale = 0f;
                 break;
             case GameState.End:
-                Time.timeScale = 0f;
+                //Time.timeScale = 0f;
                 break;
         }
+        this.state = state;
     }
 
     private void OnLevelWin()
@@ -59,11 +60,13 @@ public class LevelManager : MonoBehaviour
     private void OnLevelPause()
     {
         ChangeState(GameState.Pause);
+        Debug.LogWarning("terpause");
     }
 
     private void OnLevelResume()
     {
         ChangeState(GameState.Playing);
+        Debug.LogWarning("resume");
     }
 
     private async void OnSubmitScore(string playerName)

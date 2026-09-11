@@ -17,6 +17,7 @@ public class PlayerDialogueController : MonoBehaviour
     private int currentPageIndex;
     private string[] advanceLines;
     private string[] farewellLines;
+    private Owner currentOwner;
 
     private bool waitingForNext;
 
@@ -61,13 +62,14 @@ public class PlayerDialogueController : MonoBehaviour
         }
     }
 
-    public void StartConversation(DialogueBox ownerBox, List<DialoguePage> newPages, string[] newAdvanceLines, string[] newFarewellLines)
+    public void StartConversation(DialogueBox ownerBox, List<DialoguePage> newPages, string[] newAdvanceLines, string[] newFarewellLines, Owner owner)
     {
         activeOwnerBox = ownerBox;
         pages = newPages;
         advanceLines = newAdvanceLines;
         farewellLines = newFarewellLines;
         currentPageIndex = 0;
+        currentOwner = owner;
 
         PlayerMovement.Instance?.SetMovementLocked(true);
 
@@ -88,6 +90,7 @@ public class PlayerDialogueController : MonoBehaviour
         waitingForNext = false;
         activeOwnerBox = null;
         pages = null;
+        currentOwner = null;
 
         PlayerMovement.Instance?.SetMovementLocked(false);
     }
@@ -128,6 +131,9 @@ public class PlayerDialogueController : MonoBehaviour
         nextButton.gameObject.SetActive(false);
 
         currentPageIndex++;
+        if (currentOwner != null) 
+            if (currentOwner.dialogCounter < currentPageIndex) currentOwner.dialogCounter = currentPageIndex;
+
         bool isLastPage = currentPageIndex >= pages.Count;
 
         string[] lineBank = isLastPage ? farewellLines : advanceLines;

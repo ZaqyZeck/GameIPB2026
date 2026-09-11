@@ -153,10 +153,6 @@ public class LeaderboardManager : MonoBehaviour
     //  GET TOP SCORES
     // ---------------------------------------------------------------
 
-    /// <summary>
-    /// Fetches the top <paramref name="limit"/> entries of the leaderboard,
-    /// starting at <paramref name="offset"/> (0 = top of the board).
-    /// </summary>
     public async Task<LeaderboardPageResult> GetTopScoresAsync(int limit = 50, int offset = 0)
     {
         if (!await EnsureReadyAsync()) return null;
