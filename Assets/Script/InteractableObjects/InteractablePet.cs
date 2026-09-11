@@ -36,7 +36,11 @@ public class InteractablePet : Interactables
             player.PickUpTargetObject();
             return;
         }
-
+        if(isPlaying == true)
+        {
+            player.DropHoldObject();
+            return;
+        }
         currentToy = player.GiveToy(this);
 
         if (currentToy == null || isPlaying)

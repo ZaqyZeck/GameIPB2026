@@ -557,7 +557,7 @@ MonoBehaviour:
     ID: 0
     <DebugObject>k__BackingField: {fileID: 1174132274}
   meowSleep:
-    _entity: {fileID: 11400000, guid: 9af42a2308eb93f4ca08f8f6a227e145, type: 2}
+    _entity: {fileID: 11400000, guid: 5e5ce720d5410dc47b1b89aa268ea138, type: 2}
     ID: 0
     <DebugObject>k__BackingField: {fileID: 1174132274}
   dog:
