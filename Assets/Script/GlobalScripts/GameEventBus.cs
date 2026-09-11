@@ -8,7 +8,7 @@ public static class GameEventBus
     public static Action<HabitTrait> OnMemoryUnlocked;
     public static Action OnReunionSuccess;
 
-    public static Action OnSubmitScore; 
+    public static Action<string> OnSubmitScore; 
     public static Action OnPause;
     public static Action OnResume;
     public static Action OnWin;
