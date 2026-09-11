@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerReactionBox : MonoBehaviour
 {
@@ -11,11 +12,15 @@ public class PlayerReactionBox : MonoBehaviour
     [SerializeField] GameObject boxRoot;
     [SerializeField] TextMeshProUGUI reactionText;
 
+    Image boxImage;
+
     [Header("Settings")]
     [SerializeField] float charsPerSecond = 30f;
+    [SerializeField] float fadeOutDuration = 0.3f;
 
     Coroutine activeRoutine;
     Coroutine delayedHideRoutine;
+    Coroutine fadeRoutine;
     Action pendingCallback;
 
     public bool IsTyping { get; private set; }
@@ -23,7 +28,8 @@ public class PlayerReactionBox : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        Hide();
+        boxImage = boxRoot.GetComponent<Image>();
+        HideImmediate();
     }
 
     /// <summary>
@@ -33,8 +39,10 @@ public class PlayerReactionBox : MonoBehaviour
     public void ShowIdle()
     {
         CancelDelayedHide();
+        CancelFade();
 
         boxRoot.SetActive(true);
+        SetAlpha(1f);
         reactionText.text = string.Empty;
         reactionText.maxVisibleCharacters = 0;
     }
@@ -48,6 +56,7 @@ public class PlayerReactionBox : MonoBehaviour
         if (string.IsNullOrEmpty(text)) return;
 
         CancelDelayedHide();
+        CancelFade();
 
         if (activeRoutine != null) StopCoroutine(activeRoutine);
         pendingCallback = onTypingComplete;
@@ -70,6 +79,7 @@ public class PlayerReactionBox : MonoBehaviour
     IEnumerator TypeText(string fullText)
     {
         boxRoot.SetActive(true);
+        SetAlpha(1f);
         IsTyping = true;
 
         reactionText.text = fullText;
@@ -112,7 +122,76 @@ public class PlayerReactionBox : MonoBehaviour
         activeRoutine = null;
         IsTyping = false;
         pendingCallback = null;
+
+        if (boxRoot.activeSelf)
+        {
+            CancelFade();
+            fadeRoutine = StartCoroutine(FadeOutRoutine());
+        }
+        else
+        {
+            boxRoot.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// Hides instantly with no fade. Used on startup, where there's nothing
+    /// on screen yet to transition away from.
+    /// </summary>
+    void HideImmediate()
+    {
+        CancelDelayedHide();
+        CancelFade();
+
+        if (activeRoutine != null) StopCoroutine(activeRoutine);
+        activeRoutine = null;
+        IsTyping = false;
+        pendingCallback = null;
+
         boxRoot.SetActive(false);
+        SetAlpha(1f);
+    }
+
+    IEnumerator FadeOutRoutine()
+    {
+        float startAlpha = reactionText.color.a;
+        float t = 0f;
+
+        while (t < fadeOutDuration)
+        {
+            t += Time.deltaTime;
+            SetAlpha(Mathf.Lerp(startAlpha, 0f, t / fadeOutDuration));
+            yield return null;
+        }
+
+        // Box (and buttons) disappear instantly here, same as before -
+        // only the text and background image faded.
+        boxRoot.SetActive(false);
+        SetAlpha(1f); // reset so the box is fully visible next time it's shown
+        fadeRoutine = null;
+    }
+
+    void SetAlpha(float alpha)
+    {
+        Color textColor = reactionText.color;
+        textColor.a = alpha;
+        reactionText.color = textColor;
+
+        if (boxImage != null)
+        {
+            Color imageColor = boxImage.color;
+            imageColor.a = alpha;
+            boxImage.color = imageColor;
+        }
+    }
+
+    void CancelFade()
+    {
+        if (fadeRoutine != null)
+        {
+            StopCoroutine(fadeRoutine);
+            fadeRoutine = null;
+        }
     }
 
     public void HideAfterDelay(float delay)
