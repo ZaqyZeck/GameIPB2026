@@ -339,6 +339,13 @@ public class AuthenticationManager : MonoBehaviour
     {
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
+        //await UbahNamaPlayer(playerName);
+    }
+
+    public async Task LoginAnonymAsync(string playerName)
+    {
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
         await UbahNamaPlayer(playerName);
     }
 

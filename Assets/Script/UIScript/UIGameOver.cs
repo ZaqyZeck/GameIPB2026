@@ -9,6 +9,7 @@ public class UIGameOver : UIBase
     [SerializeField] private Button saveButton;
     [SerializeField] private TMP_InputField nameInputField;
     [SerializeField] private TextMeshProUGUI scoreText;
+    bool isSubmitting = false;
 
     void Awake()
     {
@@ -32,6 +33,7 @@ public class UIGameOver : UIBase
     private void OnDisable()
     {
         GameEventBus.OnReputationChange -= HandleReputationChange;
+        isSubmitting = false;
     }
 
     private void HandleReputationChange(int before, int after)
@@ -47,15 +49,17 @@ public class UIGameOver : UIBase
 
     private void SaveButton()
     {
+        if (isSubmitting) return;
         string playerName = nameInputField != null ? nameInputField.text.Trim() : string.Empty;
         if (string.IsNullOrEmpty(playerName))
             playerName = "Player";
 
         saveButton.interactable = false; // cegah submit dua kali
 
+        isSubmitting = true;
         GameEventBus.OnSubmitScore?.Invoke(playerName);
-        UIGameplay.ResetReputation();
+        //UIGameplay.ResetReputation();
 
-        GameManager.Instance.LoadMainMenu();
+        //GameManager.Instance.LoadMainMenu();
     }
 }

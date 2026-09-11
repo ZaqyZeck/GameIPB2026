@@ -129,7 +129,7 @@ public class LeaderboardManager : MonoBehaviour
                     AuthenticationManager.Instance.SignOut(true);
                 }
 
-                await AuthenticationManager.Instance.LoginAnonimAsync(playerName);
+                await AuthenticationManager.Instance.LoginAnonymAsync(playerName);
 
                 LeaderboardEntry entry = await AddScoreAsync(score);
 

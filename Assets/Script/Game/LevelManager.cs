@@ -71,6 +71,20 @@ public class LevelManager : MonoBehaviour
         float reputationScore = ReputationManager.Instance.GetScore();
 
         // submint score ke leaderboard secara anonim dengan nama "ben"
-        await LeaderboardManager.Instance.SubmitAnonymousScoreAsync((long) reputationScore, playerName);
+        Debug.LogWarning(playerName + " itu nama player yg disubmit di leaderboard");
+        try
+        {
+            await LeaderboardManager.Instance.SubmitAnonymousScoreAsync((long) reputationScore, playerName);
+
+        }
+        catch
+        {
+            //Debug.LogError("submit")
+        }
+        
+
+        UIGameplay.ResetReputation();
+
+        GameManager.Instance.LoadMainMenu();
     }
 }
