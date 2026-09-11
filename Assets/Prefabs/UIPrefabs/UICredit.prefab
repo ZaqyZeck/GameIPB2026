@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2396659594492052899}
   - component: {fileID: 3261472334233246749}
   - component: {fileID: 7125795201157496601}
+  - component: {fileID: 4066967227156734909}
   m_Layer: 5
   m_Name: bg
   m_TagString: Untagged
@@ -77,6 +78,28 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4066967227156734909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 883833661901973237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8dababd16289045ad57c18a23f21d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ohm.UISystem.Transitions.ScaleTransition
+  disableAfterHide: 0
+  runWhilePaused: 1
+  showConfig:
+    targetScale: {x: 1, y: 1, z: 1}
+    duration: 0.5
+    ease: 27
+  hideConfig:
+    targetScale: {x: 0, y: 0, z: 0}
+    duration: 0.5
+    ease: 26
 --- !u!1 &1280648071735910992
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +252,8 @@ GameObject:
   - component: {fileID: 4782244488840651951}
   - component: {fileID: 3900324607013123145}
   - component: {fileID: 1755116578874322242}
+  - component: {fileID: 6177577337307309021}
+  - component: {fileID: 7574329227156768670}
   m_Layer: 5
   m_Name: UICredit
   m_TagString: Untagged
@@ -330,10 +355,53 @@ MonoBehaviour:
   pooled: 0
   poolSize: 4
   dynamicPooling: 1
-  transitionController: {fileID: 0}
+  transitionController: {fileID: 6177577337307309021}
   firstSelected: {fileID: 0}
   isActive: 0
   closeButton: {fileID: 3969976577820003474}
+--- !u!114 &6177577337307309021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2507810686704333265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c69283b81aa3b440bfffb9e78e0ab8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ohm.UISystem.TransitionController
+  showOnEnable: 0
+  disableAfterHide: 1
+  transitions:
+  - transition: {fileID: 7574329227156768670}
+    showDelay: 0
+    hideDelay: 0
+  - transition: {fileID: 4066967227156734909}
+    showDelay: 0
+    hideDelay: 0
+--- !u!114 &7574329227156768670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2507810686704333265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8f7e6f176d5fd44a0ed88c25354d29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ohm.UISystem.Transitions.FadeTransition
+  disableAfterHide: 0
+  runWhilePaused: 1
+  showConfig:
+    targetAlpha: 1
+    duration: 0.5
+    ease: 6
+  hideConfig:
+    targetAlpha: 0
+    duration: 0.5
+    ease: 5
 --- !u!1 &3740571758484567641
 GameObject:
   m_ObjectHideFlags: 0
