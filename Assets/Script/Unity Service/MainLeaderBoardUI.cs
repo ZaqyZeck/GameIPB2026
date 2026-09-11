@@ -100,7 +100,7 @@ public class MainLeaderBoardUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (topBar == null || bottomBar == null) return;
 
         // Bar rank #1 turun di bawah world position 0 -> overscroll ke atas
-        if (topBar.transform.position.y < 500f)
+        if (topBar.transform.position.y < 500f || spawnedBars.Count <= 7)
         {
             SnapTo(maxAbove);
         }
@@ -139,6 +139,7 @@ public class MainLeaderBoardUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
         // Hentikan tween yang mungkin masih berjalan saat object dinonaktifkan.
         snapTween?.Kill();
         isSnapping = false;
+        ClearList();
     }
 
     private void Start()

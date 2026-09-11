@@ -55,6 +55,7 @@ public class InteractableDoor : Interactables
 
         PetManager.Instance.DoorOpen();
         TurnOnOutline(false);
+        if (GameManager.Instance != null) GameManager.Instance.PlayAudio(GameManager.Instance.ui_click);
     }
 
     private void CloseDoor()
@@ -64,6 +65,7 @@ public class InteractableDoor : Interactables
 
         isOpen = false;
         openTimer = 0f;
+        if (GameManager.Instance != null) GameManager.Instance.PlayAudio(GameManager.Instance.ui_click);
     }
 
     public override void OnSelectedHover()
