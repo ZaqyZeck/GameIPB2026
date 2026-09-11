@@ -280,13 +280,26 @@ public class PetManager : MonoBehaviour
         return false;
     }
 
-    public List<Pet> GetPetsWithAction(ActionTrait trait)
+        public List<Pet> GetPetsWithAction(ActionTrait trait)
     {
         List<Pet> result = new();
 
         foreach (Pet pet in ghostPets)
         {
             if (pet.BehaviorController.HasHiddenAction(trait))
+                result.Add(pet);
+        }
+
+        return result;
+    }
+
+    public List<Pet> GetPetsWithHabit(HabitTrait trait)
+    {
+        List<Pet> result = new();
+
+        foreach (Pet pet in ghostPets)
+        {
+            if (pet.BehaviorController.HasHiddenHabit(trait))
                 result.Add(pet);
         }
 

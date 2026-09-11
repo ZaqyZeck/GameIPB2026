@@ -9,20 +9,20 @@ public enum VisualTrait
 
 public enum HabitTrait
 {
-    None,
-    SleepyHead,
-    DoorWaiter,
-    TreasureHunter,
-    Follower
+    None = 0,
+    SleepyHead = 1,
+    DoorWaiter = 2,
+    TreasureHunter = 3,
+    Follower = 4,
+    Sunbathe = 5
 }
 
 public enum ActionTrait
 {
-    None,
-    Football,
-    Sunbathe,
-    MiceToy,
-    CatToy
+    None = 0,
+    Football = 1,
+    MiceToy = 3,
+    CatToy = 4
 }
 
 public enum PetSpecies

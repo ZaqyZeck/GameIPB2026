@@ -2287,12 +2287,13 @@ MonoBehaviour:
   actionIcons:
   - action: 1
     icon: {fileID: 228663082792738388, guid: 82c2bc300dcfd49a798385e8f1b69102, type: 3}
-  - action: 2
-    icon: {fileID: -5895797641759373032, guid: 88d9687d2965c4c7caefa3c5681c1537, type: 3}
   - action: 3
     icon: {fileID: -3863137157702377635, guid: a0c445c8675d046c393e27066618fba9, type: 3}
   - action: 4
     icon: {fileID: -4745237664472261435, guid: 28f30bce65baa412ebe1dad671c73e13, type: 3}
+  universalHabitIcons:
+  - habit: 5
+    icon: {fileID: -5895797641759373032, guid: 88d9687d2965c4c7caefa3c5681c1537, type: 3}
 --- !u!1 &720743418
 GameObject:
   m_ObjectHideFlags: 0

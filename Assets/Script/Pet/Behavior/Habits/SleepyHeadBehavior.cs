@@ -89,5 +89,5 @@ public class SleepyHeadBehavior : IHabitBehavior, IDialogueDescribable
         pet.GetPetAnimation().ResetAction();
     }
 
-    public string GetDialogueText() => "My cat loves to nap anywhere it can find a cozy spot.";
+    public string GetDialogueText() => "It naps anywhere it finds a cozy spot.";
 }

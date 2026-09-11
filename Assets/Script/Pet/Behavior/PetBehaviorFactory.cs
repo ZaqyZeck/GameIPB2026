@@ -11,11 +11,11 @@ public static class PetBehaviorFactory
         { HabitTrait.DoorWaiter,     () => new DoorWaiterBehavior() },
         { HabitTrait.TreasureHunter, () => new TreasureHunterBehavior() },
         { HabitTrait.Follower,       () => new FollowerBehavior() },
+        { HabitTrait.Sunbathe,       () => new SunbatheHabitBehavior() },
     };
     private static readonly Dictionary<ActionTrait, IActionBehavior> actionBehaviors = new()
     {
         { ActionTrait.Football, new FootballActionBehavior() },
-        { ActionTrait.Sunbathe, new SunbatheActionBehavior() },
         { ActionTrait.MiceToy,  new MiceToyActionBehavior() },
         { ActionTrait.CatToy,   new CatToyActionBehavior() },
     };

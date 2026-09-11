@@ -171,6 +171,29 @@ public class PetBehaviorController : MonoBehaviour
         return habitRevealed && pet.petData != null && pet.petData.hiddenAction == trait;
     }
 
+    public bool HasHiddenHabit(HabitTrait trait)
+    {
+        return habitRevealed && pet.petData != null && pet.petData.hiddenHabit == trait;
+    }
+
+    public void TryExecuteHabit(HabitTrait trait)
+    {
+        if (isStopBehaviour) return;
+        if (!HasHiddenHabit(trait)) return;
+
+        if (isDoingAction)
+        {
+            TryStopAction(pet.petData.hiddenAction);
+        }
+
+        isWandering = false;
+        pet.Movement.Stop();
+
+        SetHabitBehavior(PetBehaviorFactory.GetHabitBehavior(trait));
+        isDoingHabit = true;
+        habitTimer = habitInterval;
+    }
+
     public void ResetHabitTimer()
     {
         habitTimer = habitInterval;

@@ -100,6 +100,7 @@ public class Owner : Interactables
 
         string speciesLabel = petData.species == PetSpecies.Dog ? "dog" : "cat";
         string greetingText = $"Have you seen my {speciesLabel}?";
+        string typeText = "Here's how it looks.";
 
         Sprite typeIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetTypeIcon(petData.petType) : null;
         Sprite habitIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetHabitIcon(petData.petType, petData.hiddenHabit) : null;
@@ -107,9 +108,10 @@ public class Owner : Interactables
 
         List<DialoguePage> pages = new List<DialoguePage>
         {
-            new DialoguePage { text = greetingText, icon = typeIcon },
-            new DialoguePage { text = habitText, icon = habitIcon },
+            new DialoguePage { text = greetingText, icon = null },
             new DialoguePage { text = actionText, icon = actionIcon },
+            new DialoguePage { text = habitText, icon = habitIcon },
+            new DialoguePage { text = typeText, icon = typeIcon },
         };
 
         PlayerDialogueController.Instance.StartConversation(dialogueBox, pages, advanceLines, farewellLines);

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class InteractableWindow : Interactables
 {
+    public static InteractableWindow Instance;
+
     [SerializeField] private GameObject windowOpen;
     [SerializeField] private GameObject windowClose;
     [SerializeField] private SpriteRenderer closeWindowRenderer;
@@ -13,6 +15,13 @@ public class InteractableWindow : Interactables
 
     private bool isOpen;
     private float openTimer;
+
+    public bool IsOpen => isOpen;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Update()
     {
@@ -57,9 +66,8 @@ public class InteractableWindow : Interactables
     private void CallPetsAction()
     {
         if (PetManager.Instance == null) return;
-        if (MapManager.Instance == null) return;
 
-        List<Pet> petsCalled = PetManager.Instance.GetPetsWithAction(ActionTrait.Sunbathe);
+        List<Pet> petsCalled = PetManager.Instance.GetPetsWithHabit(HabitTrait.Sunbathe);
 
         foreach (Pet pet in petsCalled)
         {
@@ -67,12 +75,7 @@ public class InteractableWindow : Interactables
 
             if (pet.Movement.IsNear(transform.position, callArea))
             {
-                pet.ChangeTextAction("goto window");
-
-                pet.Movement.MoveTo(MapManager.Instance.GetRandomPositionIn(MapManager.Instance.sunlightArea), () =>
-                {
-                    pet.BehaviorController.TryExecuteAction(ActionTrait.Sunbathe);
-                });
+                pet.BehaviorController.TryExecuteHabit(HabitTrait.Sunbathe);
             }
         }
     }
@@ -96,7 +99,6 @@ public class InteractableWindow : Interactables
         }
         else
         {
-            //Debug.Log("dawdawwdwawda");
             closeWindowRenderer.sprite = closeWindowDefault;
         }
     }

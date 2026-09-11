@@ -86,5 +86,5 @@ public class TreasureHunterBehavior : IHabitBehavior, IDialogueDescribable
         Debug.Log($"{pet.petData.petName} finished digging");
     }
 
-    public string GetDialogueText() => "Every so often it claws at a wall, convinced there's treasure buried inside.";
+     public string GetDialogueText() => "It claws at walls, hunting for buried treasure.";
 }

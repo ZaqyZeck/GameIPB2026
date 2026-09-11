@@ -7,9 +7,11 @@ public class PetIconDatabase : MonoBehaviour
 
     [SerializeField] private List<PetIconSet> iconSets = new();
     [SerializeField] private List<ActionIconEntry> actionIcons = new();
+    [SerializeField] private List<HabitIconEntry> universalHabitIcons = new();
 
     private Dictionary<PetType, PetIconSet> typeLookup;
     private Dictionary<ActionTrait, Sprite> actionLookup;
+    private Dictionary<HabitTrait, Sprite> universalHabitLookup;
 
     private void Awake()
     {
@@ -31,6 +33,12 @@ public class PetIconDatabase : MonoBehaviour
         {
             actionLookup[entry.action] = entry.icon;
         }
+
+        universalHabitLookup = new Dictionary<HabitTrait, Sprite>();
+        foreach (HabitIconEntry entry in universalHabitIcons)
+        {
+            universalHabitLookup[entry.habit] = entry.icon;
+        }
     }
 
     public Sprite GetTypeIcon(PetType type)
@@ -40,6 +48,11 @@ public class PetIconDatabase : MonoBehaviour
 
     public Sprite GetHabitIcon(PetType type, HabitTrait habit)
     {
+        if (universalHabitLookup != null && universalHabitLookup.TryGetValue(habit, out Sprite universalIcon) && universalIcon != null)
+        {
+            return universalIcon;
+        }
+
         return typeLookup != null && typeLookup.TryGetValue(type, out PetIconSet set) ? set.GetHabitIcon(habit) : null;
     }
 

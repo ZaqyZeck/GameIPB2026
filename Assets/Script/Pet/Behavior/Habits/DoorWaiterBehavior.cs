@@ -80,5 +80,5 @@ public class DoorWaiterBehavior : IHabitBehavior, IDialogueDescribable
         pet.GetPetAnimation().SetSitting(false);
     }
 
-    public string GetDialogueText() => "It likes to sit by the door, waiting for someone";
+    public string GetDialogueText() => "It waits by the door for someone to come home.";
 }
