@@ -29,6 +29,14 @@ public class Pet : MonoBehaviour, IHoldable
     [SerializeField] private float actionIconDuration = 5f;
     private Coroutine actionIconCoroutine;
 
+    [Header("Cat Toy Prop")]
+    [SerializeField] private Transform catToyPropTransform;
+    [SerializeField] private float catToyWaveAngle = 20f;
+    [SerializeField] private float catToyWaveDuration = 0.3f;
+    private Tween catToyWaveTween;
+    private Vector3 catToyPropDefaultLocalPos;
+    private Vector3 catToyPropDefaultLocalScale;
+    private bool catToyPropDefaultsCaptured;
 
     public Material PetMaterial { get; private set; }
     public PetMovement Movement => movement;
@@ -159,5 +167,65 @@ public class Pet : MonoBehaviour, IHoldable
         yield return new WaitForSeconds(delay);
         actionIconImage.gameObject.SetActive(false);
         actionIconCoroutine = null;
+    }
+
+    public void ShowCatToyProp()
+    {
+        if (catToyPropTransform == null) return;
+
+        CaptureCatToyPropDefaultsIfNeeded();
+
+        catToyWaveTween?.Kill();
+
+        // Mirror position and sprite depending on facing direction.
+        // catToyPropDefaultLocalPos/Scale represent the "facing left" (default) setup.
+        bool facingRight = petAnimation.IsFacingPositiveX;
+
+        if (facingRight)
+        {
+            catToyPropTransform.localPosition = new Vector3(
+                -catToyPropDefaultLocalPos.x,
+                catToyPropDefaultLocalPos.y,
+                catToyPropDefaultLocalPos.z);
+
+            catToyPropTransform.localScale = new Vector3(
+                -catToyPropDefaultLocalScale.x,
+                catToyPropDefaultLocalScale.y,
+                catToyPropDefaultLocalScale.z);
+        }
+        else
+        {
+            catToyPropTransform.localPosition = catToyPropDefaultLocalPos;
+            catToyPropTransform.localScale = catToyPropDefaultLocalScale;
+        }
+
+        catToyPropTransform.gameObject.SetActive(true);
+        catToyPropTransform.localRotation = Quaternion.identity;
+
+        catToyWaveTween = catToyPropTransform
+            .DORotate(new Vector3(0f, 0f, catToyWaveAngle), catToyWaveDuration)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void HideCatToyProp()
+    {
+        catToyWaveTween?.Kill();
+        catToyWaveTween = null;
+
+        if (catToyPropTransform != null)
+        {
+            catToyPropTransform.localRotation = Quaternion.identity;
+            catToyPropTransform.gameObject.SetActive(false);
+        }
+    }
+
+    private void CaptureCatToyPropDefaultsIfNeeded()
+    {
+        if (catToyPropDefaultsCaptured) return;
+
+        catToyPropDefaultLocalPos = catToyPropTransform.localPosition;
+        catToyPropDefaultLocalScale = catToyPropTransform.localScale;
+        catToyPropDefaultsCaptured = true;
     }
 }

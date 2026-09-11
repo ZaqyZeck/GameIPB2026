@@ -109,7 +109,9 @@ public class PetManager : MonoBehaviour
             petMaterial.SetColor("_Color", petData.specialColor);
             newPet.SetMaterial(petMaterial);
         }
-
+        if(GameManager.Instance != null) {
+        GameManager.Instance.PlayAudio(GameManager.Instance.lonceng);
+        }
         GameEventBus.OnPetSpawned?.Invoke(petData);
     }
 

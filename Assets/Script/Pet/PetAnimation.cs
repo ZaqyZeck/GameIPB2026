@@ -17,9 +17,11 @@ public class PetAnimation : MonoBehaviour
     private static readonly int ActionIdHash = Animator.StringToHash("ActionID");
 
     public void FlipSprite(bool isFlip)
-    {
-        petRenderer.flipX = isFlip;
-    }
+{
+    petRenderer.flipX = isFlip;
+}
+
+public bool IsFacingPositiveX => petRenderer != null && petRenderer.flipX;
 
     public void SetWalking(bool isWalking)
     {
