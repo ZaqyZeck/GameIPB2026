@@ -31,7 +31,7 @@ public class HealthManager : MonoBehaviour
         if (health == 0)
         {
             OnDeath?.Invoke();
-            //GameEventBus.OnLevelWin?.Invoke();
+            GameEventBus.OnWin?.Invoke();
             Debug.LogWarning("Menaaaaang");
         }
             

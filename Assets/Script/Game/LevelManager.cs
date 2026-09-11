@@ -17,14 +17,14 @@ public class LevelManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        GameEventBus.OnLevelWin += OnLevelWin;
+        GameEventBus.OnSubmitScore += OnLevelWin;
         GameEventBus.OnPause += OnLevelPause;
         GameEventBus.OnResume += OnLevelResume;
     }
 
     private void OnDisable()
     {
-        GameEventBus.OnLevelWin -= OnLevelWin;
+        GameEventBus.OnSubmitScore -= OnLevelWin;
         GameEventBus.OnPause -= OnLevelPause;
         GameEventBus.OnResume -= OnLevelResume;
     }
