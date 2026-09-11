@@ -137,7 +137,7 @@ public class LeaderboardManager : MonoBehaviour
                 {
                     Debug.Log($"Score berhasil: {entry.Score}, Player: {entry.PlayerName}");
 
-                    AuthenticationManager.Instance.SignOut(true);
+                    //AuthenticationManager.Instance.SignOut(true);
                 }
 
                 return entry;

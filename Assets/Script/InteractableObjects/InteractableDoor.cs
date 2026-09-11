@@ -2,17 +2,27 @@ using UnityEngine;
 
 public class InteractableDoor : Interactables
 {
-    [SerializeField] private GameObject windowOpen;
-    [SerializeField] private GameObject windowClose;
+    [SerializeField] private GameObject doorOpen;
+    [SerializeField] private GameObject doorClose;
 
     [SerializeField] private float openDuration = 2f;
     [SerializeField] private Material doorMaterial;
+    [SerializeField] private GameObject doorBell;
 
     private bool isOpen;
     private float openTimer;
 
     private void Update()
     {
+        if (PetManager.Instance.isPetsAtDoor)
+        {
+            if (doorBell != null) doorBell.SetActive(true);
+        }
+        else
+        {
+            if (doorBell != null) doorBell.SetActive(false);
+        }
+
         if (!isOpen) return;
 
         openTimer -= Time.deltaTime;
@@ -36,20 +46,21 @@ public class InteractableDoor : Interactables
     private void OpenDoor()
     {
         if (!PetManager.Instance.isPetsAtDoor || isOpen) return;
-        windowOpen.SetActive(true);
-        windowClose.SetActive(false);
+        doorOpen.SetActive(true);
+        doorClose.SetActive(false);
+        doorBell.SetActive(false);
 
         isOpen = true;
         openTimer = openDuration;
 
-         PetManager.Instance.DoorOpen();
+        PetManager.Instance.DoorOpen();
         TurnOnOutline(false);
     }
 
     private void CloseDoor()
     {
-        windowOpen.SetActive(false);
-        windowClose.SetActive(true);
+        doorOpen.SetActive(false);
+        doorClose.SetActive(true);
 
         isOpen = false;
         openTimer = 0f;
@@ -78,4 +89,6 @@ public class InteractableDoor : Interactables
             doorMaterial.SetFloat("_outlineOn", 0f);
         }
     }
+
+    //public void TurnOnBell
 }
