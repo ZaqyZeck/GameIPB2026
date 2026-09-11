@@ -1758,9 +1758,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1056699956}
     m_Modifications:
+    - target: {fileID: 1517659914264012452, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 290
+      objectReference: {fileID: 0}
+    - target: {fileID: 1517659914264012452, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 3150403411739461380, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
       propertyPath: m_Name
       value: UIPause
+      objectReference: {fileID: 0}
+    - target: {fileID: 3150403411739461380, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3728558917496132468, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3728558917496132468, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3728558917496132468, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 230
+      objectReference: {fileID: 0}
+    - target: {fileID: 3728558917496132468, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 6857028012012433787, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
       propertyPath: m_Pivot.x
@@ -1841,6 +1869,22 @@ PrefabInstance:
     - target: {fileID: 6857028012012433787, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429022018727433223, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429022018727433223, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429022018727433223, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8429022018727433223, guid: b32494cbcdc4e9d4faae045a611f96c4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1943,6 +1987,10 @@ PrefabInstance:
     - target: {fileID: 8169799163659705854, guid: 510b4e52be6655d478a8e4c50d6f3b8a, type: 3}
       propertyPath: m_Name
       value: UITutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 8169799163659705854, guid: 510b4e52be6655d478a8e4c50d6f3b8a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
