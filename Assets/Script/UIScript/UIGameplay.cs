@@ -7,18 +7,24 @@ public class UIGameplay : UIBase
 {
     [SerializeField] private Button pauseButton;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private SpiritStoneDisplay spiritStoneDisplay;
 
     public static bool IsPaused { get; private set; }
 
+    /// <summary>Reputasi terakhir. Dibaca UIGameOver saat game over.</summary>
+    public static int Reputation { get; private set; }
+
+    public static void ResetReputation() => Reputation = 0;
+
     private void OnEnable()
     {
-        if (pauseButton == null)
-        {
+        if (pauseButton != null)
+            pauseButton.onClick.AddListener(OpenPauseMenu);
+        else
             Debug.LogWarning("[UIGameplay] Pause button belum di-assign.", this);
-            return;
-        }
 
-        pauseButton.onClick.AddListener(OpenPauseMenu);
+        GameEventBus.OnTakeDamage += HandleTakeDamage;
+        GameEventBus.OnReputationChange += HandleReputationChange;
     }
 
     private void OnDisable()
@@ -26,8 +32,25 @@ public class UIGameplay : UIBase
         if (pauseButton != null)
             pauseButton.onClick.RemoveListener(OpenPauseMenu);
 
+        GameEventBus.OnTakeDamage -= HandleTakeDamage;
+        GameEventBus.OnReputationChange -= HandleReputationChange;
+
         // Jaring pengaman: jangan sampai scene ditinggalkan dalam keadaan timeScale 0.
         if (IsPaused) ResumeGame();
+    }
+
+    private void HandleTakeDamage(int before, int after)
+    {
+        if (spiritStoneDisplay != null)
+            spiritStoneDisplay.SetCount(after);
+    }
+
+    private void HandleReputationChange(int before, int after)
+    {
+        Reputation = after;
+
+        if (scoreText != null)
+            scoreText.text = after.ToString();
     }
 
     public void OpenPauseMenu()
@@ -63,5 +86,4 @@ public class UIGameplay : UIBase
         if (IsPaused) ResumeGame();
         else OpenPauseMenu();
     }
-
 }
