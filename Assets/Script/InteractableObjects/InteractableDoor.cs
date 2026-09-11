@@ -48,7 +48,7 @@ public class InteractableDoor : Interactables
         if (!PetManager.Instance.isPetsAtDoor || isOpen) return;
         doorOpen.SetActive(true);
         doorClose.SetActive(false);
-        doorBell.SetActive(false);
+        if (doorBell != null) doorBell.SetActive(false);
 
         isOpen = true;
         openTimer = openDuration;
