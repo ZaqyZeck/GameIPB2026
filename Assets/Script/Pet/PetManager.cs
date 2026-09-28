@@ -9,6 +9,9 @@ public class PetManager : MonoBehaviour
     public static PetManager Instance;
 
     [SerializeField] private PetProfileSO petDatas;
+    [SerializeField] private TraitDatabaseSO traitDatabase;
+    [SerializeField] private DifficultyProfileSO difficultyProfile;
+    [SerializeField] private bool rollDislikes = true;
     [SerializeField] private GameObject[] petPrefabs;
     [SerializeField] private List<Pet> ghostPets = new();
     //[SerializeField] private List<PetData> petsAtDoor = new();
@@ -22,6 +25,12 @@ public class PetManager : MonoBehaviour
     [SerializeField] Vector3 spawnPosition;
     [SerializeField] Shader petShader;
 
+    public TraitDatabaseSO TraitDatabase => traitDatabase;
+    public DifficultyProfileSO DifficultyProfile
+    {
+        get => difficultyProfile;
+        set => difficultyProfile = value;
+    }
     public bool isPetAvailable;
     public bool isPetsAtDoor;
 
@@ -32,6 +41,10 @@ public class PetManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        if (traitDatabase != null)
+        {
+            traitDatabase.InitializeLookup();
+        }
         spawnTimer = Random.Range(minSpawnTime, maxSpawnTime);
     }
 
@@ -143,6 +156,58 @@ public class PetManager : MonoBehaviour
         if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
             return null;
 
+        // Fallback: If no difficulty profile is assigned, use the original uniform random behavior
+        if (difficultyProfile == null)
+        {
+            return petDatas.petDatas[Random.Range(0, petDatas.petDatas.Count)];
+        }
+
+        // 1. Collect PetTypes of pets currently active in the room
+        List<PetType> activeTypesInRoom = ghostPets
+            .Where(p => p != null && p.petData != null)
+            .Select(p => p.petData.petType)
+            .ToList();
+
+        // 2. Decide if we should spawn a duplicate PetType based on difficulty chance
+        bool shouldSpawnDuplicate = activeTypesInRoom.Count > 0 && Random.value < difficultyProfile.sameTypeSpawnChance;
+
+        if (shouldSpawnDuplicate)
+        {
+            // Find active PetTypes that have not reached the max duplicate cap yet
+            var eligibleDuplicateTypes = activeTypesInRoom
+                .GroupBy(t => t)
+                .Where(g => g.Count() < difficultyProfile.maxSameTypeInRoom)
+                .Select(g => g.Key)
+                .ToList();
+
+            if (eligibleDuplicateTypes.Count > 0)
+            {
+                PetType targetType = eligibleDuplicateTypes[Random.Range(0, eligibleDuplicateTypes.Count)];
+                var matchingTemplates = petDatas.petDatas
+                    .Where(d => d.petType == targetType)
+                    .ToList();
+
+                if (matchingTemplates.Count > 0)
+                {
+                    return matchingTemplates[Random.Range(0, matchingTemplates.Count)];
+                }
+            }
+        }
+
+        // 3. If duplicate roll did not trigger, and forceUniqueOnFail is enabled:
+        if (difficultyProfile.forceUniqueOnFail && activeTypesInRoom.Count > 0)
+        {
+            var distinctTemplates = petDatas.petDatas
+                .Where(d => !activeTypesInRoom.Contains(d.petType))
+                .ToList();
+
+            if (distinctTemplates.Count > 0)
+            {
+                return distinctTemplates[Random.Range(0, distinctTemplates.Count)];
+            }
+        }
+
+        // Fallback: standard uniform random
         return petDatas.petDatas[Random.Range(0, petDatas.petDatas.Count)];
     }
 
@@ -205,6 +270,8 @@ public class PetManager : MonoBehaviour
             ? petDatas.colorPool
             : null;
 
+        bool shouldRollDislikes = difficultyProfile != null ? difficultyProfile.rollDislikes : rollDislikes;
+
         for (int attempt = 0; attempt < MaxTraitRollAttempts; attempt++)
         {
             Color rolledColor = colorPool != null
@@ -214,18 +281,51 @@ public class PetManager : MonoBehaviour
             HabitTrait rolledHabit = RandomEnumValue<HabitTrait>();
             ActionTrait rolledAction = RandomEnumValue<ActionTrait>();
 
-            if (!IsTraitComboInUse(rolledColor, rolledHabit, rolledAction))
+            if (!IsTraitComboInUse(petData.petType, rolledColor, rolledHabit, rolledAction))
             {
                 petData.specialColor = rolledColor;
                 petData.hiddenHabit = rolledHabit;
                 petData.hiddenAction = rolledAction;
                 petData.ownerSprite = RollOwnerSprite();
+
+                petData.preferences.Clear();
+                if (traitDatabase != null)
+                {
+                    TraitSO likeActionSO = traitDatabase.GetTraitByAction(rolledAction);
+                    if (likeActionSO != null) petData.SetPreference(likeActionSO, PreferenceType.Like);
+
+                    TraitSO likeHabitSO = traitDatabase.GetTraitByHabit(rolledHabit);
+                    if (likeHabitSO != null) petData.SetPreference(likeHabitSO, PreferenceType.Like);
+
+                    if (shouldRollDislikes)
+                    {
+                        ActionTrait dislikeAction = RollDifferentAction(rolledAction);
+                        if (dislikeAction != ActionTrait.None)
+                        {
+                            TraitSO dislikeActionSO = traitDatabase.GetTraitByAction(dislikeAction);
+                            if (dislikeActionSO != null) petData.SetPreference(dislikeActionSO, PreferenceType.Dislike);
+                        }
+                    }
+                }
+
                 return true;
             }
         }
 
         Debug.LogError("gak ketemu trait yang cocok");
         return false;
+    }
+
+    private ActionTrait RollDifferentAction(ActionTrait preferredAction)
+    {
+        ActionTrait[] allActions = new[] { ActionTrait.Football, ActionTrait.MiceToy, ActionTrait.CatToy };
+        List<ActionTrait> candidates = new List<ActionTrait>();
+        foreach (var act in allActions)
+        {
+            if (act != preferredAction) candidates.Add(act);
+        }
+        if (candidates.Count == 0) return ActionTrait.None;
+        return candidates[Random.Range(0, candidates.Count)];
     }
 
     private Sprite RollOwnerSprite()
@@ -242,13 +342,19 @@ public class PetManager : MonoBehaviour
         return values[Random.Range(1, values.Length)];
     }
 
-    private bool IsTraitComboInUse(Color color, HabitTrait habit, ActionTrait action)
+    private bool IsTraitComboInUse(PetType petType, Color color, HabitTrait habit, ActionTrait action)
     {
         foreach (Pet ghostPet in ghostPets)
         {
             PetData other = ghostPet.petData;
 
             if (other == null) continue;
+
+            // If same breed/type, prevent identical habit + action so players can always differentiate them
+            if (other.petType == petType && other.hiddenHabit == habit && other.hiddenAction == action)
+            {
+                return true;
+            }
 
             if (other.hiddenHabit == habit &&
                 other.hiddenAction == action &&

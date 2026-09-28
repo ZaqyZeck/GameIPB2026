@@ -24,23 +24,18 @@ public class InteractablePet : Interactables
     //}
     public override void OnInteract(PlayerInteract player)
     {
-        if (ownerPet.petData.hiddenAction != ActionTrait.Football &&
-            ownerPet.petData.hiddenAction != ActionTrait.CatToy &&
-            ownerPet.petData.hiddenAction != ActionTrait.MiceToy)
-        {
-            player.PickUpTargetObject();
-            return;
-        }
         if (!player.isHoldingObject)
         {
             player.PickUpTargetObject();
             return;
         }
-        if(isPlaying == true)
+
+        if (isPlaying == true)
         {
             player.DropHoldObject();
             return;
         }
+
         currentToy = player.GiveToy(this);
 
         if (currentToy == null || isPlaying)
@@ -49,9 +44,16 @@ public class InteractablePet : Interactables
             return;
         }
 
-        if (currentToy.actionTrait == ownerPet.petData.hiddenAction)
+        if (ownerPet.petData != null && ownerPet.petData.LikesAction(currentToy.actionTrait))
         {
             StartPlayToy();
+            return;
+        }
+
+        if (ownerPet.petData != null && ownerPet.petData.DislikesAction(currentToy.actionTrait))
+        {
+            PlayAngryReactionAndDropToy();
+            ownerPet.ShowActionIcon(currentToy.actionTrait, isDislike: true);
             return;
         }
 

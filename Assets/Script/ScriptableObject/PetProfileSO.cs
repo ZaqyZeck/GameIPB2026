@@ -36,9 +36,12 @@ public class PetData
     [Header("Ciri-Ciri Action (Interactive)")]
     public ActionTrait hiddenAction;
 
+    [Header("Preferences (Data-Driven)")]
+    public List<PetPreference> preferences = new();
+
     public PetData Clone()
     {
-        return new PetData
+        var clone = new PetData
         {
             petName = petName,
             petSprite = petSprite,
@@ -51,5 +54,88 @@ public class PetData
             timeToRevealHabit = timeToRevealHabit,
             hiddenAction = hiddenAction
         };
+
+        if (preferences != null)
+        {
+            foreach (var pref in preferences)
+            {
+                if (pref != null)
+                {
+                    clone.preferences.Add(new PetPreference(pref.trait, pref.preference));
+                }
+            }
+        }
+
+        return clone;
+    }
+
+    public bool LikesAction(ActionTrait action)
+    {
+        if (hiddenAction == action) return true;
+        if (preferences != null)
+        {
+            foreach (var pref in preferences)
+            {
+                if (pref != null && pref.trait != null && pref.trait.actionType == action && pref.preference == PreferenceType.Like)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public bool DislikesAction(ActionTrait action)
+    {
+        if (preferences != null)
+        {
+            foreach (var pref in preferences)
+            {
+                if (pref != null && pref.trait != null && pref.trait.actionType == action && pref.preference == PreferenceType.Dislike)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public bool LikesHabit(HabitTrait habit)
+    {
+        if (hiddenHabit == habit) return true;
+        if (preferences != null)
+        {
+            foreach (var pref in preferences)
+            {
+                if (pref != null && pref.trait != null && pref.trait.habitType == habit && pref.preference == PreferenceType.Like)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public bool DislikesHabit(HabitTrait habit)
+    {
+        if (preferences != null)
+        {
+            foreach (var pref in preferences)
+            {
+                if (pref != null && pref.trait != null && pref.trait.habitType == habit && pref.preference == PreferenceType.Dislike)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public void SetPreference(TraitSO trait, PreferenceType type)
+    {
+        if (trait == null) return;
+        if (preferences == null) preferences = new List<PetPreference>();
+
+        var existing = preferences.Find(p => p != null && p.trait == trait);
+        if (existing != null)
+        {
+            existing.preference = type;
+        }
+        else
+        {
+            preferences.Add(new PetPreference(trait, type));
+        }
     }
 }

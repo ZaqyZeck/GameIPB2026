@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DoorWaiterBehavior : IHabitBehavior, IDialogueDescribable
+public class DoorWaiterBehavior : IHabitBehavior
 {
     private const float WaitDuration = 5f;
 
@@ -79,6 +79,4 @@ public class DoorWaiterBehavior : IHabitBehavior, IDialogueDescribable
         isWaiting = false;
         pet.GetPetAnimation().SetSitting(false);
     }
-
-    public string GetDialogueText() => "It waits by the door for someone to come home.";
 }

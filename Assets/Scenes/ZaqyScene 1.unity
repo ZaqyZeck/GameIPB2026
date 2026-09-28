@@ -464,6 +464,7 @@ MonoBehaviour:
   - Alright, I'll go look.
   currentPetId: 0
   isInLine: 0
+  dialogCounter: 0
 --- !u!212 &105957971
 SpriteRenderer:
   serializedVersion: 2
@@ -4958,6 +4959,10 @@ MonoBehaviour:
   boxRoot: {fileID: 1070518049}
   dialogueText: {fileID: 1934216167}
   iconImage: {fileID: 1751339924}
+  dislikeIndicator: {fileID: 0}
+  maxTextWidth: 360
+  minBoxHeight: 65
+  iconOnLeft: 0
   charsPerSecond: 30
 --- !u!224 &1313575288
 RectTransform:
@@ -5590,6 +5595,10 @@ MonoBehaviour:
   boxRoot: {fileID: 1625742054}
   dialogueText: {fileID: 1363313534}
   iconImage: {fileID: 928791456}
+  dislikeIndicator: {fileID: 0}
+  maxTextWidth: 360
+  minBoxHeight: 65
+  iconOnLeft: 0
   charsPerSecond: 30
 --- !u!114 &1471641121
 MonoBehaviour:
@@ -5758,6 +5767,7 @@ MonoBehaviour:
   - Alright, I'll go look.
   currentPetId: 0
   isInLine: 0
+  dialogCounter: 0
 --- !u!212 &1508637208
 SpriteRenderer:
   serializedVersion: 2
@@ -6766,6 +6776,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetManager
   petDatas: {fileID: 11400000, guid: eafeaecddb73be94aa72ce104d9a2c1b, type: 2}
+  traitDatabase: {fileID: 11400000, guid: a03698b7796bd4a4b8d73465db7991a0, type: 2}
+  rollDislikes: 1
   petPrefabs:
   - {fileID: 5179462446187314528, guid: 613407d1e85dd2a45b76e10d369aa810, type: 3}
   ghostPets: []

@@ -135,17 +135,31 @@ public class Pet : MonoBehaviour, IHoldable
         PetMaterial = material;
     }
 
-    public void ShowActionIcon(ActionTrait trait)
+    public void ShowActionIcon(ActionTrait trait, bool isDislike = false)
     {
         if (actionIconImage == null) return;
 
-        Sprite icon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetActionIcon(trait) : null;
+        Sprite icon = null;
+        if (petData != null && petData.preferences != null)
+        {
+            var pref = petData.preferences.Find(p => p != null && p.trait != null && p.trait.actionType == trait);
+            if (pref != null)
+            {
+                icon = pref.trait.GetIcon(pref.preference);
+            }
+        }
+
+        if (icon == null && PetIconDatabase.Instance != null)
+        {
+            icon = PetIconDatabase.Instance.GetActionIcon(trait);
+        }
 
         if (icon == null) return;
 
         if (actionIconCoroutine != null) StopCoroutine(actionIconCoroutine);
 
         actionIconImage.sprite = icon;
+        actionIconImage.color = isDislike ? new Color(1f, 0.4f, 0.4f, 1f) : Color.white;
         actionIconImage.gameObject.SetActive(true);
 
         actionIconCoroutine = StartCoroutine(HideActionIconAfterDelay(actionIconDuration));
@@ -159,7 +173,11 @@ public class Pet : MonoBehaviour, IHoldable
             actionIconCoroutine = null;
         }
 
-        if (actionIconImage != null) actionIconImage.gameObject.SetActive(false);
+        if (actionIconImage != null)
+        {
+            actionIconImage.color = Color.white;
+            actionIconImage.gameObject.SetActive(false);
+        }
     }
 
     private IEnumerator HideActionIconAfterDelay(float delay)

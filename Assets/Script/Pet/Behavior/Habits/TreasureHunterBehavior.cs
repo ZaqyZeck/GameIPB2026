@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TreasureHunterBehavior : IHabitBehavior, IDialogueDescribable
+public class TreasureHunterBehavior : IHabitBehavior
 {
     private const float MinDigDuration = 5f;
     private const float MaxDigDuration = 8f;
@@ -85,6 +85,4 @@ public class TreasureHunterBehavior : IHabitBehavior, IDialogueDescribable
         pet.Animation.ResetAction();
         Debug.Log($"{pet.petData.petName} finished digging");
     }
-
-     public string GetDialogueText() => "It claws at walls, hunting for buried treasure.";
 }
