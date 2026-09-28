@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FootballActionBehavior : IActionBehavior, IDialogueDescribable
+public class FootballActionBehavior : IActionBehavior
 {
     public float actionDurtion = 10f;
 
@@ -26,6 +26,4 @@ public class FootballActionBehavior : IActionBehavior, IDialogueDescribable
     {
         return actionDurtion;
     }
-
-    public string GetDialogueText() => "Give it a ball and it'll play for hours.";
 }

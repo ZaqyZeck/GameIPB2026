@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CatToyActionBehavior : IActionBehavior, IDialogueDescribable
+public class CatToyActionBehavior : IActionBehavior
 {
     public float actionDurtion = 10f;
 
@@ -28,6 +28,4 @@ public class CatToyActionBehavior : IActionBehavior, IDialogueDescribable
     {
         return actionDurtion;
     }
-
-    public string GetDialogueText() => "It can't resist swatting at a little toy mouse.";
 }

@@ -5,4 +5,5 @@ public class DialoguePage
 {
     public string text;
     public Sprite icon; 
+    public bool isDislike;
 }

@@ -93,29 +93,7 @@ public class Owner : Interactables
     {
         if (currentPet == null || currentPet.petData == null || dialogueBox == null || PlayerDialogueController.Instance == null) return;
 
-        PetData petData = currentPet.petData;
-
-        IHabitBehavior habit = PetBehaviorFactory.GetHabitBehavior(petData.hiddenHabit);
-        IActionBehavior action = PetBehaviorFactory.GetActionBehavior(petData.hiddenAction);
-
-        string habitText = (habit as IDialogueDescribable)?.GetDialogueText() ?? "Hmm, not sure what it likes to do.";
-        string actionText = (action as IDialogueDescribable)?.GetDialogueText() ?? "Hmm, not sure what it does.";
-
-        string speciesLabel = petData.species == PetSpecies.Dog ? "dog" : "cat";
-        string greetingText = $"Have you seen my {speciesLabel}?";
-        string typeText = "Here's how it looks.";
-
-        Sprite typeIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetTypeIcon(petData.petType) : null;
-        Sprite habitIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetHabitIcon(petData.petType, petData.hiddenHabit) : null;
-        Sprite actionIcon = PetIconDatabase.Instance != null ? PetIconDatabase.Instance.GetActionIcon(petData.hiddenAction) : null;
-
-        List<DialoguePage> pages = new List<DialoguePage>
-        {
-            new DialoguePage { text = greetingText, icon = null },
-            new DialoguePage { text = actionText, icon = actionIcon },
-            new DialoguePage { text = habitText, icon = habitIcon },
-            new DialoguePage { text = typeText, icon = typeIcon },
-        };
+        List<DialoguePage> pages = PetClueGenerator.GenerateDialoguePages(currentPet, this);
 
         PlayerDialogueController.Instance.StartConversation(dialogueBox, pages, advanceLines, farewellLines, this);
     }

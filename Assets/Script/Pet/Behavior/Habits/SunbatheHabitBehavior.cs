@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SunbatheHabitBehavior : IHabitBehavior, IDialogueDescribable
+public class SunbatheHabitBehavior : IHabitBehavior
 {
     private const float SunbatheDuration = 8f;
 
@@ -99,6 +99,4 @@ public class SunbatheHabitBehavior : IHabitBehavior, IDialogueDescribable
         isSunbathing = false;
         pet.Animation.SetSitting(false);
     }
-
-    public string GetDialogueText() => "It loves finding a warm, sunny spot to lounge in.";
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SleepyHeadBehavior : IHabitBehavior, IDialogueDescribable
+public class SleepyHeadBehavior : IHabitBehavior
 {
     private const float SleepDuration = 5f;
 
@@ -88,6 +88,4 @@ public class SleepyHeadBehavior : IHabitBehavior, IDialogueDescribable
         isSleeping = false;
         pet.GetPetAnimation().ResetAction();
     }
-
-    public string GetDialogueText() => "It naps anywhere it finds a cozy spot.";
 }

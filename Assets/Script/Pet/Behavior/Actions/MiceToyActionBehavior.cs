@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MiceToyActionBehavior : IActionBehavior, IDialogueDescribable
+public class MiceToyActionBehavior : IActionBehavior
 {
     public float actionDurtion = 10f;
 
@@ -25,6 +25,4 @@ public class MiceToyActionBehavior : IActionBehavior, IDialogueDescribable
     {
         return actionDurtion;
     }
-
-    public string GetDialogueText() => "A mice toy will get it chasing around instantly.";
 }
