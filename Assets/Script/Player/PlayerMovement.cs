@@ -55,6 +55,10 @@ public class PlayerMovement : MonoBehaviour
         haveTarget = false;
         path = null;
         currentWaypoint = 0;
+        if (playerAnimation != null)
+        {
+            HandleAnimation(0f, true);
+        }
     }
 
     /// <summary>

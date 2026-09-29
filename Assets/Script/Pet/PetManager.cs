@@ -379,7 +379,11 @@ public class PetManager : MonoBehaviour
 
     public bool CanAddPetAtDoor()
     {
-        if (ghostPets.Count >= maxPet) return false;
+        int limit = (difficultyProfile != null && difficultyProfile.maxActivePets > 0)
+            ? difficultyProfile.maxActivePets
+            : (maxPet > 0 ? maxPet : 4);
+
+        if (ghostPets.Count >= limit) return false;
 
         if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
             return false;

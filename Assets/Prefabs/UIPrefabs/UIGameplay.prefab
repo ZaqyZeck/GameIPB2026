@@ -391,6 +391,7 @@ MonoBehaviour:
   usedColor: {r: 0.25, g: 0.25, b: 0.35, a: 1}
   activeSprite: {fileID: 0}
   usedSprite: {fileID: 0}
+  dissolveMaterialTemplate: {fileID: 2100000, guid: 8c3f4e5a2b1c4d98a0e2713258f4b002, type: 2}
 --- !u!1 &3165565909610011886
 GameObject:
   m_ObjectHideFlags: 0

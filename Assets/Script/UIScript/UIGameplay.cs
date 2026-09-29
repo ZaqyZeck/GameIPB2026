@@ -6,6 +6,7 @@ using TMPro;
 public class UIGameplay : UIBase
 {
     [SerializeField] private Button pauseButton;
+    [SerializeField] private Button dropButton;
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private SpiritStoneDisplay spiritStoneDisplay;
 
@@ -23,8 +24,38 @@ public class UIGameplay : UIBase
         else
             Debug.LogWarning("[UIGameplay] Pause button belum di-assign.", this);
 
+        if (dropButton != null)
+        {
+            dropButton.onClick.AddListener(OnDropButtonClicked);
+            dropButton.gameObject.SetActive(false);
+        }
+
         GameEventBus.OnTakeDamage += HandleTakeDamage;
         GameEventBus.OnReputationChange += HandleReputationChange;
+    }
+
+    private void Update()
+    {
+        if (dropButton != null)
+        {
+            bool holding = PlayerInteract.Instance != null && PlayerInteract.Instance.isHoldingObject;
+            if (dropButton.gameObject.activeSelf != holding)
+            {
+                dropButton.gameObject.SetActive(holding);
+            }
+        }
+    }
+
+    private void OnDropButtonClicked()
+    {
+        if (GameInputManager.Instance != null)
+        {
+            GameInputManager.Instance.TriggerDrop();
+        }
+        else if (PlayerInteract.Instance != null)
+        {
+            PlayerInteract.Instance.DropHoldObject();
+        }
     }
 
     private void OnDisable()

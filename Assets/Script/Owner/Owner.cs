@@ -34,13 +34,18 @@ public class Owner : Interactables
 
     public bool isInLine;
     private float patienceTimer;
+    private float totalPatience;
     private float maxFillWidth;
 
     public int dialogCounter = 0;
+    public int lastDialogueIndex = 0;
+    public bool hasTalkedBefore = false;
+    private float spawnTimestamp;
 
     private void Awake()
     {
-        patienceTimer = patienceAmount;
+        totalPatience = patienceAmount + 30f;
+        patienceTimer = totalPatience;
         
         if (patienceFillRect != null)
         {
@@ -64,7 +69,7 @@ public class Owner : Interactables
         }
         else if (isInLine)
         {
-            patienceTimer = patienceAmount;
+            patienceTimer = totalPatience;
             DespawnWithoutPet();
         }
     }
@@ -78,7 +83,7 @@ public class Owner : Interactables
     {
         if (patienceFillRect != null)
         {
-            float fillPercentage = patienceTimer / patienceAmount;
+            float fillPercentage = totalPatience > 0 ? (patienceTimer / totalPatience) : 0f;
             patienceFillRect.sizeDelta = new Vector2(maxFillWidth * fillPercentage, patienceFillRect.sizeDelta.y);
         }
     }
@@ -105,6 +110,8 @@ public class Owner : Interactables
             DespawnWithoutPet();
             return false;
         }
+        float solveDuration = Time.time - spawnTimestamp;
+        OwnerManager.RecordSolve(solveDuration);
         DespawnWithPet();
         return true;
     }
@@ -114,6 +121,9 @@ public class Owner : Interactables
         if (isInLine) return;
 
         dialogCounter = 0;
+        lastDialogueIndex = 0;
+        hasTalkedBefore = false;
+        spawnTimestamp = Time.time;
         currentPet = wantedPet;
         currentOwnerData = newOwnerData;
         ownerName = currentOwnerData.ownerName;
@@ -123,7 +133,14 @@ public class Owner : Interactables
 
         ApplyOwnerSprite();
 
-        patienceTimer = patienceAmount;
+        float extraPatience = 30f;
+        if (PetManager.Instance != null && PetManager.Instance.DifficultyProfile != null)
+        {
+            extraPatience = PetManager.Instance.DifficultyProfile.extraPatienceTime;
+        }
+
+        totalPatience = patienceAmount + extraPatience;
+        patienceTimer = totalPatience;
         if (patienceFillRect != null) patienceFillRect.sizeDelta = new Vector2(maxFillWidth, patienceFillRect.sizeDelta.y);
 
         interactCollider.enabled = true;
@@ -175,8 +192,9 @@ public class Owner : Interactables
         OwnerManager.Instance.CheckLine();
         int score = 0;
 
-        if (patienceTimer / patienceAmount > 0.6f) score = 15;
-        else if (patienceTimer / patienceAmount > 0.3f) score = 10;
+        float ratio = totalPatience > 0 ? (patienceTimer / totalPatience) : 0f;
+        if (ratio > 0.6f) score = 15;
+        else if (ratio > 0.3f) score = 10;
         else score = 5;
 
         if (dialogCounter <= 0) score += 15;
@@ -196,6 +214,9 @@ public class Owner : Interactables
         ownerName = null;
         interactCollider.enabled = false;
         isInLine = false;
+        dialogCounter = 0;
+        lastDialogueIndex = 0;
+        hasTalkedBefore = false;
     }
 
     private void SpawnAnimation()

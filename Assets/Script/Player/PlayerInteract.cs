@@ -17,57 +17,141 @@ public class PlayerInteract : MonoBehaviour
 
     [SerializeField] private float pickUpRange = 2f;
 
+    [Header("Double Tap / Click Drop Settings")]
+    [Tooltip("Maximum time (in seconds) between two taps/clicks to count as a double-click drop.")]
+    [SerializeField] private float doubleClickThreshold = 0.35f;
+    [Tooltip("Maximum screen pixel distance between two taps/clicks to count as a double-click drop.")]
+    [SerializeField] private float doubleClickMaxDistance = 100f;
+
+    private float lastClickTime = -1f;
+    private Vector2 lastClickPosition;
+
     private void Awake()
     {
         Instance = this;
     }
-    private void Update()
+
+    private void OnEnable()
     {
-        if (!LevelManager.Instance.IsPlaying) return;
-        SelectHoverObject();
-
-        bool inputLocked = PlayerMovement.Instance != null && PlayerMovement.Instance.IsMovementLocked;
-        if (inputLocked) return;
-
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (GameInputManager.Instance != null)
         {
-            PlayerMovement.Instance.StopTargeting();
-            if (IsCurrentlyHover) 
-            {
-                SelectTargetObject();
-                PlayerMovement.Instance.ChangeTargetPosition(currentTargetObject.transform.position);
-            }
-            else
-            {
-                DeselectTarget();
-                Vector3 mousePosition = Mouse.current.position.ReadValue();
-
-                Vector3 screenPosition = new Vector3(mousePosition.x, mousePosition.y, Mathf.Abs(Camera.main.transform.position.z));
-
-                Vector3 newTargetPosition = Camera.main.ScreenToWorldPoint(screenPosition);
-
-                newTargetPosition.z = 0f;
-
-                PlayerMovement.Instance.ChangeTargetPosition(newTargetPosition);
-            }
-        }
-        if (Mouse.current.rightButton.wasPressedThisFrame)
-        {
-            DropHoldObject();
+            GameInputManager.Instance.OnPrimaryTap += HandlePrimaryTap;
+            GameInputManager.Instance.OnDrop += DropHoldObject;
         }
     }
 
-    public void SelectHoverObject()
+    private void Start()
     {
-        Vector3 mousePosition = Mouse.current.position.ReadValue();
-        Vector3 screenPosition = new Vector3(mousePosition.x, mousePosition.y, Mathf.Abs(Camera.main.transform.position.z));
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+        if (GameInputManager.Instance != null)
+        {
+            GameInputManager.Instance.OnPrimaryTap -= HandlePrimaryTap;
+            GameInputManager.Instance.OnPrimaryTap += HandlePrimaryTap;
+            GameInputManager.Instance.OnDrop -= DropHoldObject;
+            GameInputManager.Instance.OnDrop += DropHoldObject;
+        }
+    }
+
+    private void OnDisable()
+    {
+        lastClickTime = -1f;
+        if (GameInputManager.Instance != null)
+        {
+            GameInputManager.Instance.OnPrimaryTap -= HandlePrimaryTap;
+            GameInputManager.Instance.OnDrop -= DropHoldObject;
+        }
+    }
+
+    private void Update()
+    {
+        if (!LevelManager.Instance.IsPlaying) return;
+
+        if (GameInputManager.Instance != null)
+        {
+            SelectHoverObject(GameInputManager.Instance.CurrentPointerPosition);
+        }
+    }
+
+    private void HandlePrimaryTap(Vector2 screenPosition)
+    {
+        if (LevelManager.Instance != null && !LevelManager.Instance.IsPlaying) return;
+        if (PlayerMovement.Instance != null && PlayerMovement.Instance.IsMovementLocked) return;
+        if (GameInputManager.Instance != null && GameInputManager.Instance.IsPointerOverUI()) return;
+
+        // Double-click / double-tap detection for dropping held object
+        if (isHoldingObject)
+        {
+            float timeSinceLastClick = Time.time - lastClickTime;
+            float dist = Vector2.Distance(screenPosition, lastClickPosition);
+
+            if (lastClickTime > 0f && timeSinceLastClick <= doubleClickThreshold && dist <= doubleClickMaxDistance)
+            {
+                lastClickTime = -1f;
+                if (PlayerMovement.Instance != null)
+                {
+                    PlayerMovement.Instance.StopTargeting();
+                }
+                DeselectTarget();
+                DropHoldObject();
+                return;
+            }
+
+            lastClickTime = Time.time;
+            lastClickPosition = screenPosition;
+        }
+        else
+        {
+            lastClickTime = -1f;
+        }
+
+        PlayerMovement.Instance.StopTargeting();
+
+        Transform hitInteractable = GetInteractableAtScreenPosition(screenPosition);
+        if (hitInteractable != null)
+        {
+            currentHoverObject = hitInteractable;
+            SelectTargetObject();
+            PlayerMovement.Instance.ChangeTargetPosition(currentTargetObject.transform.position);
+        }
+        else
+        {
+            DeselectTarget();
+            if (Camera.main != null)
+            {
+                Vector3 screenPos3D = new Vector3(screenPosition.x, screenPosition.y, Mathf.Abs(Camera.main.transform.position.z));
+                Vector3 newTargetPosition = Camera.main.ScreenToWorldPoint(screenPos3D);
+                newTargetPosition.z = 0f;
+                PlayerMovement.Instance.ChangeTargetPosition(newTargetPosition);
+            }
+        }
+    }
+
+    public void SelectHoverObject(Vector2 screenPosition)
+    {
+        Transform hit = GetInteractableAtScreenPosition(screenPosition);
+        if (hit == currentHoverObject) return;
+
+        DeselectHover();
+        currentHoverObject = hit;
+
+        if (currentHoverObject != null)
+        {
+            Interactables interactableObject = currentHoverObject.GetComponent<Interactables>();
+            if (interactableObject != null)
+            {
+                interactableObject.OnSelectedHover();
+            }
+        }
+    }
+
+    public Transform GetInteractableAtScreenPosition(Vector2 screenPosition)
+    {
+        if (Camera.main == null) return null;
+
+        Vector3 screenPos3D = new Vector3(screenPosition.x, screenPosition.y, Mathf.Abs(Camera.main.transform.position.z));
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPos3D);
         worldPosition.z = 0f;
 
         Collider2D[] colliders = Physics2D.OverlapPointAll(worldPosition);
-
-        DeselectHover();
-
         Collider2D closestCollider = null;
         float closestY = float.MaxValue;
 
@@ -76,7 +160,6 @@ public class PlayerInteract : MonoBehaviour
             if (!collider.CompareTag("interactable")) continue;
 
             float y = collider.transform.position.y;
-
             if (y < closestY)
             {
                 closestY = y;
@@ -84,16 +167,7 @@ public class PlayerInteract : MonoBehaviour
             }
         }
 
-        if (closestCollider == null) return;
-
-        currentHoverObject = closestCollider.transform;
-
-        Interactables interactableObject = currentHoverObject.GetComponent<Interactables>();
-
-        if (interactableObject != null)
-        {
-            interactableObject.OnSelectedHover();
-        }
+        return closestCollider != null ? closestCollider.transform : null;
     }
     public void SelectTargetObject()
     {
@@ -140,10 +214,12 @@ public class PlayerInteract : MonoBehaviour
 
         holdable.OnPickedUp(holdTransform);
         isHoldingObject = true;
+        lastClickTime = -1f;
         DeselectTarget();
     }
     public void DropHoldObject()
     {
+        if (LevelManager.Instance != null && !LevelManager.Instance.IsPlaying) return;
         if (currentHoldObject == null) return;
 
         currentHoldObject.SetParent(interactableParent);
@@ -228,6 +304,7 @@ public class PlayerInteract : MonoBehaviour
         CurrentHeldHoldable = null;
         currentHoldObject = null;
         isHoldingObject = false;
+        lastClickTime = -1f;
     }
 
     public Transform GetInteractableParent()

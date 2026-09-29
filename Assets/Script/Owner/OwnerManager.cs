@@ -1,9 +1,23 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class OwnerManager : MonoBehaviour
 {
     public static OwnerManager Instance;
+    public static float LastSolveDuration { get; private set; } = -1f;
+    public static List<float> RecentSolveDurations { get; private set; } = new();
+
+    public static void RecordSolve(float duration)
+    {
+        LastSolveDuration = duration;
+        RecentSolveDurations.Add(duration);
+        if (RecentSolveDurations.Count > 10)
+        {
+            RecentSolveDurations.RemoveAt(0);
+        }
+    }
+
     [SerializeField] Owner[] owners = new Owner[3];
     [SerializeField] OwnerProfileSO ownerDatas;
 

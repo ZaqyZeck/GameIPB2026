@@ -7,7 +7,7 @@ public class HealthManager : MonoBehaviour
 {
     public static HealthManager Instance;
     [Header("Health Settings")]
-    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private int maxHealth = 5;
     [SerializeField] private int health;
     public event Action<int, int> OnHealthChanged; 
     public event Action OnDeath;
@@ -17,6 +17,14 @@ public class HealthManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        if (PetManager.Instance != null && PetManager.Instance.DifficultyProfile != null)
+        {
+            maxHealth = PetManager.Instance.DifficultyProfile.targetStones;
+        }
+        else
+        {
+            maxHealth = 5;
+        }
         health = maxHealth;
     }
 
