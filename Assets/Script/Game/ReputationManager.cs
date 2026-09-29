@@ -37,6 +37,17 @@ public class ReputationManager : MonoBehaviour
 
     public int Adjust(int delta, string reason = "No reason given")
     {
+        return Adjust(delta, Vector3.zero, reason);
+    }
+
+    public void UpdateUI(int newScore)
+    {
+        if (reputationText != null)
+            reputationText.text = "Reputation: " + newScore;
+    }
+
+    public int Adjust(int delta, Vector3 sourceWorldPos, string reason = "No reason given")
+    {
         int before = score;
         score = Mathf.Clamp(score + delta, minScore, maxScore);
 
@@ -48,10 +59,17 @@ public class ReputationManager : MonoBehaviour
             resultingScore = score
         });
 
-        if(reputationText != null) reputationText.text = "Reputation: " + score;
-
         OnReputationChanged?.Invoke(before, score);
-        GameEventBus.OnReputationChange(before, score);
+
+        if (sourceWorldPos != Vector3.zero)
+        {
+            GameEventBus.OnReputationDeltaWorld?.Invoke(delta, score, sourceWorldPos);
+        }
+        else
+        {
+            UpdateUI(score);
+            GameEventBus.OnReputationChange?.Invoke(before, score);
+        }
 
         return score;
     }
@@ -59,8 +77,14 @@ public class ReputationManager : MonoBehaviour
     public int Reward(int amount, string reason = "")
         => Adjust(Mathf.Abs(amount), reason);
 
+    public int Reward(int amount, Vector3 sourceWorldPos, string reason = "")
+        => Adjust(Mathf.Abs(amount), sourceWorldPos, reason);
+
     public int Penalize(int amount, string reason = "")
         => Adjust(-Mathf.Abs(amount), reason);
+
+    public int Penalize(int amount, Vector3 sourceWorldPos, string reason = "")
+        => Adjust(-Mathf.Abs(amount), sourceWorldPos, reason);
 
     public int GetScore() => score;
 

@@ -21,7 +21,7 @@ public class SpiritStoneDisplay : MonoBehaviour
     [SerializeField] private float dissolveDuration = 0.95f;
     [Tooltip("Warna kilau api/bara (Ember) di tepian saat batu pecah menjadi abu.")]
     [ColorUsage(true, true)]
-    [SerializeField] private Color emberColor = new Color(3.2f, 1.2f, 0.2f, 1f);
+    [SerializeField] private Color emberColor = new Color(0.35f, 0.85f, 1.0f, 1f);
     [Tooltip("Animasi getar kecil saat batu mulai hancur.")]
     [SerializeField] private bool punchOnBreak = true;
     [Tooltip("Setelah hancur menjadi debu, tampilkan siluet batu gelap/slot kosong.")]
@@ -132,7 +132,7 @@ public class SpiritStoneDisplay : MonoBehaviour
                 .SetUpdate(true);
         }
 
-        stone.DOColor(new Color(1f, 0.88f, 0.35f, 1f), 0.12f).SetUpdate(true).OnComplete(() =>
+        stone.DOColor(new Color(0.65f, 0.92f, 1.0f, 1f), 0.12f).SetUpdate(true).OnComplete(() =>
         {
             stone.DOColor(usedColor, dissolveDuration * 0.7f).SetUpdate(true);
         });
@@ -246,14 +246,14 @@ public class SpiritStoneDisplay : MonoBehaviour
 
         Color[] dustPalette = new Color[]
         {
-            new Color(1.0f, 0.92f, 0.25f, 1f),
-            new Color(1.0f, 0.52f, 0.10f, 1f),
-            new Color(1.0f, 0.72f, 0.15f, 1f),
-            new Color(1.0f, 1.0f, 0.95f, 1f),
+            new Color(0.35f, 0.80f, 1.0f, 1f),
+            new Color(0.18f, 0.58f, 1.0f, 1f),
+            new Color(0.32f, 0.45f, 0.95f, 1f),
+            new Color(0.75f, 0.94f, 1.0f, 1f),
+            new Color(0.92f, 0.98f, 1.0f, 1f),
             emberColor,
-            new Color(0.45f, 0.40f, 0.48f, 0.95f),
-            new Color(0.22f, 0.20f, 0.25f, 0.95f),
-            new Color(0.32f, 0.28f, 0.35f, 0.95f)
+            new Color(0.18f, 0.16f, 0.28f, 0.95f),
+            new Color(0.28f, 0.26f, 0.40f, 0.95f)
         };
 
         Sprite emberSpr = GetEmberParticleSprite();

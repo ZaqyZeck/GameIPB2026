@@ -161,7 +161,7 @@ public class Owner : Interactables
     public void DespawnWithoutPet()
     {
         if (!isInLine) return;
-        //ReputationManager.Instance.Penalize(100);
+        Vector3 spawnWorldPos = transform.position + Vector3.up * 1.6f;
         ResetOwnerState();
         DespawnAnimation();
         OwnerManager.Instance.CheckLine();
@@ -177,16 +177,14 @@ public class Owner : Interactables
             penalty = 17;
         }
         dialogCounter = 0;
-        ReputationManager.Instance.Penalize(penalty);
-
+        ReputationManager.Instance.Penalize(penalty, spawnWorldPos);
     }
 
     public void DespawnWithPet()
     {
         if (!isInLine) return;
+        Vector3 spawnWorldPos = transform.position + Vector3.up * 1.6f;
         PetManager.Instance.DespawnPet(currentPet);
-        //currentPet.isOwnerArrived = false;
-        //ReputationManager.Instance.Reward(100);
         ResetOwnerState();
         DespawnAnimation();
         OwnerManager.Instance.CheckLine();
@@ -202,7 +200,7 @@ public class Owner : Interactables
         else if (dialogCounter == 2) score += 5;
 
         dialogCounter = 0;
-        ReputationManager.Instance.Reward(score);
+        ReputationManager.Instance.Reward(score, spawnWorldPos);
     }
 
     private void ResetOwnerState()
