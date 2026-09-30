@@ -67,6 +67,11 @@ public class PlayerInteract : MonoBehaviour
 
         if (GameInputManager.Instance != null)
         {
+            if (GameInputManager.Instance.IsPointerOverUI())
+            {
+                DeselectHover();
+                return;
+            }
             SelectHoverObject(GameInputManager.Instance.CurrentPointerPosition);
         }
     }
@@ -139,6 +144,10 @@ public class PlayerInteract : MonoBehaviour
             if (interactableObject != null)
             {
                 interactableObject.OnSelectedHover();
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.PlayAudio(GameManager.Instance.hover);
+                }
             }
         }
     }

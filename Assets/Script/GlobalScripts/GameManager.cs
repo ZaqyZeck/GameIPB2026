@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using PixeLadder.EasyTransition;
 using Ami.BroAudio;
@@ -34,6 +38,10 @@ public class GameManager : MonoBehaviour
     public SoundID dogAngry;
     public SoundID dogSleep;
     public SoundID lonceng;
+    public SoundID hover;
+    public SoundID clickUI;
+    public SoundID correctNumberPopup;
+    public SoundID numberBumpCorrect;
 
     [Range(0f, 1f)] public float defaultMaster = 0.5f;
     [Range(0f, 1f)] public float defaultBGM = 0.5f;
@@ -50,6 +58,8 @@ public class GameManager : MonoBehaviour
     private bool _bgmPlaying;
     private bool _gameplayBgmPlaying;
     private bool _isLoadingScene;
+    private GameObject _lastHoveredUI;
+    private readonly List<RaycastResult> _uiRaycastResults = new List<RaycastResult>();
 
     // ---------- Lifecycle ----------
 
@@ -116,9 +126,117 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        UpdateUIHover();
+        UpdateUIClick();
+    }
+
+    private void UpdateUIHover()
+    {
+        if (EventSystem.current == null) return;
+
+        if (GameInputManager.Instance != null && !GameInputManager.Instance.IsPointerOverUI())
+        {
+            _lastHoveredUI = null;
+            return;
+        }
+
+        Vector2 pointerPos = GameInputManager.Instance != null
+            ? GameInputManager.Instance.CurrentPointerPosition
+            : (Pointer.current != null ? Pointer.current.position.ReadValue() : Vector2.zero);
+
+        PointerEventData eventData = new PointerEventData(EventSystem.current)
+        {
+            position = pointerPos
+        };
+
+        _uiRaycastResults.Clear();
+        EventSystem.current.RaycastAll(eventData, _uiRaycastResults);
+
+        GameObject hoveredUI = null;
+        for (int i = 0; i < _uiRaycastResults.Count; i++)
+        {
+            var go = _uiRaycastResults[i].gameObject;
+            if (go == null) continue;
+
+            var selectable = go.GetComponentInParent<Selectable>();
+            if (selectable != null && selectable.isActiveAndEnabled && selectable.interactable)
+            {
+                hoveredUI = selectable.gameObject;
+                break;
+            }
+        }
+
+        if (hoveredUI != _lastHoveredUI)
+        {
+            _lastHoveredUI = hoveredUI;
+            if (hoveredUI != null)
+            {
+                PlayAudio(hover);
+            }
+        }
+    }
+
+    private void UpdateUIClick()
+    {
+        if (EventSystem.current == null) return;
+
+        bool isPointerPressed = Pointer.current != null && Pointer.current.press.wasPressedThisFrame;
+        bool isGamepadPressed = Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame;
+
+        if (!isPointerPressed && !isGamepadPressed) return;
+
+        if (isPointerPressed)
+        {
+            bool isOverUI = GameInputManager.Instance != null
+                ? GameInputManager.Instance.IsPointerOverUI()
+                : EventSystem.current.IsPointerOverGameObject();
+
+            if (!isOverUI) return;
+
+            Vector2 pointerPos = GameInputManager.Instance != null
+                ? GameInputManager.Instance.CurrentPointerPosition
+                : (Pointer.current != null ? Pointer.current.position.ReadValue() : Vector2.zero);
+
+            PointerEventData eventData = new PointerEventData(EventSystem.current)
+            {
+                position = pointerPos
+            };
+
+            _uiRaycastResults.Clear();
+            EventSystem.current.RaycastAll(eventData, _uiRaycastResults);
+
+            for (int i = 0; i < _uiRaycastResults.Count; i++)
+            {
+                var go = _uiRaycastResults[i].gameObject;
+                if (go == null) continue;
+
+                var selectable = go.GetComponentInParent<Selectable>();
+                if (selectable != null && selectable.isActiveAndEnabled && selectable.interactable)
+                {
+                    PlayAudio(clickUI.IsValid() ? clickUI : ui_click);
+                    break;
+                }
+            }
+        }
+        else if (isGamepadPressed)
+        {
+            if (EventSystem.current.currentSelectedGameObject != null)
+            {
+                var selectable = EventSystem.current.currentSelectedGameObject.GetComponentInParent<Selectable>();
+                if (selectable != null && selectable.isActiveAndEnabled && selectable.interactable)
+                {
+                    PlayAudio(clickUI.IsValid() ? clickUI : ui_click);
+                }
+            }
+        }
+    }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _isLoadingScene = false;
+        _lastHoveredUI = null;
 
         // Gameplay pakai BGM sendiri, scene lain pakai BGM main menu.
         ApplyBGMFor(IsScene(scene, SceneType.Gameplay));

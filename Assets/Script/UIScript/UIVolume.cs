@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using Ohm.UISystem;
 
@@ -19,7 +19,6 @@ public class UIVolume : UIBase
 
         if (closeButton != null)
         {
-            GameManager.Instance.PlayAudio(GameManager.Instance.ui_click);
             closeButton.onClick.RemoveAllListeners();
             closeButton.onClick.AddListener(CloseButton);
         }

@@ -152,6 +152,11 @@ public class UIGameplay : UIBase
         Color scoreColor = isPositive ? new Color(1.0f, 0.88f, 0.20f, 1f) : new Color(1.0f, 0.32f, 0.32f, 1f);
         tmp.color = scoreColor;
 
+        if (isPositive && GameManager.Instance != null)
+        {
+            GameManager.Instance.PlayAudio(GameManager.Instance.correctNumberPopup);
+        }
+
         Vector3 targetPos = scoreText != null ? scoreText.rectTransform.position : screenPos;
         targetPos.z = 0f;
 
@@ -178,6 +183,11 @@ public class UIGameplay : UIBase
         seq.AppendCallback(() =>
         {
             activeFlyingScores = Mathf.Max(0, activeFlyingScores - 1);
+
+            if (isPositive && GameManager.Instance != null)
+            {
+                GameManager.Instance.PlayAudio(GameManager.Instance.numberBumpCorrect);
+            }
 
             SpawnImpactSparkles(targetPos, scoreColor, canvasRoot);
 
@@ -257,9 +267,6 @@ public class UIGameplay : UIBase
             Debug.LogError("[UIGameplay] UIManager tidak ditemukan.", this);
             return;
         }
-
-        if (GameManager.Instance != null)
-            GameManager.Instance.PlayAudio(GameManager.Instance.ui_click);
 
         GameEventBus.OnPause?.Invoke();
 
