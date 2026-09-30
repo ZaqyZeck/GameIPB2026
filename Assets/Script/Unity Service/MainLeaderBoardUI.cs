@@ -165,7 +165,7 @@ public class MainLeaderBoardUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             return;
         }
 
-        LeaderboardPageResult result = await LeaderboardManager.Instance.GetTopScoresAsync(topEntriesCount, 0);
+        LeaderboardPageResult result = await LeaderboardManager.Instance.GetTopScoresAsync(topEntriesCount, 0, "reputationscore");
 
         PopulateList(result.Entries);
 

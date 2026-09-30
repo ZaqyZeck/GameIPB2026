@@ -77,7 +77,7 @@ public class LevelManager : MonoBehaviour
         Debug.LogWarning(playerName + " itu nama player yg disubmit di leaderboard");
         try
         {
-            await LeaderboardManager.Instance.SubmitAnonymousScoreAsync((long) reputationScore, playerName);
+            await LeaderboardManager.Instance.SubmitAnonymousScoreAsync((long) reputationScore, playerName, "reputationscore");
 
         }
         catch

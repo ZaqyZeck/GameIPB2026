@@ -7,6 +7,7 @@ using Unity.Services.Leaderboards;
 using Unity.Services.Leaderboards.Exceptions;
 using Unity.Services.Leaderboards.Models;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 /// <summary>
 /// Handles all communication with Unity Cloud Leaderboards:
@@ -27,7 +28,7 @@ public class LeaderboardManager : MonoBehaviour
 
     [Header("Leaderboard Config")]
     [Tooltip("Must match the Leaderboard ID configured in the Unity Cloud Dashboard.")]
-    [SerializeField] private string leaderboardId = "global_highscore";
+    //[SerializeField] private string leaderboardId = "global_highscore";
 
     [Header("Debug")]
     [SerializeField] private bool logDebugMessages = true;
@@ -89,17 +90,17 @@ public class LeaderboardManager : MonoBehaviour
     /// Unity Leaderboards keeps the player's best score by default
     /// (configurable as Best/Last/etc. per-leaderboard in the dashboard).
     /// </summary>
-    public async Task<LeaderboardEntry> AddScoreAsync(long score)
+    public async Task<LeaderboardEntry> AddScoreAsync(long score, string leaderBoardID)
     {
         CheckServices();
-        DebugPrintLeaderboardIdChars(); // TEMP: remove once the id issue is confirmed fixed
+        //DebugPrintLeaderboardIdChars(); // TEMP: remove once the id issue is confirmed fixed
         if (!await EnsureReadyAsync()) return null;
 
         try
         {
             await EnsurePlayerNameIsSetAsync();
 
-            LeaderboardEntry entry = await Leaderboards.AddPlayerScoreAsync(leaderboardId, score);
+            LeaderboardEntry entry = await Leaderboards.AddPlayerScoreAsync(leaderBoardID, score);
 
             Log($"Score submitted: {entry.PlayerName} -> {entry.Score} (rank {entry.Rank})");
             OnScoreAdded?.Invoke(entry);
@@ -120,7 +121,7 @@ public class LeaderboardManager : MonoBehaviour
         return null;
     }
 
-    public async Task<LeaderboardEntry> SubmitAnonymousScoreAsync(long score, string playerName)
+    public async Task<LeaderboardEntry> SubmitAnonymousScoreAsync(long score, string playerName, string leaderBoardID)
         {
             try
             {
@@ -131,7 +132,7 @@ public class LeaderboardManager : MonoBehaviour
 
                 await AuthenticationManager.Instance.LoginAnonymAsync(playerName);
 
-                LeaderboardEntry entry = await AddScoreAsync(score);
+                LeaderboardEntry entry = await AddScoreAsync(score, leaderBoardID);
 
                 if (entry != null)
                 {
@@ -153,7 +154,7 @@ public class LeaderboardManager : MonoBehaviour
     //  GET TOP SCORES
     // ---------------------------------------------------------------
 
-    public async Task<LeaderboardPageResult> GetTopScoresAsync(int limit = 50, int offset = 0)
+    public async Task<LeaderboardPageResult> GetTopScoresAsync(int limit = 50, int offset = 0, string leaderBoardID = "reputationscore")
     {
         if (!await EnsureReadyAsync()) return null;
         if (!EnsureSignedIn()) return new LeaderboardPageResult(new List<LeaderboardEntry>(), 0);
@@ -161,7 +162,7 @@ public class LeaderboardManager : MonoBehaviour
         try
         {
             var options = new GetScoresOptions { Offset = offset, Limit = limit };
-            LeaderboardScoresPage scoresPage = await Leaderboards.GetScoresAsync(leaderboardId, options);
+            LeaderboardScoresPage scoresPage = await Leaderboards.GetScoresAsync(leaderBoardID, options);
 
             Log($"Fetched {scoresPage.Results.Count} leaderboard entries. Offset: {offset}, Total: {scoresPage.Total}");
 
@@ -192,14 +193,14 @@ public class LeaderboardManager : MonoBehaviour
     /// they're outside the top N returned by GetTopScoresAsync.
     /// Returns null if the player hasn't submitted a score yet.
     /// </summary>
-    public async Task<LeaderboardEntry> GetPlayerScoreAsync()
+    public async Task<LeaderboardEntry> GetPlayerScoreAsync(string leaderBoardID)
     {
         if (!await EnsureReadyAsync()) return null;
         if (!EnsureSignedIn()) return null;
 
         try
         {
-            LeaderboardEntry entry = await Leaderboards.GetPlayerScoreAsync(leaderboardId);
+            LeaderboardEntry entry = await Leaderboards.GetPlayerScoreAsync(leaderBoardID);
             OnPlayerScoreLoaded?.Invoke(entry);
             return entry;
         }
@@ -326,15 +327,15 @@ public class LeaderboardManager : MonoBehaviour
         return true;
     }
 
-    private void DebugPrintLeaderboardIdChars()
-    {
-        var codes = new System.Text.StringBuilder();
-        foreach (char c in leaderboardId)
-        {
-            codes.Append($"'{c}'(U+{(int)c:X4}) ");
-        }
-        Debug.Log($"[UGS CHECK] leaderboardId=\"{leaderboardId}\" length={leaderboardId.Length} chars=[{codes}]");
-    }
+    //private void DebugPrintLeaderboardIdChars()
+    //{
+    //    var codes = new System.Text.StringBuilder();
+    //    foreach (char c in leaderboardId)
+    //    {
+    //        codes.Append($"'{c}'(U+{(int)c:X4}) ");
+    //    }
+    //    Debug.Log($"[UGS CHECK] leaderboardId=\"{leaderboardId}\" length={leaderboardId.Length} chars=[{codes}]");
+    //}
 
     private void CheckServices()
     {

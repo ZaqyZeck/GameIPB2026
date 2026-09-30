@@ -1,303 +1,303 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Unity.Services.Authentication;
-using Unity.Services.Leaderboards.Models;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+//using System.Collections.Generic;
+//using System.Threading.Tasks;
+//using Unity.Services.Authentication;
+//using Unity.Services.Leaderboards.Models;
+//using UnityEngine;
+//using UnityEngine.UI;
+//using TMPro;
 
-public class LeaderboardUI : MonoBehaviour
-{
-    [Header("List")]
-    [SerializeField] private Transform contentParent;
-    [SerializeField] private RankBarUI rankBarPrefab;
-    [SerializeField] private int maxEntriesPerSlide = 5;
+//public class LeaderboardUI : MonoBehaviour
+//{
+//    [Header("List")]
+//    [SerializeField] private Transform contentParent;
+//    [SerializeField] private RankBarUI rankBarPrefab;
+//    [SerializeField] private int maxEntriesPerSlide = 5;
 
-    [Header("Controls")]
-    [SerializeField] private Button addScoreButton;
-    [SerializeField] private Button nextButton;
-    [SerializeField] private Button prevButton;
-    [SerializeField] private Button refreshButton;
+//    [Header("Controls")]
+//    [SerializeField] private Button addScoreButton;
+//    [SerializeField] private Button nextButton;
+//    [SerializeField] private Button prevButton;
+//    [SerializeField] private Button refreshButton;
 
-    private const int TestScoreAmount = 10;
+//    private const int TestScoreAmount = 10;
 
-    [Header("Optional Info")]
-    [SerializeField] private TMP_Text statusText;
-    [SerializeField] private TMP_Text playerRankText;
-    [SerializeField] private TMP_Text currentSlideNumberText;
+//    [Header("Optional Info")]
+//    [SerializeField] private TMP_Text statusText;
+//    [SerializeField] private TMP_Text playerRankText;
+//    [SerializeField] private TMP_Text currentSlideNumberText;
 
-    private readonly List<RankBarUI> spawnedBars = new List<RankBarUI>();
+//    private readonly List<RankBarUI> spawnedBars = new List<RankBarUI>();
 
-    private int currentPage;
-    private int totalEntries;
-    private bool isLoading;
+//    private int currentPage;
+//    private int totalEntries;
+//    private bool isLoading;
 
-    private int TotalPages => totalEntries <= 0 ? 1 : Mathf.CeilToInt((float)totalEntries / maxEntriesPerSlide);
+//    private int TotalPages => totalEntries <= 0 ? 1 : Mathf.CeilToInt((float)totalEntries / maxEntriesPerSlide);
 
-    private void OnEnable()
-    {
-        var leaderboard = LeaderboardManager.Instance;
-        if (leaderboard == null) return;
+//    private void OnEnable()
+//    {
+//        var leaderboard = LeaderboardManager.Instance;
+//        if (leaderboard == null) return;
 
-        leaderboard.OnScoreAdded += HandleScoreAdded;
-        leaderboard.OnError += ShowStatus;
-    }
+//        leaderboard.OnScoreAdded += HandleScoreAdded;
+//        leaderboard.OnError += ShowStatus;
+//    }
 
-    private void OnDisable()
-    {
-        var leaderboard = LeaderboardManager.Instance;
-        if (leaderboard == null) return;
+//    private void OnDisable()
+//    {
+//        var leaderboard = LeaderboardManager.Instance;
+//        if (leaderboard == null) return;
 
-        leaderboard.OnScoreAdded -= HandleScoreAdded;
-        leaderboard.OnError -= ShowStatus;
-    }
+//        leaderboard.OnScoreAdded -= HandleScoreAdded;
+//        leaderboard.OnError -= ShowStatus;
+//    }
 
-    private void Start()
-    {
-        if (addScoreButton != null)
-            addScoreButton.onClick.AddListener(OnAddScoreClicked);
+//    private void Start()
+//    {
+//        if (addScoreButton != null)
+//            addScoreButton.onClick.AddListener(OnAddScoreClicked);
 
-        if (nextButton != null)
-            nextButton.onClick.AddListener(OnNextClicked);
+//        if (nextButton != null)
+//            nextButton.onClick.AddListener(OnNextClicked);
 
-        if (prevButton != null)
-            prevButton.onClick.AddListener(OnPrevClicked);
+//        if (prevButton != null)
+//            prevButton.onClick.AddListener(OnPrevClicked);
 
-        if (refreshButton != null)
-            refreshButton.onClick.AddListener(OnRefreshClicked);
+//        if (refreshButton != null)
+//            refreshButton.onClick.AddListener(OnRefreshClicked);
 
-        currentPage = 0;
+//        currentPage = 0;
 
-        RefreshLeaderboard();
-    }
+//        RefreshLeaderboard();
+//    }
 
-    private async void OnAddScoreClicked()
-    {
-        if (isLoading) return;
+//    private async void OnAddScoreClicked()
+//    {
+//        if (isLoading) return;
 
-        SetLoading(true);
-        ShowStatus("Submitting score...");
+//        SetLoading(true);
+//        ShowStatus("Submitting score...");
 
-        var entry = await LeaderboardManager.Instance.SubmitAnonymousScoreAsync(TestScoreAmount, "anonim");
+//        var entry = await LeaderboardManager.Instance.SubmitAnonymousScoreAsync(TestScoreAmount, "anonim");
 
-        if (entry != null)
-        {
-            ShowStatus($"Score submitted! New total: {entry.Score}");
-            await RefreshPlayerRank();
-        }
+//        if (entry != null)
+//        {
+//            ShowStatus($"Score submitted! New total: {entry.Score}");
+//            await RefreshPlayerRank();
+//        }
 
-        currentPage = 0;
-        await RefreshLeaderboardAsync();
+//        currentPage = 0;
+//        await RefreshLeaderboardAsync();
 
-        SetLoading(false);
-    }
+//        SetLoading(false);
+//    }
 
-    private async void OnRefreshClicked()
-    {
-        if (isLoading) return;
+//    private async void OnRefreshClicked()
+//    {
+//        if (isLoading) return;
 
-        SetLoading(true);
+//        SetLoading(true);
 
-        currentPage = 0;
+//        currentPage = 0;
 
-        await RefreshLeaderboardAsync();
-        await RefreshPlayerRank();
+//        await RefreshLeaderboardAsync();
+//        await RefreshPlayerRank();
 
-        SetLoading(false);
-    }
+//        SetLoading(false);
+//    }
 
-    private async void RefreshLeaderboard()
-    {
-        if (isLoading) return;
+//    private async void RefreshLeaderboard()
+//    {
+//        if (isLoading) return;
 
-        SetLoading(true);
-        ShowStatus("Loading leaderboard...");
+//        SetLoading(true);
+//        ShowStatus("Loading leaderboard...");
 
-        currentPage = 0;
+//        currentPage = 0;
 
-        await RefreshLeaderboardAsync();
-        await RefreshPlayerRank();
+//        await RefreshLeaderboardAsync();
+//        await RefreshPlayerRank();
 
-        SetLoading(false);
-    }
+//        SetLoading(false);
+//    }
 
-    private async void OnNextClicked()
-    {
-        if (isLoading) return;
-        if (!CanGoNext()) return;
+//    private async void OnNextClicked()
+//    {
+//        if (isLoading) return;
+//        if (!CanGoNext()) return;
 
-        currentPage++;
+//        currentPage++;
 
-        await LoadCurrentPage();
-    }
+//        await LoadCurrentPage();
+//    }
 
-    private async void OnPrevClicked()
-    {
-        if (isLoading) return;
-        if (!CanGoPrevious()) return;
+//    private async void OnPrevClicked()
+//    {
+//        if (isLoading) return;
+//        if (!CanGoPrevious()) return;
 
-        currentPage--;
+//        currentPage--;
 
-        await LoadCurrentPage();
-    }
+//        await LoadCurrentPage();
+//    }
 
-    private async Task LoadCurrentPage()
-    {
-        SetLoading(true);
-        ShowStatus("Loading leaderboard...");
+//    private async Task LoadCurrentPage()
+//    {
+//        SetLoading(true);
+//        ShowStatus("Loading leaderboard...");
 
-        await RefreshLeaderboardAsync();
+//        await RefreshLeaderboardAsync();
 
-        SetLoading(false);
-    }
+//        SetLoading(false);
+//    }
 
-    private async Task RefreshLeaderboardAsync()
-    {
-        int offset = currentPage * maxEntriesPerSlide;
+//    private async Task RefreshLeaderboardAsync()
+//    {
+//        int offset = currentPage * maxEntriesPerSlide;
 
-        LeaderboardPageResult result = await LeaderboardManager.Instance.GetTopScoresAsync(maxEntriesPerSlide, offset);
+//        LeaderboardPageResult result = await LeaderboardManager.Instance.GetTopScoresAsync(maxEntriesPerSlide, offset);
 
-        totalEntries = result.Total;
+//        totalEntries = result.Total;
 
-        int maxPage = Mathf.Max(0, TotalPages - 1);
+//        int maxPage = Mathf.Max(0, TotalPages - 1);
 
-        if (currentPage > maxPage)
-        {
-            currentPage = maxPage;
+//        if (currentPage > maxPage)
+//        {
+//            currentPage = maxPage;
 
-            offset = currentPage * maxEntriesPerSlide;
+//            offset = currentPage * maxEntriesPerSlide;
 
-            result = await LeaderboardManager.Instance.GetTopScoresAsync(maxEntriesPerSlide, offset);
+//            result = await LeaderboardManager.Instance.GetTopScoresAsync(maxEntriesPerSlide, offset);
 
-            totalEntries = result.Total;
-        }
+//            totalEntries = result.Total;
+//        }
 
-        PopulateList(result.Entries);
-        UpdatePaginationUI();
-    }
+//        PopulateList(result.Entries);
+//        UpdatePaginationUI();
+//    }
 
-    private async Task RefreshPlayerRank()
-    {
-        if (playerRankText == null) return;
+//    private async Task RefreshPlayerRank()
+//    {
+//        if (playerRankText == null) return;
 
-        var myEntry = await LeaderboardManager.Instance.GetPlayerScoreAsync();
+//        var myEntry = await LeaderboardManager.Instance.GetPlayerScoreAsync();
 
-        playerRankText.text = myEntry != null
-            ? $"Your rank: #{myEntry.Rank + 1}  (score: {myEntry.Score})"
-            : "You haven't submitted a score yet.";
-    }
+//        playerRankText.text = myEntry != null
+//            ? $"Your rank: #{myEntry.Rank + 1}  (score: {myEntry.Score})"
+//            : "You haven't submitted a score yet.";
+//    }
 
-    private void HandleScoreAdded(LeaderboardEntry entry)
-    {
-        ShowStatus($"Added {TestScoreAmount} points! Total: {entry.Score}");
-    }
+//    private void HandleScoreAdded(LeaderboardEntry entry)
+//    {
+//        ShowStatus($"Added {TestScoreAmount} points! Total: {entry.Score}");
+//    }
 
-    private void PopulateList(List<LeaderboardEntry> entries)
-    {
-        ClearList();
+//    private void PopulateList(List<LeaderboardEntry> entries)
+//    {
+//        ClearList();
 
-        string myPlayerId = AuthenticationService.Instance != null
-            ? AuthenticationService.Instance.PlayerId
-            : null;
+//        string myPlayerId = AuthenticationService.Instance != null
+//            ? AuthenticationService.Instance.PlayerId
+//            : null;
 
-        foreach (var entry in entries)
-        {
-            RankBarUI bar = Instantiate(rankBarPrefab, contentParent);
+//        foreach (var entry in entries)
+//        {
+//            RankBarUI bar = Instantiate(rankBarPrefab, contentParent);
 
-            bar.RankNumber.text = (entry.Rank + 1).ToString();
-            bar.Usename.text = string.IsNullOrEmpty(entry.PlayerName)
-                ? entry.PlayerId
-                : entry.PlayerName;
-            bar.Score.text = entry.Score.ToString("0");
+//            bar.RankNumber.text = (entry.Rank + 1).ToString();
+//            bar.Usename.text = string.IsNullOrEmpty(entry.PlayerName)
+//                ? entry.PlayerId
+//                : entry.PlayerName;
+//            bar.Score.text = entry.Score.ToString("0");
 
-            if (!string.IsNullOrEmpty(myPlayerId) && entry.PlayerId == myPlayerId)
-            {
-                bar.Usename.text += " (You)";
-            }
+//            if (!string.IsNullOrEmpty(myPlayerId) && entry.PlayerId == myPlayerId)
+//            {
+//                bar.Usename.text += " (You)";
+//            }
 
-            spawnedBars.Add(bar);
-        }
+//            spawnedBars.Add(bar);
+//        }
 
-        if (entries.Count == 0)
-        {
-            ShowStatus("No scores yet. Be the first!");
-        }
-        else
-        {
-            ShowStatus(string.Empty);
-        }
-    }
+//        if (entries.Count == 0)
+//        {
+//            ShowStatus("No scores yet. Be the first!");
+//        }
+//        else
+//        {
+//            ShowStatus(string.Empty);
+//        }
+//    }
 
-    private void ClearList()
-    {
-        foreach (var bar in spawnedBars)
-        {
-            if (bar != null)
-                Destroy(bar.gameObject);
-        }
+//    private void ClearList()
+//    {
+//        foreach (var bar in spawnedBars)
+//        {
+//            if (bar != null)
+//                Destroy(bar.gameObject);
+//        }
 
-        spawnedBars.Clear();
-    }
+//        spawnedBars.Clear();
+//    }
 
-    private bool CanGoNext()
-    {
-        return currentPage < TotalPages - 1;
-    }
+//    private bool CanGoNext()
+//    {
+//        return currentPage < TotalPages - 1;
+//    }
 
-    private bool CanGoPrevious()
-    {
-        return currentPage > 0;
-    }
+//    private bool CanGoPrevious()
+//    {
+//        return currentPage > 0;
+//    }
 
-    private void UpdatePaginationUI()
-    {
-        if (prevButton != null)
-            prevButton.interactable = !isLoading && CanGoPrevious();
+//    private void UpdatePaginationUI()
+//    {
+//        if (prevButton != null)
+//            prevButton.interactable = !isLoading && CanGoPrevious();
 
-        if (nextButton != null)
-            nextButton.interactable = !isLoading && CanGoNext();
+//        if (nextButton != null)
+//            nextButton.interactable = !isLoading && CanGoNext();
 
-        if (currentSlideNumberText != null)
-            currentSlideNumberText.text = $"{currentPage + 1} / {TotalPages}";
-    }
+//        if (currentSlideNumberText != null)
+//            currentSlideNumberText.text = $"{currentPage + 1} / {TotalPages}";
+//    }
 
-    private void SetLoading(bool loading)
-    {
-        isLoading = loading;
+//    private void SetLoading(bool loading)
+//    {
+//        isLoading = loading;
 
-        if (addScoreButton != null)
-            addScoreButton.interactable = !loading;
+//        if (addScoreButton != null)
+//            addScoreButton.interactable = !loading;
 
-        if (refreshButton != null)
-            refreshButton.interactable = !loading;
+//        if (refreshButton != null)
+//            refreshButton.interactable = !loading;
 
-        UpdatePaginationUI();
-    }
+//        UpdatePaginationUI();
+//    }
 
-    private void ShowStatus(string message)
-    {
-        if (statusText != null)
-            statusText.text = message;
-    }
+//    private void ShowStatus(string message)
+//    {
+//        if (statusText != null)
+//            statusText.text = message;
+//    }
 
-    private async void AddScore(long scoreAmount, string playerName)
-    {
-        if (isLoading) return;
+//    private async void AddScore(long scoreAmount, string playerName)
+//    {
+//        if (isLoading) return;
 
-        SetLoading(true);
-        ShowStatus("Submitting score...");
+//        SetLoading(true);
+//        ShowStatus("Submitting score...");
 
-        var entry = await LeaderboardManager.Instance.SubmitAnonymousScoreAsync(scoreAmount, "playerName");
+//        var entry = await LeaderboardManager.Instance.SubmitAnonymousScoreAsync(scoreAmount, "playerName");
 
-        if (entry != null)
-        {
-            ShowStatus($"Score submitted! New total: {entry.Score}");
-            await RefreshPlayerRank();
-        }
+//        if (entry != null)
+//        {
+//            ShowStatus($"Score submitted! New total: {entry.Score}");
+//            await RefreshPlayerRank();
+//        }
 
-        currentPage = 0;
-        await RefreshLeaderboardAsync();
+//        currentPage = 0;
+//        await RefreshLeaderboardAsync();
 
-        SetLoading(false);
-    }
-}
+//        SetLoading(false);
+//    }
+//}
