@@ -41,6 +41,10 @@ public class PetManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        if (GameManager.Instance != null && GameManager.Instance.SelectedDifficulty != null)
+        {
+            difficultyProfile = GameManager.Instance.SelectedDifficulty;
+        }
         if (traitDatabase != null)
         {
             traitDatabase.InitializeLookup();
@@ -217,7 +221,7 @@ public class PetManager : MonoBehaviour
 
         foreach (Pet ghostPet in ghostPets)
         {
-            if (!ghostPet.isOwnerArrived)
+            if (ghostPet != null && !ghostPet.isOwnerArrived)
             {
                 availablePets.Add(ghostPet);
             }
@@ -245,7 +249,7 @@ public class PetManager : MonoBehaviour
     {
         foreach (Pet pet in ghostPets)
         {
-            if (!pet.isOwnerArrived) return true;
+            if (pet != null && !pet.isOwnerArrived) return true;
         }
 
         return false;

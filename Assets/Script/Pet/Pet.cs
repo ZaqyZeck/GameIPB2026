@@ -73,6 +73,11 @@ public class Pet : MonoBehaviour, IHoldable
         isOwnerArrived = true;
     }
 
+    public void ResetOwnerArrived()
+    {
+        isOwnerArrived = false;
+    }
+
     public void SpawnAtDoor(PetData newPetData)
     {
         petData = newPetData;

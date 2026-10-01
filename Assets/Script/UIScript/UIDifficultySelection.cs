@@ -11,12 +11,13 @@ public class UIDifficultySelection : UIBase
     [SerializeField] private Button normalButton;
     [SerializeField] private Button adaptButton;
 
+    [Header("Difficulty Profiles")]
+    [SerializeField] private DifficultyProfileSO easyProfile;
+    [SerializeField] private DifficultyProfileSO normalProfile;
+    [SerializeField] private DifficultyProfileSO adaptProfile;
+
     void Awake()
     {
-        //if (resumeButton != null)
-        //    resumeButton.onClick.AddListener(ResumeButton);
-        //if (homeButton != null)
-        //    homeButton.onClick.AddListener(BackToMenu);
         if (backButton != null) backButton.onClick.AddListener(BackButtonPressed);
         if (easyButton != null) easyButton.onClick.AddListener(EasyButtonPressed);
         if (normalButton != null) normalButton.onClick.AddListener(NormalButtonPressed);
@@ -26,30 +27,38 @@ public class UIDifficultySelection : UIBase
     public void BackButtonPressed()
     {
         UIManager.Instance.OnEscape();
-        //GameEventBus.OnResume?.Invoke();
     }
+
     public void EasyButtonPressed()
     {
-        GameManager.Instance.LoadScene(SceneType.Gameplay);
-        Debug.Log("Start Game Clicked");
-        //UIGameplay.ResetReputation();
+        if (GameManager.Instance != null)
+        {
+            if (easyProfile != null) GameManager.Instance.SetDifficulty(easyProfile);
+            else GameManager.Instance.SetDifficulty(DifficultyTier.Easy);
 
-        //GameManager.Instance.LoadMainMenu();
+            GameManager.Instance.LoadScene(SceneType.Gameplay);
+        }
     }
+
     public void NormalButtonPressed()
     {
-        GameManager.Instance.LoadScene(SceneType.Gameplay);
-        Debug.Log("Start Game Clicked");
-        //UIGameplay.ResetReputation();
+        if (GameManager.Instance != null)
+        {
+            if (normalProfile != null) GameManager.Instance.SetDifficulty(normalProfile);
+            else GameManager.Instance.SetDifficulty(DifficultyTier.Medium);
 
-        //GameManager.Instance.LoadMainMenu();
+            GameManager.Instance.LoadScene(SceneType.Gameplay);
+        }
     }
+
     public void AdaptButtonPressed()
     {
-        GameManager.Instance.LoadScene(SceneType.Gameplay);
-        Debug.Log("Start Game Clicked");
-        //UIGameplay.ResetReputation();
+        if (GameManager.Instance != null)
+        {
+            if (adaptProfile != null) GameManager.Instance.SetDifficulty(adaptProfile);
+            else GameManager.Instance.SetDifficulty(DifficultyTier.Adaptive);
 
-        //GameManager.Instance.LoadMainMenu();
+            GameManager.Instance.LoadScene(SceneType.Gameplay);
+        }
     }
 }

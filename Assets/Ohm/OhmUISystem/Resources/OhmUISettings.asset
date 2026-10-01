@@ -25,4 +25,4 @@ MonoBehaviour:
   - {fileID: 6492384171253772215, guid: 8844e674705e75948ae98ff79be11449, type: 3}
   startUI:
     typeName: UIMainMenu, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  closeAllOnSceneChange: 0
+  closeAllOnSceneChange: 1

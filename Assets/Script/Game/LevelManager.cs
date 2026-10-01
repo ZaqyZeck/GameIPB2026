@@ -86,8 +86,6 @@ public class LevelManager : MonoBehaviour
         }
         
 
-        UIGameplay.ResetReputation();
-
         GameManager.Instance.LoadMainMenu();
     }
 }

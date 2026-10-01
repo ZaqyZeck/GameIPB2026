@@ -44,6 +44,37 @@ public class SpiritStoneDisplay : MonoBehaviour
     {
         if (currentCount == -1 && stones != null && stones.Length > 0)
         {
+            ResetDisplay();
+        }
+    }
+
+    public void ResetDisplay()
+    {
+        InitializeArrays();
+        if (activeCoroutines != null)
+        {
+            for (int i = 0; i < activeCoroutines.Length; i++)
+            {
+                if (activeCoroutines[i] != null)
+                {
+                    StopCoroutine(activeCoroutines[i]);
+                    activeCoroutines[i] = null;
+                }
+            }
+        }
+
+        currentCount = -1;
+        if (stones != null && stones.Length > 0)
+        {
+            for (int i = 0; i < stones.Length; i++)
+            {
+                if (stones[i] != null)
+                {
+                    stones[i].transform.DOKill();
+                    stones[i].DOKill();
+                    stones[i].transform.localScale = Vector3.one;
+                }
+            }
             int initialCount = (HealthManager.Instance != null) ? HealthManager.Instance.GetHealth() : stones.Length;
             SetCount(initialCount);
         }
@@ -117,6 +148,11 @@ public class SpiritStoneDisplay : MonoBehaviour
     {
         Image stone = stones[index];
         if (stone == null) yield break;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.PlayAudio(GameManager.Instance.burn);
+        }
 
         stone.transform.DOKill();
         stone.DOKill();

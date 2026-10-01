@@ -161,23 +161,36 @@ public class Owner : Interactables
     public void DespawnWithoutPet()
     {
         if (!isInLine) return;
+        if (currentPet != null)
+        {
+            currentPet.ResetOwnerArrived();
+        }
         Vector3 spawnWorldPos = transform.position + Vector3.up * 1.6f;
         ResetOwnerState();
         DespawnAnimation();
         OwnerManager.Instance.CheckLine();
-        HealthManager.Instance.TakeDamage();
+        int penalty = (patienceTimer > 0) ? 15 : 17;
+        dialogCounter = 0;
 
-        int penalty = 0;
-        if (patienceTimer > 0)
+        bool isFatal = HealthManager.Instance != null && HealthManager.Instance.GetHealth() <= 1;
+        if (isFatal)
         {
-            penalty = 15;
+            if (UIGameplay.Instance != null)
+            {
+                UIGameplay.Instance.CompleteAllFlyingScores();
+            }
+            ReputationManager.Instance.Penalize(penalty);
+            if (UIGameplay.Instance != null)
+            {
+                UIGameplay.Instance.RefreshDisplay();
+            }
         }
         else
         {
-            penalty = 17;
+            ReputationManager.Instance.Penalize(penalty, spawnWorldPos);
         }
-        dialogCounter = 0;
-        ReputationManager.Instance.Penalize(penalty, spawnWorldPos);
+
+        HealthManager.Instance.TakeDamage();
     }
 
     public void DespawnWithPet()

@@ -11,27 +11,70 @@ public class UIGameplay : UIBase
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private SpiritStoneDisplay spiritStoneDisplay;
 
+    [Header("Damage Screen Blink")]
+    [SerializeField] private Image damageBlinkImage;
+    [SerializeField] private Color blinkColor = new Color(0.85f, 0.12f, 0.12f, 0.55f);
+    [SerializeField] private float blinkInDuration = 0.06f;
+    [SerializeField] private float blinkOutDuration = 0.24f;
+    [SerializeField] private float soulStoneAnimationDelay = 0.12f;
+
+    public static UIGameplay Instance { get; private set; }
     public static int Reputation { get; private set; }
 
     private int displayedReputation;
     private int activeFlyingScores;
+    private readonly System.Collections.Generic.List<GameObject> activeFlyingObjects = new();
+
+    public void CompleteAllFlyingScores()
+    {
+        for (int i = activeFlyingObjects.Count - 1; i >= 0; i--)
+        {
+            if (activeFlyingObjects[i] != null)
+            {
+                activeFlyingObjects[i].transform.DOKill();
+                Destroy(activeFlyingObjects[i]);
+            }
+        }
+        activeFlyingObjects.Clear();
+        activeFlyingScores = 0;
+        RefreshDisplay();
+    }
 
     public static void ResetReputation()
     {
         Reputation = 0;
+        if (Instance != null)
+        {
+            Instance.CompleteAllFlyingScores();
+            Instance.displayedReputation = 0;
+            Instance.activeFlyingScores = 0;
+            if (Instance.scoreText != null)
+            {
+                Instance.scoreText.transform.DOKill();
+                Instance.scoreText.DOKill();
+                Instance.scoreText.text = "0";
+            }
+        }
+        if (ReputationManager.Instance != null)
+        {
+            ReputationManager.Instance.ResetReputation();
+        }
+    }
+
+    private void Awake()
+    {
+        Instance = this;
     }
 
     private void Start()
     {
-        displayedReputation = (ReputationManager.Instance != null) ? ReputationManager.Instance.GetScore() : Reputation;
-        if (scoreText != null)
-        {
-            scoreText.text = displayedReputation.ToString();
-        }
+        RefreshDisplay();
     }
 
     private void OnEnable()
     {
+        Instance = this;
+
         if (pauseButton != null)
             pauseButton.onClick.AddListener(OpenPauseMenu);
         else
@@ -46,6 +89,25 @@ public class UIGameplay : UIBase
         GameEventBus.OnTakeDamage += HandleTakeDamage;
         GameEventBus.OnReputationChange += HandleReputationChange;
         GameEventBus.OnReputationDeltaWorld += HandleReputationDeltaWorld;
+
+        RefreshDisplay();
+
+        if (spiritStoneDisplay != null)
+        {
+            spiritStoneDisplay.ResetDisplay();
+        }
+    }
+
+    public void RefreshDisplay()
+    {
+        displayedReputation = (ReputationManager.Instance != null) ? ReputationManager.Instance.GetScore() : Reputation;
+        activeFlyingScores = 0;
+        if (scoreText != null)
+        {
+            scoreText.transform.DOKill();
+            scoreText.DOKill();
+            scoreText.text = displayedReputation.ToString();
+        }
     }
 
     private void Update()
@@ -81,13 +143,122 @@ public class UIGameplay : UIBase
         GameEventBus.OnReputationChange -= HandleReputationChange;
         GameEventBus.OnReputationDeltaWorld -= HandleReputationDeltaWorld;
 
+        if (damageBlinkImage != null)
+        {
+            damageBlinkImage.DOKill();
+            damageBlinkImage.gameObject.SetActive(false);
+        }
+
+        CompleteAllFlyingScores();
+
         if (LevelManager.Instance.IsPause) ResumeGame();
+    }
+
+    private static Sprite _vignetteSprite;
+
+    private static Sprite GetVignetteSprite()
+    {
+        if (_vignetteSprite != null) return _vignetteSprite;
+
+        int res = 128;
+        Texture2D tex = new Texture2D(res, res, TextureFormat.RGBA32, false);
+        tex.wrapMode = TextureWrapMode.Clamp;
+        tex.filterMode = FilterMode.Bilinear;
+
+        float center = (res - 1) * 0.5f;
+        Color[] colors = new Color[res * res];
+
+        for (int y = 0; y < res; y++)
+        {
+            for (int x = 0; x < res; x++)
+            {
+                float dist = Vector2.Distance(new Vector2(x, y), new Vector2(center, center)) / center;
+                float alpha = Mathf.SmoothStep(0.25f, 1.0f, dist);
+                colors[y * res + x] = new Color(1f, 1f, 1f, alpha);
+            }
+        }
+
+        tex.SetPixels(colors);
+        tex.Apply();
+        _vignetteSprite = Sprite.Create(tex, new Rect(0, 0, res, res), new Vector2(0.5f, 0.5f));
+        return _vignetteSprite;
+    }
+
+    private void EnsureDamageBlinkOverlay()
+    {
+        if (damageBlinkImage != null) return;
+
+        Canvas canvas = GetComponentInParent<Canvas>();
+        Transform canvasRoot = (canvas != null && canvas.rootCanvas != null) ? canvas.rootCanvas.transform : transform;
+
+        GameObject blinkObj = new GameObject("DamageBlinkOverlay");
+        blinkObj.layer = gameObject.layer;
+        blinkObj.transform.SetParent(canvasRoot, false);
+        blinkObj.transform.SetAsLastSibling();
+
+        RectTransform rect = blinkObj.AddComponent<RectTransform>();
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.sizeDelta = Vector2.zero;
+        rect.anchoredPosition = Vector2.zero;
+
+        damageBlinkImage = blinkObj.AddComponent<Image>();
+        damageBlinkImage.sprite = GetVignetteSprite();
+        damageBlinkImage.type = Image.Type.Simple;
+        damageBlinkImage.raycastTarget = false;
+
+        Color c = blinkColor;
+        c.a = 0f;
+        damageBlinkImage.color = c;
+        blinkObj.SetActive(false);
+    }
+
+    public void TriggerDamageBlink()
+    {
+        EnsureDamageBlinkOverlay();
+        if (damageBlinkImage == null) return;
+
+        damageBlinkImage.DOKill();
+        damageBlinkImage.gameObject.SetActive(true);
+
+        Color startCol = blinkColor;
+        startCol.a = 0f;
+        damageBlinkImage.color = startCol;
+
+        Sequence blinkSeq = DOTween.Sequence().SetUpdate(true);
+        blinkSeq.Append(damageBlinkImage.DOFade(blinkColor.a, blinkInDuration).SetEase(Ease.OutQuad));
+        blinkSeq.Append(damageBlinkImage.DOFade(0f, blinkOutDuration).SetEase(Ease.InQuad));
+        blinkSeq.OnComplete(() =>
+        {
+            if (damageBlinkImage != null)
+                damageBlinkImage.gameObject.SetActive(false);
+        });
     }
 
     private void HandleTakeDamage(int before, int after)
     {
-        if (spiritStoneDisplay != null)
-            spiritStoneDisplay.SetCount(after);
+        if (after < before)
+        {
+            TriggerDamageBlink();
+            if (soulStoneAnimationDelay > 0f)
+            {
+                DOVirtual.DelayedCall(soulStoneAnimationDelay, () =>
+                {
+                    if (spiritStoneDisplay != null)
+                        spiritStoneDisplay.SetCount(after);
+                }).SetUpdate(true);
+            }
+            else
+            {
+                if (spiritStoneDisplay != null)
+                    spiritStoneDisplay.SetCount(after);
+            }
+        }
+        else
+        {
+            if (spiritStoneDisplay != null)
+                spiritStoneDisplay.SetCount(after);
+        }
     }
 
     private void HandleReputationChange(int before, int after)
@@ -116,6 +287,7 @@ public class UIGameplay : UIBase
         Transform canvasRoot = (canvas != null && canvas.rootCanvas != null) ? canvas.rootCanvas.transform : transform;
 
         GameObject flyObj = new GameObject("FlyingScoreText");
+        activeFlyingObjects.Add(flyObj);
         flyObj.layer = gameObject.layer;
         RectTransform flyRect = flyObj.AddComponent<RectTransform>();
         flyObj.transform.SetParent(canvasRoot, false);
@@ -182,6 +354,7 @@ public class UIGameplay : UIBase
 
         seq.AppendCallback(() =>
         {
+            activeFlyingObjects.Remove(flyObj);
             activeFlyingScores = Mathf.Max(0, activeFlyingScores - 1);
 
             if (isPositive && GameManager.Instance != null)

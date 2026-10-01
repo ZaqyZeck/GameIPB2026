@@ -180,9 +180,22 @@ namespace TutorialSystem
                 messageText.ForceMeshUpdate();
 
                 int totalChars = messageText.textInfo.characterCount;
+                int charCount = 0;
                 for (int i = 0; i <= totalChars; i++)
                 {
                     messageText.maxVisibleCharacters = i;
+                    if (i > 0 && i - 1 < messageText.textInfo.characterInfo.Length)
+                    {
+                        char c = messageText.textInfo.characterInfo[i - 1].character;
+                        if (!char.IsWhiteSpace(c))
+                        {
+                            charCount++;
+                            if (charCount % 2 == 1 && GameManager.Instance != null)
+                            {
+                                GameManager.Instance.PlayAudio(GameManager.Instance.dialogue);
+                            }
+                        }
+                    }
                     yield return new WaitForSecondsRealtime(typingSpeed);
                 }
             }

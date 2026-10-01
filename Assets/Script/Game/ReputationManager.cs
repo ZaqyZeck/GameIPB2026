@@ -35,6 +35,12 @@ public class ReputationManager : MonoBehaviour
         score = startingScore;
     }
 
+    private void Start()
+    {
+        UpdateUI(score);
+        GameEventBus.OnReputationChange?.Invoke(score, score);
+    }
+
     public int Adjust(int delta, string reason = "No reason given")
     {
         return Adjust(delta, Vector3.zero, reason);
@@ -94,6 +100,7 @@ public class ReputationManager : MonoBehaviour
     {
         score = startingScore;
         history.Clear();
+        UpdateUI(score);
     }
 
     //private int CalculateScore(ScoreVariable scoreVariable)

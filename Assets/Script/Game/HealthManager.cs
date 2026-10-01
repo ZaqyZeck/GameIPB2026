@@ -17,15 +17,32 @@ public class HealthManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        if (PetManager.Instance != null && PetManager.Instance.DifficultyProfile != null)
+        DifficultyProfileSO activeProfile = null;
+        if (GameManager.Instance != null && GameManager.Instance.SelectedDifficulty != null)
         {
-            maxHealth = PetManager.Instance.DifficultyProfile.targetStones;
+            activeProfile = GameManager.Instance.SelectedDifficulty;
+        }
+        else if (PetManager.Instance != null && PetManager.Instance.DifficultyProfile != null)
+        {
+            activeProfile = PetManager.Instance.DifficultyProfile;
+        }
+
+        if (activeProfile != null)
+        {
+            maxHealth = activeProfile.targetStones;
         }
         else
         {
             maxHealth = 5;
         }
         health = maxHealth;
+    }
+
+    private void Start()
+    {
+        if (healthText != null) healthText.text = "Health: " + health;
+        OnHealthChanged?.Invoke(health, health);
+        GameEventBus.OnTakeDamage?.Invoke(health, health);
     }
 
     public void TakeDamage(int amount = 1)

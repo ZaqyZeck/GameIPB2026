@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using Ohm.UISystem;
 using TMPro;
+
+using DG.Tweening;
 
 public class UIGameOver : UIBase
 {
@@ -9,6 +11,12 @@ public class UIGameOver : UIBase
     [SerializeField] private Button saveButton;
     [SerializeField] private TMP_InputField nameInputField;
     [SerializeField] private TextMeshProUGUI scoreText;
+
+    [Header("Score Animation")]
+    [SerializeField] private float scoreCountDuration = 1.0f;
+    [SerializeField] private Ease scoreCountEase = Ease.OutQuad;
+
+    private Tween scoreTween;
     bool isSubmitting = false;
 
     void Awake()
@@ -19,11 +27,9 @@ public class UIGameOver : UIBase
 
     private void OnEnable()
     {
-        // Panel ini baru aktif saat game over, jadi event reputasi selama
-        // gameplay terlewat. Ambil nilai terakhir yang disimpan UIGameplay.
-        ShowScore(UIGameplay.Reputation);
+        int finalScore = (ReputationManager.Instance != null) ? ReputationManager.Instance.GetScore() : UIGameplay.Reputation;
+        AnimateScore(finalScore);
 
-        // Tetap dengarkan kalau reputasi masih berubah setelah panel muncul
         GameEventBus.OnReputationChange += HandleReputationChange;
 
         if (saveButton != null)
@@ -32,19 +38,37 @@ public class UIGameOver : UIBase
 
     private void OnDisable()
     {
+        scoreTween?.Kill();
         GameEventBus.OnReputationChange -= HandleReputationChange;
         isSubmitting = false;
     }
 
     private void HandleReputationChange(int before, int after)
     {
-        ShowScore(after);
+        AnimateScore(after);
     }
 
-    private void ShowScore(int score)
+    private void AnimateScore(int targetScore)
     {
-        if (scoreText != null)
-            scoreText.text = score.ToString();
+        scoreTween?.Kill();
+
+        if (scoreText == null) return;
+
+        scoreText.text = "0";
+
+        if (targetScore == 0) return;
+
+        int current = 0;
+        float duration = Mathf.Clamp(scoreCountDuration, 0.4f, 2.0f);
+
+        scoreTween = DOTween.To(() => current, val =>
+        {
+            current = val;
+            if (scoreText != null)
+                scoreText.text = current.ToString();
+        }, targetScore, duration)
+        .SetEase(scoreCountEase)
+        .SetUpdate(true);
     }
 
     private void SaveButton()

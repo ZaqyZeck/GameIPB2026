@@ -440,6 +440,9 @@ MonoBehaviour:
   easyButton: {fileID: 802340039654014128}
   normalButton: {fileID: 213554110526397675}
   adaptButton: {fileID: 9082953387670388422}
+  easyProfile: {fileID: 11400000, guid: d87037a8e0d4141f09a592e7d75ec6c8, type: 2}
+  normalProfile: {fileID: 11400000, guid: d652759a6ce35489fb30145f276ef638, type: 2}
+  adaptProfile: {fileID: 11400000, guid: d45f5a42da85c4b00b58826657f1c32f, type: 2}
 --- !u!114 &1105043351129207732
 MonoBehaviour:
   m_ObjectHideFlags: 0

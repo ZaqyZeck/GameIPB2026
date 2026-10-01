@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using Ohm.UISystem;
 
@@ -22,9 +22,6 @@ public class UIPauseMenu : UIBase
     }
     public void BackToMenu()
     {
-        
-        UIGameplay.ResetReputation();
-
         GameManager.Instance.LoadMainMenu();
     }
 }

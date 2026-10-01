@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using PixeLadder.EasyTransition;
 using Ami.BroAudio;
+using Ohm.UISystem;
 
 [Serializable]
 public class SceneEntry
@@ -42,12 +43,22 @@ public class GameManager : MonoBehaviour
     public SoundID clickUI;
     public SoundID correctNumberPopup;
     public SoundID numberBumpCorrect;
+    public SoundID dialogue;
+    public SoundID burn;
 
     [Range(0f, 1f)] public float defaultMaster = 0.5f;
     [Range(0f, 1f)] public float defaultBGM = 0.5f;
     [Range(0f, 1f)] public float defaultSFX = 0.5f;
     [Tooltip("Durasi crossfade saat ganti BGM antar scene.")]
     [SerializeField] private float _bgmFadeTime = 0.5f;
+
+    [Header("Difficulty")]
+    [SerializeField] private DifficultyProfileSO defaultDifficulty;
+    [SerializeField] private DifficultyProfileSO easyDifficulty;
+    [SerializeField] private DifficultyProfileSO mediumDifficulty;
+    [SerializeField] private DifficultyProfileSO adaptiveDifficulty;
+
+    public DifficultyProfileSO SelectedDifficulty { get; private set; }
 
     // ---------- Runtime state ----------
 
@@ -73,8 +84,13 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        if (SelectedDifficulty == null)
+        {
+            SelectedDifficulty = defaultDifficulty != null ? defaultDifficulty : easyDifficulty;
+        }
         ApplyDefaultVolume();
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneTransitioner.OnScreenCovered += HandleScreenCovered;
     }
 
     private void OnEnable()
@@ -101,6 +117,7 @@ public class GameManager : MonoBehaviour
         if (Instance == this)
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
+            SceneTransitioner.OnScreenCovered -= HandleScreenCovered;
             Instance = null;
         }
     }
@@ -233,10 +250,46 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void HandleScreenCovered()
+    {
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.CloseAllUI(instant: true);
+        }
+    }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _isLoadingScene = false;
         _lastHoveredUI = null;
+
+        if (IsScene(scene, SceneType.MainMenu))
+        {
+            UIGameplay.ResetReputation();
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.CloseAllUI(instant: true);
+                UIManager.Instance.ShowUI<UIMainMenu>(showInstant: true, hideCurrentInstant: true);
+            }
+        }
+        else if (IsScene(scene, SceneType.Gameplay))
+        {
+            UIGameplay.ResetReputation();
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.CloseAllUI(instant: true);
+                UIManager.Instance.ShowUI<UIGameplay>(showInstant: true, hideCurrentInstant: true);
+            }
+            if (UIGameplay.Instance != null)
+            {
+                UIGameplay.Instance.RefreshDisplay();
+            }
+            var stones = FindObjectsByType<SpiritStoneDisplay>(FindObjectsSortMode.None);
+            foreach (var stone in stones)
+            {
+                stone.ResetDisplay();
+            }
+        }
 
         // Gameplay pakai BGM sendiri, scene lain pakai BGM main menu.
         ApplyBGMFor(IsScene(scene, SceneType.Gameplay));
@@ -275,7 +328,10 @@ public class GameManager : MonoBehaviour
         LoadScenePath(scene.Path, effect);
     }
 
-    public void LoadMainMenu() => LoadScene(SceneType.MainMenu);
+    public void LoadMainMenu()
+    {
+        LoadScene(SceneType.MainMenu);
+    }
 
     public void RestartScene()
     {
@@ -359,5 +415,26 @@ public class GameManager : MonoBehaviour
     {
         BroAudio.Stop(BroAudioType.Music);
         _bgmPlaying = false;
+    }
+
+    public void SetDifficulty(DifficultyTier tier)
+    {
+        switch (tier)
+        {
+            case DifficultyTier.Easy:
+                SelectedDifficulty = easyDifficulty != null ? easyDifficulty : defaultDifficulty;
+                break;
+            case DifficultyTier.Medium:
+                SelectedDifficulty = mediumDifficulty != null ? mediumDifficulty : defaultDifficulty;
+                break;
+            case DifficultyTier.Adaptive:
+                SelectedDifficulty = adaptiveDifficulty != null ? adaptiveDifficulty : defaultDifficulty;
+                break;
+        }
+    }
+
+    public void SetDifficulty(DifficultyProfileSO profile)
+    {
+        SelectedDifficulty = profile;
     }
 }

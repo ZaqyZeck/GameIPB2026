@@ -27,7 +27,9 @@ namespace PixeLadder.EasyTransition
         // Cache shader property ID for performance
         private static readonly int RectSizeID = Shader.PropertyToID("_RectSize");
 
+        public static event System.Action OnScreenCovered;
         public static event System.Action OnSceneLoaded;
+        public bool IsTransitioning => isTransitioning;
 
         private void Awake()
         {
@@ -111,6 +113,8 @@ namespace PixeLadder.EasyTransition
 
             // Run the fade-out animation
             yield return effect.AnimateOut(transitionImageInstance);
+
+            OnScreenCovered?.Invoke();
 
             // Load the new scene
             yield return SceneManager.LoadSceneAsync(sceneName);

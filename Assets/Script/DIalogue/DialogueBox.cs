@@ -22,6 +22,7 @@ public class DialogueBox : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float charsPerSecond = 30f;
+    [SerializeField] private int soundFrequency = 2;
 
     private Coroutine typingCoroutine;
     private Action pendingCallback;
@@ -175,11 +176,26 @@ public class DialogueBox : MonoBehaviour
         int totalChars = dialogueText.textInfo.characterCount;
         float delay = 1f / charsPerSecond;
         int visible = 0;
+        int charCount = 0;
 
         while (visible < totalChars)
         {
             visible++;
             dialogueText.maxVisibleCharacters = visible;
+
+            if (soundFrequency > 0 && visible - 1 < dialogueText.textInfo.characterInfo.Length)
+            {
+                char c = dialogueText.textInfo.characterInfo[visible - 1].character;
+                if (!char.IsWhiteSpace(c))
+                {
+                    charCount++;
+                    if ((soundFrequency == 1 || charCount % soundFrequency == 1) && GameManager.Instance != null)
+                    {
+                        GameManager.Instance.PlayAudio(GameManager.Instance.dialogue);
+                    }
+                }
+            }
+
             yield return new WaitForSeconds(delay);
         }
 

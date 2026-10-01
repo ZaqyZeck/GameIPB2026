@@ -245,7 +245,7 @@ MonoBehaviour:
   startScreen: {fileID: 0}
   startUI:
     typeName: UIMainMenu, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-  delayBeforeStart: 0.1
+  delayBeforeStart: 0
   waitForSceneLoad: 1
 --- !u!4 &702158943
 Transform:
@@ -595,10 +595,22 @@ MonoBehaviour:
     _entity: {fileID: 11400000, guid: da574beeb0b9e495aba20e34000de2ef, type: 2}
     ID: 0
     <DebugObject>k__BackingField: {fileID: 1174132274}
+  dialogue:
+    _entity: {fileID: 11400000, guid: 91778e2b135dc4bf4ad3dc10fef235bc, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
+  burn:
+    _entity: {fileID: 11400000, guid: 17fc015b78eae4555a6a3aac2bb33ea8, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
   defaultMaster: 0.5
   defaultBGM: 0.5
   defaultSFX: 0.5
   _bgmFadeTime: 0.5
+  defaultDifficulty: {fileID: 11400000, guid: d87037a8e0d4141f09a592e7d75ec6c8, type: 2}
+  easyDifficulty: {fileID: 11400000, guid: d87037a8e0d4141f09a592e7d75ec6c8, type: 2}
+  mediumDifficulty: {fileID: 11400000, guid: d652759a6ce35489fb30145f276ef638, type: 2}
+  adaptiveDifficulty: {fileID: 11400000, guid: d45f5a42da85c4b00b58826657f1c32f, type: 2}
 --- !u!4 &1174132276
 Transform:
   m_ObjectHideFlags: 0
