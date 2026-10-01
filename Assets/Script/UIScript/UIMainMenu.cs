@@ -21,8 +21,9 @@ public class UIMainMenu : UIBase
     {
         startButton.onClick.AddListener(() =>
         {
-            GameManager.Instance.LoadScene(SceneType.Gameplay);
-            Debug.Log("Start Game Clicked");
+            //GameManager.Instance.LoadScene(SceneType.Gameplay);
+            //Debug.Log("Start Game Clicked");
+            UIManager.Instance.ShowUI<UIDifficultySelection>();
         });
         volumeButton.onClick.AddListener(() =>
         {

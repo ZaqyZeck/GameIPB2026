@@ -8,6 +8,7 @@ namespace Ohm.UISystem
         public static readonly Type UIAchievement = typeof(UIAchievement);
         public static readonly Type UIConfirmation = typeof(UIConfirmation);
         public static readonly Type UICredit = typeof(UICredit);
+        public static readonly Type UIDifficultySelection = typeof(UIDifficultySelection);
         public static readonly Type UIFloatingNumber = typeof(UIFloatingNumber);
         public static readonly Type UIFloatingText = typeof(UIFloatingText);
         public static readonly Type UIGameOver = typeof(UIGameOver);
