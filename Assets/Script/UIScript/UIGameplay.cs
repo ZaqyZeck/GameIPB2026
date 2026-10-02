@@ -325,9 +325,18 @@ public class UIGameplay : UIBase
         Color scoreColor = isPositive ? new Color(1.0f, 0.88f, 0.20f, 1f) : new Color(1.0f, 0.32f, 0.32f, 1f);
         tmp.color = scoreColor;
 
-        if (isPositive && GameManager.Instance != null)
+        if (GameManager.Instance != null)
         {
-            GameManager.Instance.PlayAudio(GameManager.Instance.correctNumberPopup);
+            if (isPositive)
+            {
+                if (GameManager.Instance.correctNumberPopup.IsValid())
+                    GameManager.Instance.PlayAudio(GameManager.Instance.correctNumberPopup);
+            }
+            else
+            {
+                if (GameManager.Instance.numberPopupWrong.IsValid())
+                    GameManager.Instance.PlayAudio(GameManager.Instance.numberPopupWrong);
+            }
         }
 
         Vector3 targetPos = scoreText != null ? scoreText.rectTransform.position : screenPos;

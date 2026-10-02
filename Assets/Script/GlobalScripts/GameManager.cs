@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public SoundID hover;
     public SoundID clickUI;
     public SoundID correctNumberPopup;
+    public SoundID numberPopupWrong;
     public SoundID numberBumpCorrect;
     public SoundID numberBumpWrong;
     public SoundID dialogue;

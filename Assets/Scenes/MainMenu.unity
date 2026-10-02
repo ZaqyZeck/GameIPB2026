@@ -805,6 +805,10 @@ MonoBehaviour:
     _entity: {fileID: 11400000, guid: 9be57e596d70b44b68599034c6e8ad78, type: 2}
     ID: 0
     <DebugObject>k__BackingField: {fileID: 1174132274}
+  numberPopupWrong:
+    _entity: {fileID: 11400000, guid: d3f449fd0973443ff81164725d971dbf, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
   numberBumpCorrect:
     _entity: {fileID: 11400000, guid: da574beeb0b9e495aba20e34000de2ef, type: 2}
     ID: 0

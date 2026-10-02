@@ -144,13 +144,13 @@ public class AdaptiveDifficultyController : MonoBehaviour
                     break;
                 case 4:
                     profile.maxActivePets = 7;
-                    profile.extraPatienceTime = 20f;
+                    profile.extraPatienceTime = 15f;
                     profile.sameTypeSpawnChance = 0.50f;
                     profile.rollDislikes = true;
                     break;
                 case 5:
                     profile.maxActivePets = 8;
-                    profile.extraPatienceTime = 15f;
+                    profile.extraPatienceTime = 5f;
                     profile.sameTypeSpawnChance = 0.65f;
                     profile.rollDislikes = true;
                     break;
@@ -164,8 +164,8 @@ public class AdaptiveDifficultyController : MonoBehaviour
                 case 1: OwnerManager.Instance.SetSpawnInterval(14f, 18f); break;
                 case 2: OwnerManager.Instance.SetSpawnInterval(12f, 16f); break;
                 case 3: OwnerManager.Instance.SetSpawnInterval(10f, 14f); break;
-                case 4: OwnerManager.Instance.SetSpawnInterval(8f, 12f); break;
-                case 5: OwnerManager.Instance.SetSpawnInterval(7f, 10f); break;
+                case 4: OwnerManager.Instance.SetSpawnInterval(6f, 10f); break;
+                case 5: OwnerManager.Instance.SetSpawnInterval(5f, 8f); break;
             }
         }
     }
