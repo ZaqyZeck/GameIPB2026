@@ -262,8 +262,11 @@ public class LeaderboardManager : MonoBehaviour
             }
 
             string currentName = await AuthenticationService.Instance.GetPlayerNameAsync();
+            string currentBaseName = !string.IsNullOrEmpty(currentName) && currentName.Contains("#")
+                ? currentName.Split('#')[0]
+                : currentName;
 
-            if (currentName != username)
+            if (currentBaseName != username)
             {
                 await AuthenticationService.Instance.UpdatePlayerNameAsync(username);
                 Log($"Leaderboard player name updated to '{username}'.");

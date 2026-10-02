@@ -335,26 +335,57 @@ public class AuthenticationManager : MonoBehaviour
         }
     }
 
+    public static string SanitizePlayerName(string rawName)
+    {
+        if (string.IsNullOrWhiteSpace(rawName)) return "Player";
+
+        // Replace whitespace with underscores (UGS forbids spaces)
+        string cleaned = rawName.Trim().Replace(' ', '_');
+
+        var sb = new System.Text.StringBuilder();
+        foreach (char c in cleaned)
+        {
+            if (char.IsLetterOrDigit(c) || c == '_' || c == '-' || c == '.')
+            {
+                sb.Append(c);
+            }
+        }
+
+        string result = sb.ToString();
+        if (result.Length < 3)
+        {
+            result = (result + "_player").Substring(0, Mathf.Min(result.Length + 7, 20));
+        }
+        else if (result.Length > 20)
+        {
+            result = result.Substring(0, 20);
+        }
+
+        return result;
+    }
+
     public async Task LoginAnonimAsync(string playerName)
     {
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-
-        //await UbahNamaPlayer(playerName);
+        PlayerName = SanitizePlayerName(playerName);
     }
 
     public async Task LoginAnonymAsync(string playerName)
     {
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
-
-        await UbahNamaPlayer(playerName);
+        string sanitized = SanitizePlayerName(playerName);
+        PlayerName = sanitized;
+        await UbahNamaPlayer(sanitized);
     }
 
     public async Task UbahNamaPlayer(string namaBaru)
     {
         try
         {
+            string sanitized = SanitizePlayerName(namaBaru);
+            PlayerName = sanitized;
             // Panggil API Unity untuk memperbarui nama
-            string namaHasilUpdate = await AuthenticationService.Instance.UpdatePlayerNameAsync(namaBaru);
+            string namaHasilUpdate = await AuthenticationService.Instance.UpdatePlayerNameAsync(sanitized);
             Debug.Log($"Nama player berhasil diganti menjadi: {namaHasilUpdate}");
         }
         catch (AuthenticationException ex)

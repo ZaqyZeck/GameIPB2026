@@ -262,10 +262,17 @@ public class MainLeaderBoardUI : MonoBehaviour
         {
             RankBarUI bar = Instantiate(rankBarPrefab, contentParent);
 
-            bar.RankNumber.text = (entry.Rank + 1).ToString();
-            bar.Usename.text = string.IsNullOrEmpty(entry.PlayerName)
-                ? entry.PlayerId
-                : entry.PlayerName;
+            string displayName = entry.PlayerName;
+            if (string.IsNullOrEmpty(displayName))
+            {
+                displayName = entry.PlayerId;
+            }
+            else if (displayName.Contains("#"))
+            {
+                displayName = displayName.Split('#')[0];
+            }
+
+            bar.Usename.text = displayName;
             bar.Score.text = entry.Score.ToString("0");
 
             if (!string.IsNullOrEmpty(myPlayerId) && entry.PlayerId == myPlayerId)
