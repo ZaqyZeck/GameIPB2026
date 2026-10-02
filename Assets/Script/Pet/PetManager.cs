@@ -24,6 +24,7 @@ public class PetManager : MonoBehaviour
     [SerializeField] float spawnTimer;
     [SerializeField] Vector3 spawnPosition;
     [SerializeField] Shader petShader;
+    [SerializeField] float petOutlineWidth = 0.01f;
 
     public TraitDatabaseSO TraitDatabase => traitDatabase;
     public DifficultyProfileSO DifficultyProfile
@@ -124,6 +125,7 @@ public class PetManager : MonoBehaviour
         {
             Material petMaterial = new Material(petShader);
             petMaterial.SetColor("_Color", petData.specialColor);
+            petMaterial.SetFloat("_outlineWidth", petOutlineWidth);
             newPet.SetMaterial(petMaterial);
         }
         if(GameManager.Instance != null) {
