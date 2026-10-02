@@ -451,7 +451,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 105957971}
   interactCollider: {fileID: 105957969}
   textPetId: {fileID: 0}
-  ownerMaterial: {fileID: 0}
+  ownerMaterial: {fileID: 2100000, guid: ddbf6d6f12ad97945987f88f505c52a4, type: 2}
   patienceFillRect: {fileID: 764415121}
   patienceBarObject: {fileID: 637199596}
   dialogueBox: {fileID: 1471641120}
@@ -494,7 +494,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: ddbf6d6f12ad97945987f88f505c52a4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4675,6 +4675,7 @@ MonoBehaviour:
   reactionText: {fileID: 1616917925}
   charsPerSecond: 30
   fadeOutDuration: 0.3
+  soundFrequency: 2
 --- !u!114 &1256394998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4970,6 +4971,7 @@ MonoBehaviour:
   minBoxHeight: 65
   iconOnLeft: 0
   charsPerSecond: 30
+  soundFrequency: 2
 --- !u!224 &1313575288
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5606,6 +5608,7 @@ MonoBehaviour:
   minBoxHeight: 65
   iconOnLeft: 0
   charsPerSecond: 30
+  soundFrequency: 2
 --- !u!114 &1471641121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5759,7 +5762,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1508637208}
   interactCollider: {fileID: 1508637206}
   textPetId: {fileID: 0}
-  ownerMaterial: {fileID: 0}
+  ownerMaterial: {fileID: 2100000, guid: 6f2ef6f92f19b0b4abb417b7970552e1, type: 2}
   patienceFillRect: {fileID: 1112996513}
   patienceBarObject: {fileID: 1944085922}
   dialogueBox: {fileID: 1313575287}
@@ -5802,7 +5805,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 6f2ef6f92f19b0b4abb417b7970552e1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6797,6 +6800,7 @@ MonoBehaviour:
   spawnTimer: 0
   spawnPosition: {x: 5.75, y: -1.5, z: 0}
   petShader: {fileID: -6465566751694194690, guid: fe3952bcb72c7db469863a4ea6bdf821, type: 3}
+  petOutlineWidth: 0.02
   isPetAvailable: 0
   isPetsAtDoor: 0
 --- !u!4 &1820748887

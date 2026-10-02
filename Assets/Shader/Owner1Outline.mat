@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BallOutlineShader
+  m_Name: Owner1Outline
   m_Shader: {fileID: -6465566751694194690, guid: fe3952bcb72c7db469863a4ea6bdf821, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -42,13 +42,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _outlineOn: 0
-    - _outlineWidth: 0.035
+    - _outlineWidth: 0.03
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!114 &3550769566403531775
+--- !u!114 &6543896450169405626
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
