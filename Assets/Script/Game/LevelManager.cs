@@ -73,11 +73,12 @@ public class LevelManager : MonoBehaviour
     {
         float reputationScore = ReputationManager.Instance.GetScore();
 
+        string leaderboardID = GetLeaderboardID();
         // submint score ke leaderboard secara anonim dengan nama "ben"
-        Debug.LogWarning(playerName + " itu nama player yg disubmit di leaderboard");
+        Debug.LogWarning(playerName + " itu nama player yg disubmit di " + leaderboardID);
         try
         {
-            await LeaderboardManager.Instance.SubmitAnonymousScoreAsync((long) reputationScore, playerName, "reputationscore");
+            await LeaderboardManager.Instance.SubmitAnonymousScoreAsync((long) reputationScore, playerName, leaderboardID);
 
         }
         catch
@@ -87,5 +88,19 @@ public class LevelManager : MonoBehaviour
         
 
         GameManager.Instance.LoadMainMenu();
+    }
+
+    private string GetLeaderboardID()
+    {
+        switch (GameManager.Instance.SelectedDifficulty.tier)
+        {
+            case DifficultyTier.Easy:
+                return "reputationscore_easy";
+            case DifficultyTier.Medium:
+                return "reputationscore";
+            case DifficultyTier.Adaptive:
+                return "reputationscore_adapt";
+        }
+        return null;
     }
 }

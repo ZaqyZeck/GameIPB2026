@@ -5,30 +5,34 @@ using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Leaderboards.Models;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 using DG.Tweening;
+using UnityEngine.UI;
 
-public class MainLeaderBoardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MainLeaderBoardUI : MonoBehaviour
 {
     [SerializeField] private GameObject LeaderboardParent;
-    public bool isOverLeaderboard { get; private set; } = false;
+    //public bool isOverLeaderboard { get; private set; } = false;
 
-    [SerializeField] private int scrollMultiplier = 40;
-    [SerializeField] private float maxAbove = 290f;
-    [SerializeField] private float maxBellow = -290f;
+    //[SerializeField] private int scrollMultiplier = 40;
+    //[SerializeField] private float maxAbove = 290f;
+    //[SerializeField] private float maxBellow = -290f;
 
-    [Header("Snap Back Animation")]
-    [Tooltip("Durasi animasi kembali ke batas atas/bawah.")]
-    [SerializeField] private float snapDuration = 0.35f;
-    [SerializeField] private Ease snapEase = Ease.OutCubic;
+    //[Header("Snap Back Animation")]
+    //[Tooltip("Durasi animasi kembali ke batas atas/bawah.")]
+    //[SerializeField] private float snapDuration = 0.35f;
+    //[SerializeField] private Ease snapEase = Ease.OutCubic;
+    [Header("Leaderboard Difficulty")]
+    [SerializeField] private DifficultyTier leaderboardDifficulty = DifficultyTier.Medium;
+    [SerializeField] private Button easyButton;
+    [SerializeField] private Button normalButton;
+    [SerializeField] private Button adaptButton;
 
     [Header("List")]
     [SerializeField] private Transform contentParent;
     [SerializeField] private RankBarUI rankBarPrefab;
     [SerializeField] private int topEntriesCount = 200;
 
+    
     [Header("Optional Info")]
     [SerializeField] private TMP_Text statusText;
 
@@ -46,86 +50,111 @@ public class MainLeaderBoardUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private Tween snapTween;
     private bool isSnapping;
 
-    private void Update()
-    {
-        if (isOverLeaderboard)
-        {
-            Vector2 scrollDelta = Mouse.current.scroll.ReadValue();
 
-            float scrollY = scrollDelta.y;
-            ScrollLeaderboard(scrollY);
-        }
+    void Awake()
+    {
+        if (easyButton != null) easyButton.onClick.AddListener(EasyButtonPressed);
+        if (normalButton != null) normalButton.onClick.AddListener(NormalButtonPressed);
+        if (adaptButton != null) adaptButton.onClick.AddListener(AdaptButtonPressed);
     }
 
-    // Triggered automatically when the mouse enters the UI Image bounds
-    public void OnPointerEnter(PointerEventData eventData)
+    public void EasyButtonPressed()
     {
-        isOverLeaderboard = true;
+        leaderboardDifficulty = DifficultyTier.Easy;
+        LoadLeaderboard();
     }
 
-    // Triggered automatically when the mouse leaves the UI Image bounds
-    public void OnPointerExit(PointerEventData eventData)
+    public void NormalButtonPressed()
     {
-        isOverLeaderboard = false;
+        leaderboardDifficulty = DifficultyTier.Medium;
+        LoadLeaderboard();
     }
 
-    private void ScrollLeaderboard(float scrollY)
+    public void AdaptButtonPressed()
     {
-        // Selama animasi snap-back berjalan, abaikan input scroll manual
-        // supaya contentParent tidak "ditarik" dua arah sekaligus.
-        if (isSnapping) return;
-        if (Mathf.Approximately(scrollY, 0f)) return;
-
-        contentParent.localPosition += new Vector3(0f, -(scrollY * scrollMultiplier), 0f);
-
-        CheckScrollBounds();
+        leaderboardDifficulty = DifficultyTier.Adaptive;
+        LoadLeaderboard();
     }
+    //private void Update()
+    //{
+    //    //if (isOverLeaderboard)
+    //    //{
+    //    //    Vector2 scrollDelta = Mouse.current.scroll.ReadValue();
 
-    // ---------------------------------------------------------------
-    //  BOUNDARY CHECK + SNAP BACK
-    // ---------------------------------------------------------------
+    //    //    float scrollY = scrollDelta.y;
+    //    //    ScrollLeaderboard(scrollY);
+    //    //}
+    //}
 
-    /// <summary>
-    /// Mengecek posisi bar paling atas (rank #1) dan bar paling bawah
-    /// terhadap world/canvas position Y = 0. Jika melewati batas,
-    /// animasikan contentParent kembali ke maxAbove / maxBellow.
-    /// </summary>
-    private void CheckScrollBounds()
-    {
-        if (spawnedBars.Count == 0) return;
+    //// Triggered automatically when the mouse enters the UI Image bounds
+    //public void OnPointerEnter(PointerEventData eventData)
+    //{
+    //    isOverLeaderboard = true;
+    //}
 
-        RankBarUI topBar = spawnedBars[0];
-        RankBarUI bottomBar = spawnedBars[spawnedBars.Count - 1];
+    //// Triggered automatically when the mouse leaves the UI Image bounds
+    //public void OnPointerExit(PointerEventData eventData)
+    //{
+    //    isOverLeaderboard = false;
+    //}
 
-        if (topBar == null || bottomBar == null) return;
+    //private void ScrollLeaderboard(float scrollY)
+    //{
+    //    // Selama animasi snap-back berjalan, abaikan input scroll manual
+    //    // supaya contentParent tidak "ditarik" dua arah sekaligus.
+    //    if (isSnapping) return;
+    //    if (Mathf.Approximately(scrollY, 0f)) return;
 
-        // Bar rank #1 turun di bawah world position 0 -> overscroll ke atas
-        if (topBar.transform.position.y < 500f || spawnedBars.Count <= 7)
-        {
-            SnapTo(maxAbove);
-        }
-        // Bar paling bawah naik di atas world position 0 -> overscroll ke bawah
-        else if (bottomBar.transform.position.y > 500f)
-        {
-            SnapTo(bottomBar.transform.position.y + maxBellow);
-        }
-    }
+    //    contentParent.localPosition += new Vector3(0f, -(scrollY * scrollMultiplier), 0f);
 
-    private void SnapTo(float targetLocalY)
-    {
-        // Kalau sudah snapping ke arah yang sama, tidak perlu restart tween.
-        if (isSnapping && Mathf.Approximately(contentParent.localPosition.y, targetLocalY))
-            return;
+    //    CheckScrollBounds();
+    //}
 
-        isSnapping = true;
-        snapTween?.Kill();
+    //// ---------------------------------------------------------------
+    ////  BOUNDARY CHECK + SNAP BACK
+    //// ---------------------------------------------------------------
 
-        snapTween = contentParent
-            .DOLocalMoveY(targetLocalY, snapDuration)
-            .SetEase(snapEase)
-            .OnComplete(() => isSnapping = false)
-            .OnKill(() => isSnapping = false);
-    }
+    ///// <summary>
+    ///// Mengecek posisi bar paling atas (rank #1) dan bar paling bawah
+    ///// terhadap world/canvas position Y = 0. Jika melewati batas,
+    ///// animasikan contentParent kembali ke maxAbove / maxBellow.
+    ///// </summary>
+    //private void CheckScrollBounds()
+    //{
+    //    if (spawnedBars.Count == 0) return;
+
+    //    RankBarUI topBar = spawnedBars[0];
+    //    RankBarUI bottomBar = spawnedBars[spawnedBars.Count - 1];
+
+    //    if (topBar == null || bottomBar == null) return;
+
+    //    // Bar rank #1 turun di bawah world position 0 -> overscroll ke atas
+    //    if (topBar.transform.position.y < 500f || spawnedBars.Count <= 7)
+    //    {
+    //        SnapTo(maxAbove);
+    //    }
+    //    // Bar paling bawah naik di atas world position 0 -> overscroll ke bawah
+    //    else if (bottomBar.transform.position.y > 500f)
+    //    {
+    //        SnapTo(bottomBar.transform.position.y + maxBellow);
+    //    }
+    //}
+
+    //private void SnapTo(float targetLocalY)
+    //{
+    //    // Kalau sudah snapping ke arah yang sama, tidak perlu restart tween.
+    //    if (isSnapping && Mathf.Approximately(contentParent.localPosition.y, targetLocalY))
+    //        return;
+
+    //    isSnapping = true;
+    //    snapTween?.Kill();
+
+    //    snapTween = contentParent
+    //        .DOLocalMoveY(targetLocalY, snapDuration)
+    //        .SetEase(snapEase)
+    //        .OnComplete(() => isSnapping = false)
+    //        .OnKill(() => isSnapping = false);
+    //}
 
     private void OnEnable()
     {
@@ -134,7 +163,7 @@ public class MainLeaderBoardUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void OnDisable()
     {
-        isOverLeaderboard = false;
+        //isOverLeaderboard = false;
 
         // Hentikan tween yang mungkin masih berjalan saat object dinonaktifkan.
         snapTween?.Kill();
@@ -165,7 +194,7 @@ public class MainLeaderBoardUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
             return;
         }
 
-        LeaderboardPageResult result = await LeaderboardManager.Instance.GetTopScoresAsync(topEntriesCount, 0, "reputationscore");
+        LeaderboardPageResult result = await LeaderboardManager.Instance.GetTopScoresAsync(topEntriesCount, 0, GetLeaderboardID());
 
         PopulateList(result.Entries);
 
@@ -258,5 +287,19 @@ public class MainLeaderBoardUI : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private void LogError(string message)
     {
         if (logDebugMessages) Debug.LogError($"[MainLeaderboardUI] {message}");
+    }
+
+    private string GetLeaderboardID()
+    {
+        switch (leaderboardDifficulty)
+        {
+            case DifficultyTier.Easy:
+                return "reputationscore_easy";
+            case DifficultyTier.Medium:
+                return "reputationscore";
+            case DifficultyTier.Adaptive:
+                return "reputationscore_adapt";
+        }
+        return null;
     }
 }
