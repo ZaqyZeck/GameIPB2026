@@ -73,6 +73,16 @@ public class PetManager : MonoBehaviour
         }
         else
         {
+            if (InteractableDoor.Instance != null && InteractableDoor.Instance.IsOpen)
+            {
+                return;
+            }
+
+            if (isPetsAtDoor)
+            {
+                return;
+            }
+
             spawnTimer = Random.Range(minSpawnTime, maxSpawnTime);
             AddPetAtDoor();
         }
@@ -95,8 +105,10 @@ public class PetManager : MonoBehaviour
 
         PetData petData = template.Clone();
 
-        SpawnPetAtDoor(petData);
-        isPetsAtDoor = true;
+        if (SpawnPetAtDoor(petData))
+        {
+            isPetsAtDoor = true;
+        }
     }
 
     public void DoorOpen()
@@ -109,14 +121,14 @@ public class PetManager : MonoBehaviour
         isPetsAtDoor = false;
     }
 
-    private void SpawnPetAtDoor(PetData petData)
+    private bool SpawnPetAtDoor(PetData petData)
     {
-        if (petData == null) return;
+        if (petData == null) return false;
 
         if (!TryRollUniqueTraits(petData))
         {
             Debug.Log("Gagal mendapatkan kombinasi trait (warna/habit/action) yang unik.");
-            return;
+            return false;
         }
 
         Debug.Log($"Pet mendapatkan PetData: {petData.petName}");
@@ -140,6 +152,7 @@ public class PetManager : MonoBehaviour
         GameManager.Instance.PlayAudio(GameManager.Instance.lonceng);
         }
         GameEventBus.OnPetSpawned?.Invoke(petData);
+        return true;
     }
 
     public void DespawnPet(Pet ghostPet)
@@ -401,6 +414,8 @@ public class PetManager : MonoBehaviour
 
         if (petDatas == null || petDatas.petDatas == null || petDatas.petDatas.Count == 0)
             return false;
+
+        if (isPetsAtDoor) return false;
 
         return true;
     }

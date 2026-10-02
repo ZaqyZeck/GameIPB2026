@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     public SoundID clickUI;
     public SoundID correctNumberPopup;
     public SoundID numberBumpCorrect;
+    public SoundID numberBumpWrong;
     public SoundID dialogue;
     public SoundID burn;
 

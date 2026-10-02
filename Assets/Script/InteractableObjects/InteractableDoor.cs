@@ -9,18 +9,31 @@ public class InteractableDoor : Interactables
     [SerializeField] private Material doorMaterial;
     [SerializeField] private GameObject doorBell;
 
+    public static InteractableDoor Instance { get; private set; }
+    public bool IsOpen => isOpen;
+
     private bool isOpen;
     private float openTimer;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
+
     private void Update()
     {
-        if (PetManager.Instance.isPetsAtDoor)
+        if (PetManager.Instance != null && PetManager.Instance.isPetsAtDoor && !isOpen)
         {
-            if (doorBell != null) doorBell.SetActive(true);
+            if (doorBell != null && !doorBell.activeSelf) doorBell.SetActive(true);
         }
         else
         {
-            if (doorBell != null) doorBell.SetActive(false);
+            if (doorBell != null && doorBell.activeSelf) doorBell.SetActive(false);
         }
 
         if (!isOpen) return;

@@ -595,6 +595,10 @@ MonoBehaviour:
     _entity: {fileID: 11400000, guid: da574beeb0b9e495aba20e34000de2ef, type: 2}
     ID: 0
     <DebugObject>k__BackingField: {fileID: 1174132274}
+  numberBumpWrong:
+    _entity: {fileID: 11400000, guid: 45563ea5995ff4ea58d32747cbcc8819, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1174132274}
   dialogue:
     _entity: {fileID: 11400000, guid: 91778e2b135dc4bf4ad3dc10fef235bc, type: 2}
     ID: 0

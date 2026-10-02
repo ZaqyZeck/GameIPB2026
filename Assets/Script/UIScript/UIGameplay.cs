@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using Ohm.UISystem;
 using TMPro;
 using DG.Tweening;
+using Ami.BroAudio;
 
 public class UIGameplay : UIBase
 {
@@ -357,9 +358,28 @@ public class UIGameplay : UIBase
             activeFlyingObjects.Remove(flyObj);
             activeFlyingScores = Mathf.Max(0, activeFlyingScores - 1);
 
-            if (isPositive && GameManager.Instance != null)
+            if (GameManager.Instance != null)
             {
-                GameManager.Instance.PlayAudio(GameManager.Instance.numberBumpCorrect);
+                if (isPositive)
+                {
+                    if (GameManager.Instance.numberBumpCorrect.IsValid())
+                        GameManager.Instance.PlayAudio(GameManager.Instance.numberBumpCorrect);
+                }
+                else
+                {
+                    if (GameManager.Instance.numberBumpWrong.IsValid())
+                    {
+                        GameManager.Instance.PlayAudio(GameManager.Instance.numberBumpWrong);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("[UIGameplay] numberBumpWrong is not assigned on GameManager in Inspector!");
+                    }
+                }
+            }
+            else if (!isPositive)
+            {
+                Debug.LogWarning("[UIGameplay] Cannot play numberBumpWrong because GameManager.Instance is null (game must be started from MainMenu).");
             }
 
             SpawnImpactSparkles(targetPos, scoreColor, canvasRoot);
