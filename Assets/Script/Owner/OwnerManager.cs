@@ -27,6 +27,12 @@ public class OwnerManager : MonoBehaviour
 
     [SerializeField] bool isLineFull ;
 
+    public void SetSpawnInterval(float min, float max)
+    {
+        minSpawnTime = Mathf.Max(1f, min);
+        maxSpawnTime = Mathf.Max(minSpawnTime, max);
+    }
+
     private void Awake()
     {
         Instance = this;

@@ -191,16 +191,20 @@ public class Owner : Interactables
         }
 
         HealthManager.Instance.TakeDamage();
+        GameEventBus.OnCustomerResolved?.Invoke(false, 0f);
     }
 
     public void DespawnWithPet()
     {
         if (!isInLine) return;
+        float solveDuration = Time.time - spawnTimestamp;
         Vector3 spawnWorldPos = transform.position + Vector3.up * 1.6f;
         PetManager.Instance.DespawnPet(currentPet);
         ResetOwnerState();
         DespawnAnimation();
         OwnerManager.Instance.CheckLine();
+        GameEventBus.OnReunionSuccess?.Invoke();
+        GameEventBus.OnCustomerResolved?.Invoke(true, solveDuration);
         int score = 0;
 
         float ratio = totalPatience > 0 ? (patienceTimer / totalPatience) : 0f;

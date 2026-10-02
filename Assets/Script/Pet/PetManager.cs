@@ -46,6 +46,14 @@ public class PetManager : MonoBehaviour
         {
             difficultyProfile = GameManager.Instance.SelectedDifficulty;
         }
+        if (difficultyProfile != null && difficultyProfile.tier == DifficultyTier.Adaptive)
+        {
+            difficultyProfile = Instantiate(difficultyProfile);
+            if (GetComponent<AdaptiveDifficultyController>() == null)
+            {
+                gameObject.AddComponent<AdaptiveDifficultyController>();
+            }
+        }
         if (traitDatabase != null)
         {
             traitDatabase.InitializeLookup();

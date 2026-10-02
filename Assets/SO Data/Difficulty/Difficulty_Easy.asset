@@ -16,7 +16,7 @@ MonoBehaviour:
   extraPatienceTime: 30
   maxActivePets: 4
   targetStones: 5
-  sameTypeSpawnChance: 0
-  maxSameTypeInRoom: 2
+  sameTypeSpawnChance: 0.2
+  maxSameTypeInRoom: 3
   forceUniqueOnFail: 1
   rollDislikes: 0

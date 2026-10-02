@@ -28,6 +28,7 @@ public class MainLeaderBoardUI : MonoBehaviour
     [SerializeField] private Button adaptButton;
 
     [Header("List")]
+    [SerializeField] private ScrollRect scrollRect;
     [SerializeField] private Transform contentParent;
     [SerializeField] private RankBarUI rankBarPrefab;
     [SerializeField] private int topEntriesCount = 200;
@@ -56,6 +57,22 @@ public class MainLeaderBoardUI : MonoBehaviour
         if (easyButton != null) easyButton.onClick.AddListener(EasyButtonPressed);
         if (normalButton != null) normalButton.onClick.AddListener(NormalButtonPressed);
         if (adaptButton != null) adaptButton.onClick.AddListener(AdaptButtonPressed);
+
+        if (scrollRect == null)
+            scrollRect = GetComponentInChildren<ScrollRect>(true);
+
+        if (scrollRect != null)
+        {
+            scrollRect.scrollSensitivity = 1f;
+            scrollRect.movementType = ScrollRect.MovementType.Clamped;
+            if (scrollRect.verticalScrollbar != null)
+            {
+                scrollRect.verticalScrollbar.gameObject.SetActive(false);
+                scrollRect.verticalScrollbar = null;
+            }
+        }
+
+        ConfigureContentLayout();
     }
 
     public void EasyButtonPressed()
@@ -260,6 +277,46 @@ public class MainLeaderBoardUI : MonoBehaviour
         }
 
         ShowStatus(entries.Count == 0 ? "No scores yet." : string.Empty);
+
+        StopAllCoroutines();
+        StartCoroutine(ResetScrollRoutine());
+    }
+
+    private System.Collections.IEnumerator ResetScrollRoutine()
+    {
+        yield return null;
+        Canvas.ForceUpdateCanvases();
+        if (contentParent is RectTransform rt)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rt);
+        }
+        if (scrollRect != null)
+        {
+            scrollRect.StopMovement();
+            scrollRect.verticalNormalizedPosition = 1f;
+        }
+    }
+
+    private void ConfigureContentLayout()
+    {
+        if (contentParent == null) return;
+
+        var fitter = contentParent.GetComponent<ContentSizeFitter>();
+        if (fitter == null)
+        {
+            fitter = contentParent.gameObject.AddComponent<ContentSizeFitter>();
+        }
+        fitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
+        fitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        var vlg = contentParent.GetComponent<VerticalLayoutGroup>();
+        if (vlg != null)
+        {
+            vlg.childControlWidth = true;
+            vlg.childForceExpandWidth = true;
+            vlg.childControlHeight = false;
+            vlg.childForceExpandHeight = false;
+        }
     }
 
     private void ClearList()
