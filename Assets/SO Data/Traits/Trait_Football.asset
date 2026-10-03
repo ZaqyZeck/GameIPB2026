@@ -18,7 +18,7 @@ MonoBehaviour:
   actionType: 1
   habitType: 0
   iconLike: {fileID: 228663082792738388, guid: 82c2bc300dcfd49a798385e8f1b69102, type: 3}
-  iconDislike: {fileID: 0}
+  iconDislike: {fileID: -6694580591840097681, guid: d718ae06421184d709082b4db8ab57c1, type: 3}
   likeDialogueLines:
   - It loves playing with balls!
   - Loves kicking a football!

@@ -18,7 +18,7 @@ MonoBehaviour:
   actionType: 4
   habitType: 0
   iconLike: {fileID: -4745237664472261435, guid: 28f30bce65baa412ebe1dad671c73e13, type: 3}
-  iconDislike: {fileID: 0}
+  iconDislike: {fileID: -5750117593945402168, guid: 3a716b75116e94432ab2cd7bd86cf185, type: 3}
   likeDialogueLines:
   - Loves feather wands!
   - Can't resist cat toys!

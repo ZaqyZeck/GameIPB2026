@@ -18,7 +18,7 @@ MonoBehaviour:
   actionType: 3
   habitType: 0
   iconLike: {fileID: -3863137157702377635, guid: a0c445c8675d046c393e27066618fba9, type: 3}
-  iconDislike: {fileID: 0}
+  iconDislike: {fileID: -5750117593945402168, guid: 3a716b75116e94432ab2cd7bd86cf185, type: 3}
   likeDialogueLines:
   - Obsessed with toy mice!
   - Loves chasing toy mice.
