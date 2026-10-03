@@ -16,6 +16,7 @@ public class PetBehaviorController : MonoBehaviour
     [SerializeField] private bool isDoingHabit;
     [SerializeField] private bool isStopBehaviour;
     [SerializeField] private bool isWandering;
+    private ActionTrait currentActionTrait;
 
     public void Initialize(PetData petData)
     {
@@ -23,6 +24,7 @@ public class PetBehaviorController : MonoBehaviour
         isDoingAction = false;
         isDoingHabit = false;
         isStopBehaviour = false;
+        currentActionTrait = ActionTrait.None;
 
         revealTimer = petData.timeToRevealHabit;
         habitTimer = habitInterval;
@@ -142,6 +144,7 @@ public class PetBehaviorController : MonoBehaviour
         actionBehaviour.ExecuteAction(pet);
 
         isDoingAction = true;
+        currentActionTrait = trait;
 
         GameEventBus.OnActionExecuted?.Invoke(trait);
     }
@@ -156,6 +159,7 @@ public class PetBehaviorController : MonoBehaviour
         actionBehaviour?.StopAction(pet);
 
         isDoingAction = false;
+        currentActionTrait = ActionTrait.None;
         actionTimer = 0f;
 
         habitTimer = habitInterval;
@@ -164,7 +168,7 @@ public class PetBehaviorController : MonoBehaviour
 
     public bool HasHiddenAction(ActionTrait trait)
     {
-        return habitRevealed && pet.petData != null && pet.petData.hiddenAction == trait;
+        return pet.petData != null && (pet.petData.hiddenAction == trait || pet.petData.LikesAction(trait));
     }
 
     public bool HasHiddenHabit(HabitTrait trait)
@@ -221,7 +225,8 @@ public class PetBehaviorController : MonoBehaviour
     {
         if (isDoingAction)
         {
-            TryStopAction(trait);
+            ActionTrait targetTrait = currentActionTrait != ActionTrait.None ? currentActionTrait : trait;
+            TryStopAction(targetTrait);
         }
 
         if (isDoingHabit)

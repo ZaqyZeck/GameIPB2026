@@ -188,7 +188,7 @@ public class PlayerInteract : MonoBehaviour
         currentTargetObject = currentHoverObject;
         DeselectHover();
     }
-    void DeselectTarget()
+    public void DeselectTarget()
     {
         currentTargetObject = null;
     }
@@ -305,6 +305,7 @@ public class PlayerInteract : MonoBehaviour
         currentHoldObject.SetParent(pet.transform);
         currentHoldObject.localPosition = Vector3.zero;
         RemoveObjectFromHold();
+        DeselectTarget();
 
         return toy;
     }

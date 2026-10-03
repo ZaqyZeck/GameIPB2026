@@ -17,6 +17,7 @@ public class InteractablePet : Interactables
     bool isPlaying;
     InteractableObject currentToy;
     Coroutine angryReactionCoroutine;
+    private float nextPickupAllowedTime = -1f;
 
     //private void Start()
     //{
@@ -24,25 +25,37 @@ public class InteractablePet : Interactables
     //}
     public override void OnInteract(PlayerInteract player)
     {
+        if (Time.time < nextPickupAllowedTime)
+        {
+            return;
+        }
+
         if (!player.isHoldingObject)
         {
             player.PickUpTargetObject();
             return;
         }
 
-        if (isPlaying == true)
+        if (isPlaying)
         {
-            player.DropHoldObject();
+            return;
+        }
+
+        InteractableObject toyHoldable = player.CurrentHeldHoldable as InteractableObject;
+        if (toyHoldable == null)
+        {
             return;
         }
 
         currentToy = player.GiveToy(this);
+        player.DeselectTarget();
 
-        if (currentToy == null || isPlaying)
+        if (currentToy == null)
         {
-            StopPlayToy();
             return;
         }
+
+        nextPickupAllowedTime = Time.time + 0.5f;
 
         if (ownerPet.petData != null && ownerPet.petData.LikesAction(currentToy.actionTrait))
         {
@@ -57,7 +70,7 @@ public class InteractablePet : Interactables
             return;
         }
 
-        PlayAngryReactionAndDropToy();
+        DropToy();
     }
 
     public IHoldable GetHoldable() => ownerPet;
@@ -65,6 +78,15 @@ public class InteractablePet : Interactables
     {
         isPickuped = true;
         DeactivateCollider();
+        if (isPlaying)
+        {
+            StopPlayToy();
+        }
+        if (angryReactionCoroutine != null)
+        {
+            StopCoroutine(angryReactionCoroutine);
+            angryReactionCoroutine = null;
+        }
     }
     public void DropBehaviour()
     {
@@ -90,7 +112,7 @@ public class InteractablePet : Interactables
         ownerPet.Movement.Stop();
 
         currentToy?.SetVisible(false);
-        ownerPet.BehaviorController.TryExecuteAction(ownerPet.petData.hiddenAction);
+        ownerPet.BehaviorController.TryExecuteAction(currentToy.actionTrait);
         PlayToySound();
     }
 

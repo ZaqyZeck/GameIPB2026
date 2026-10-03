@@ -52,6 +52,8 @@ public class Pet : MonoBehaviour, IHoldable
         petAnimation.SetWalking(false);
         petAnimation.SetSitting(false);
         petAnimation.ResetAction();
+        HideActionIcon();
+        HideCatToyProp();
     }
 
     public void OnDropped(Transform dropParent)
