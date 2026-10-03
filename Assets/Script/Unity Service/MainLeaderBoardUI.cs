@@ -272,6 +272,7 @@ public class MainLeaderBoardUI : MonoBehaviour
                 displayName = displayName.Split('#')[0];
             }
 
+            bar.RankNumber.text = (entry.Rank + 1).ToString();
             bar.Usename.text = displayName;
             bar.Score.text = entry.Score.ToString("0");
 
